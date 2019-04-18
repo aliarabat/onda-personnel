@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,6 +25,7 @@ public class WorkDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToMany
     private List<Day> days;
     private Date workDetailDate;
     private Integer pan;
@@ -37,6 +39,48 @@ public class WorkDetail implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<Day> getDays() {
+        return days;
+    }
+
+    public void setDays(List<Day> days) {
+        this.days = days;
+    }
+
+    public Date getWorkDetailDate() {
+        return workDetailDate;
+    }
+
+    public void setWorkDetailDate(Date workDetailDate) {
+        this.workDetailDate = workDetailDate;
+    }
+
+    public Integer getPan() {
+        return pan;
+    }
+
+    public void setPan(Integer pan) {
+        this.pan = pan;
+    }
+
+    public Integer getHn() {
+        return hn;
+    }
+
+    public void setHn(Integer hn) {
+        this.hn = hn;
+    }
+
+    public Integer getHjf() {
+        return hjf;
+    }
+
+    public void setHjf(Integer hjf) {
+        this.hjf = hjf;
+    }
+
+    
 
     @Override
     public int hashCode() {

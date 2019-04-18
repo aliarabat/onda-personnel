@@ -6,6 +6,7 @@
 package com.onda.personnel.bean;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +25,8 @@ public class DayDetail implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String wording;
-    private Date startingDate;
-    private Date endingDate;
+    private LocalTime startingTime;
+    private LocalTime endingTime;
     private Integer pan;
     private Integer hn;
     private Integer he;
@@ -47,21 +48,23 @@ public class DayDetail implements Serializable {
         this.wording = wording;
     }
 
-    public Date getStartingDate() {
-        return startingDate;
+    public LocalTime getStartingTime() {
+        return startingTime;
     }
 
-    public void setStartingDate(Date startingDate) {
-        this.startingDate = startingDate;
+    public void setStartingTime(LocalTime startingTime) {
+        this.startingTime = startingTime;
     }
 
-    public Date getEndingDate() {
-        return endingDate;
+    public LocalTime getEndingTime() {
+        return endingTime;
     }
 
-    public void setEndingDate(Date endingDate) {
-        this.endingDate = endingDate;
+    public void setEndingTime(LocalTime endingTime) {
+        this.endingTime = endingTime;
     }
+
+    
 
     public Integer getPan() {
         return pan;

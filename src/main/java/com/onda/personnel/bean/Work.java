@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -22,7 +23,9 @@ public class Work implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToOne
     private WorkDetail workDetail;
+    @OneToOne
     private Employee employee;
 
     public Long getId() {
@@ -49,10 +52,6 @@ public class Work implements Serializable {
         this.employee = employee;
     }
 
-    
-
-   
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -77,5 +76,5 @@ public class Work implements Serializable {
     public String toString() {
         return "javaapplication1.Work[ id=" + id + " ]";
     }
-    
+
 }
