@@ -5,6 +5,7 @@
  */
 package com.onda.personnel.service.impl;
 
+import com.onda.personnel.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +13,6 @@ import org.springframework.stereotype.Service;
  * @author AMINE
  */
 @Service
-public class EmployeeServiceImpl {
+public class EmployeeServiceImpl implements EmployeeService{
     
 }

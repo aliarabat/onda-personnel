@@ -6,6 +6,7 @@
 package com.onda.personnel.rest.converter;
 
 import com.onda.personnel.bean.Day;
+import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.rest.vo.DayVo;
 import org.springframework.stereotype.Component;
 
@@ -14,16 +15,36 @@ import org.springframework.stereotype.Component;
  * @author AMINE
  */
 @Component
-public class DayConverter extends AbstractConverter<Day, DayVo>{
+public class DayConverter extends AbstractConverter<Day, DayVo> {
 
     @Override
     public Day toItem(DayVo vo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (vo == null) {
+            return null;
+        } else {
+            Day d = new Day();
+            d.setId(vo.getId());
+            d.setHe(NumberUtil.toInteger(vo.getHe()));
+            d.setHn(NumberUtil.toInteger(vo.getHn()));
+            d.setPan(NumberUtil.toInteger(vo.getPan()));
+            d.setDayDetails(new DayDetailConverter().toItem(vo.getDayDetails()));
+            return d;
+        }
     }
 
     @Override
     public DayVo toVo(Day item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (item == null) {
+            return null;
+        } else {
+            DayVo dVo = new DayVo();
+            dVo.setId(item.getId());
+            dVo.setHe(NumberUtil.toString(item.getHe()));
+            dVo.setHn(NumberUtil.toString(item.getHn()));
+            dVo.setPan(NumberUtil.toString(item.getPan()));
+            dVo.setDayDetails(new DayDetailConverter().toVo(item.getDayDetails()));
+            return dVo;
+        }
     }
-    
+
 }

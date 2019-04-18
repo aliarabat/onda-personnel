@@ -7,7 +7,6 @@ package com.onda.personnel.bean;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,8 +21,6 @@ import javax.persistence.ManyToMany;
 @Entity
 public class DayDetail implements Serializable {
 
-    @ManyToMany(mappedBy = "dayDetails")
-    private List<Day> days;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,6 +32,8 @@ public class DayDetail implements Serializable {
     private Integer hn;
     private Integer he;
     private String mode;
+    @ManyToMany(mappedBy = "dayDetails")
+    private List<Day> days;
 
     public Long getId() {
         return id;
@@ -68,7 +67,13 @@ public class DayDetail implements Serializable {
         this.endingTime = endingTime;
     }
 
-    
+    public List<Day> getDays() {
+        return days;
+    }
+
+    public void setDays(List<Day> days) {
+        this.days = days;
+    }
 
     public Integer getPan() {
         return pan;
@@ -101,8 +106,6 @@ public class DayDetail implements Serializable {
     public void setMode(String mode) {
         this.mode = mode;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -128,5 +131,5 @@ public class DayDetail implements Serializable {
     public String toString() {
         return "javaapplication1.DayDetail[ id=" + id + " ]";
     }
-    
+
 }

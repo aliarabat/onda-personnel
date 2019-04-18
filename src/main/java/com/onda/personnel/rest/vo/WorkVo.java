@@ -5,16 +5,38 @@
  */
 package com.onda.personnel.rest.vo;
 
-import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.WorkDetail;
-import javax.persistence.OneToOne;
-
 /**
  *
  * @author AMINE
  */
 public class WorkVo {
-     private Long id;
+
+    private Long id;
     private WorkDetailVo workDetail;
     private EmployeeVo employee;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public WorkDetailVo getWorkDetail() {
+        return workDetail;
+    }
+
+    public void setWorkDetail(WorkDetailVo workDetail) {
+        this.workDetail = workDetail;
+    }
+
+    public EmployeeVo getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeVo employee) {
+        this.employee = employee;
+    }
+
 }

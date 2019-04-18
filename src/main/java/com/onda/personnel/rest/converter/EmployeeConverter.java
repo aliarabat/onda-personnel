@@ -13,18 +13,33 @@ import org.springframework.stereotype.Component;
  *
  * @author AMINE
  */
-
 @Component
-public class EmployeeConverter  extends AbstractConverter<Employee, EmployeeVo>{
+public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
 
     @Override
     public Employee toItem(EmployeeVo vo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (vo == null) {
+            return null;
+        } else {
+            Employee emp = new Employee();
+            emp.setId(vo.getId());
+            emp.setFirstName(vo.getFirstName());
+            emp.setLastName(vo.getLastName());
+            return emp;
+        }
     }
 
     @Override
     public EmployeeVo toVo(Employee item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (item == null) {
+            return null;
+        } else {
+            EmployeeVo empVo = new EmployeeVo();
+            empVo.setId(item.getId());
+            empVo.setFirstName(item.getFirstName());
+            empVo.setLastName(item.getLastName());
+            return empVo;
+        }
     }
-    
+
 }

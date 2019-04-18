@@ -10,6 +10,7 @@ package com.onda.personnel.rest.vo;
  * @author AMINE
  */
 public class EmployeeVo {
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -37,6 +38,5 @@ public class EmployeeVo {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
-    
+
 }

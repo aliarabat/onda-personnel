@@ -6,6 +6,7 @@
 package com.onda.personnel.rest.converter;
 
 import com.onda.personnel.bean.WorkDetail;
+import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +19,32 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
 
     @Override
     public WorkDetail toItem(WorkDetailVo vo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (vo==null) {
+            return null;
+        } else {
+            WorkDetail workDetail=new WorkDetail();
+            workDetail.setId(vo.getId());
+            workDetail.setHjf(NumberUtil.toInteger(vo.getHjf()));
+            workDetail.setHn(NumberUtil.toInteger(vo.getHn()));
+            workDetail.setPan(NumberUtil.toInteger(vo.getPan()));
+            workDetail.setDays(new DayConverter().toItem(vo.getDays()));
+            return workDetail;
+        }
     }
 
     @Override
     public WorkDetailVo toVo(WorkDetail item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (item==null) {
+            return null;
+        } else {
+            WorkDetailVo workDetailVo=new WorkDetailVo();
+            workDetailVo.setId(item.getId());
+            workDetailVo.setHjf(NumberUtil.toString(item.getHjf()));
+            workDetailVo.setHn(NumberUtil.toString(item.getHn()));
+            workDetailVo.setPan(NumberUtil.toString(item.getPan()));
+            workDetailVo.setDays(new DayConverter().toVo(item.getDays()));
+            return workDetailVo;
+        }
     }
     
 }
