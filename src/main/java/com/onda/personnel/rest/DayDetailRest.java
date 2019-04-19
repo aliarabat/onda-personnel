@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author AMINE
  */
 @RestController
-@RequestMapping("/personnel-api/personnels")
+@RequestMapping("/personnel-api/personnels/dayDetail")
 public class DayDetailRest {
 
     @Autowired

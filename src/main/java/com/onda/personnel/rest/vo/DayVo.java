@@ -14,10 +14,10 @@ import java.util.List;
 public class DayVo {
 
     private Long id;
-    private List<DayDetailVo> dayDetails;
     private String pan;
     private String hn;
     private String he;
+    private List<DayDetailVo> dayDetails;
 
     public Long getId() {
         return id;

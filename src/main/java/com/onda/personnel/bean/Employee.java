@@ -34,10 +34,6 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
     public Integer getMatricule() {
         return matricule;
     }
@@ -46,8 +42,10 @@ public class Employee implements Serializable {
         this.matricule = matricule;
     }
 
-   
- 
+    public String getFirstName() {
+        return firstName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

@@ -5,22 +5,20 @@
  */
 package com.onda.personnel.rest.vo;
 
-import com.onda.personnel.bean.Day;
-import java.util.Date;
 import java.util.List;
-import javax.persistence.OneToMany;
 
 /**
  *
  * @author AMINE
  */
 public class WorkDetailVo {
+
     private Long id;
-    private List<DayVo> days;
     private String workDetailDate;
     private String pan;
     private String hn;
     private String hjf;
+    private List<DayVo> days;
 
     public Long getId() {
         return id;
@@ -28,14 +26,6 @@ public class WorkDetailVo {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<DayVo> getDays() {
-        return days;
-    }
-
-    public void setDays(List<DayVo> days) {
-        this.days = days;
     }
 
     public String getWorkDetailDate() {
@@ -69,6 +59,13 @@ public class WorkDetailVo {
     public void setHjf(String hjf) {
         this.hjf = hjf;
     }
-    
-    
+
+    public List<DayVo> getDays() {
+        return days;
+    }
+
+    public void setDays(List<DayVo> days) {
+        this.days = days;
+    }
+
 }

@@ -8,13 +8,10 @@ package com.onda.personnel.bean;
 import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 /**
  *
@@ -35,6 +32,7 @@ public class DayDetail implements Serializable {
     private Integer hn;
     private Integer he;
     private String mode;
+    
 
     public Long getId() {
         return id;
@@ -101,8 +99,6 @@ public class DayDetail implements Serializable {
     public void setMode(String mode) {
         this.mode = mode;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -129,5 +125,5 @@ public class DayDetail implements Serializable {
     public String toString() {
         return "javaapplication1.DayDetail[ id=" + id + " ]";
     }
-    
+
 }

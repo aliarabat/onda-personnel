@@ -5,14 +5,12 @@
  */
 package com.onda.personnel.rest.vo;
 
-
-
-
 /**
  *
  * @author AMINE
  */
 public class DayDetailVo {
+
     private Long id;
     private String wording;
     private String startingTime;
@@ -21,7 +19,6 @@ public class DayDetailVo {
     private String hn;
     private String he;
     private String mode;
-
 
     public Long getId() {
         return id;
@@ -86,6 +83,5 @@ public class DayDetailVo {
     public void setMode(String mode) {
         this.mode = mode;
     }
-    
-    
+
 }

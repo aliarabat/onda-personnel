@@ -27,6 +27,9 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
             emp.setMatricule(NumberUtil.toInteger(vo.getMatricule()));
             emp.setFirstName(vo.getFirstName());
             emp.setLastName(vo.getLastName());
+            emp.setFirstName(vo.getFirstName());
+            emp.setLastName(vo.getLastName());
+            emp.setMatricule(NumberUtil.toInteger(vo.getMatricule()));
             return emp;
         }
     }

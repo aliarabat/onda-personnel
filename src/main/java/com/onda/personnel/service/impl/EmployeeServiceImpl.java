@@ -5,6 +5,10 @@
  */
 package com.onda.personnel.service.impl;
 
+import com.onda.personnel.bean.Employee;
+import com.onda.personnel.dao.EmployeeDao;
+import com.onda.personnel.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +16,48 @@ import org.springframework.stereotype.Service;
  * @author AMINE
  */
 @Service
-public class EmployeeServiceImpl {
-    
+public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
+    EmployeeDao employeeDao;
+
+    @Override
+    public Employee findByMatricule(Integer matricule) {
+        return employeeDao.findByMatricule(matricule);
+    }
+
+    @Override
+    public int createEmployee(Employee employee) {
+        Employee checkEmployee = findByMatricule(employee.getMatricule());
+        if (checkEmployee != null) {
+            return -1;
+        } else {
+            employeeDao.save(employee);
+            return 1;
+        }
+
+    }
+
+    @Override
+    public int editEmployee(Integer matricule, Employee newEmployee) {
+        Employee checkEmployee = findByMatricule(matricule);
+        if (checkEmployee == null) {
+            return -1;
+        } else {
+            checkEmployee.setFirstName(newEmployee.getFirstName());
+            checkEmployee.setLastName(newEmployee.getLastName());
+            checkEmployee.setMatricule(newEmployee.getMatricule());
+            employeeDao.save(checkEmployee);
+            return 1;
+        }
+    }
+
+    public EmployeeDao getEmployeeDao() {
+        return employeeDao;
+    }
+
+    public void setEmployeeDao(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
+    }
+
 }
