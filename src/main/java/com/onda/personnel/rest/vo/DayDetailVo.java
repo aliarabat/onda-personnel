@@ -5,19 +5,14 @@
  */
 package com.onda.personnel.rest.vo;
 
-import com.onda.personnel.bean.Day;
-import java.time.LocalTime;
-import java.util.List;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+
 
 /**
  *
  * @author AMINE
  */
 public class DayDetailVo {
-    private List<DayVo> days;
     private Long id;
     private String wording;
     private String startingTime;
@@ -27,13 +22,6 @@ public class DayDetailVo {
     private String he;
     private String mode;
 
-    public List<DayVo> getDays() {
-        return days;
-    }
-
-    public void setDays(List<DayVo> days) {
-        this.days = days;
-    }
 
     public Long getId() {
         return id;

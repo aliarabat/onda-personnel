@@ -21,4 +21,54 @@ public class WorkDetailVo {
     private String pan;
     private String hn;
     private String hjf;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<DayVo> getDays() {
+        return days;
+    }
+
+    public void setDays(List<DayVo> days) {
+        this.days = days;
+    }
+
+    public String getWorkDetailDate() {
+        return workDetailDate;
+    }
+
+    public void setWorkDetailDate(String workDetailDate) {
+        this.workDetailDate = workDetailDate;
+    }
+
+    public String getPan() {
+        return pan;
+    }
+
+    public void setPan(String pan) {
+        this.pan = pan;
+    }
+
+    public String getHn() {
+        return hn;
+    }
+
+    public void setHn(String hn) {
+        this.hn = hn;
+    }
+
+    public String getHjf() {
+        return hjf;
+    }
+
+    public void setHjf(String hjf) {
+        this.hjf = hjf;
+    }
+    
+    
 }

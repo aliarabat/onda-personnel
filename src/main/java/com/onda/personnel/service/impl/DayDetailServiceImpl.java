@@ -5,6 +5,12 @@
  */
 package com.onda.personnel.service.impl;
 
+import com.onda.personnel.bean.DayDetail;
+import com.onda.personnel.dao.DayDetailDao;
+import com.onda.personnel.service.DayDetailService;
+import java.time.LocalTime;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +18,74 @@ import org.springframework.stereotype.Service;
  * @author AMINE
  */
 @Service
-public class DayDetailServiceImpl {
-    
+public class DayDetailServiceImpl implements DayDetailService {
+
+    @Autowired
+    private DayDetailDao dayDetailDao;
+
+    @Override
+    public DayDetail findByWording(String wording) {
+        return dayDetailDao.findByWording(wording);
+    }
+
+    @Override
+    public int createDayDetail(DayDetail dayDetail) {
+        DayDetail dd = findByWording(dayDetail.getWording());
+        if (dd != null) {
+            return -1;
+        } else {
+            dayDetail.setStartingTime(dayDetail.getStartingTime().plusHours(1));
+            dayDetail.setEndingTime(dayDetail.getEndingTime().plusHours(1));
+            dayDetailDao.save(dayDetail);
+            return 1;
+        }
+    }
+
+    @Override
+    public int updateDayDetail(String wording, DayDetail dayDetail) {
+        DayDetail oldDayDetail = findByWording(wording);
+        if (oldDayDetail == null) {
+            return -1;
+        } else {
+            oldDayDetail.setEndingTime(dayDetail.getEndingTime().plusHours(1));
+            oldDayDetail.setStartingTime(dayDetail.getStartingTime().plusHours(1));
+            oldDayDetail.setHe(dayDetail.getHe());
+            oldDayDetail.setHn(dayDetail.getHn());
+            oldDayDetail.setMode(dayDetail.getMode());
+            oldDayDetail.setPan(dayDetail.getPan());
+            oldDayDetail.setWording(dayDetail.getWording());
+            dayDetailDao.save(oldDayDetail);
+            return 1;
+        }
+    }
+
+    @Override
+    public int deleteDayDeail(String wording) {
+        DayDetail dayDetail = findByWording(wording);
+        if (dayDetail == null) {
+            return -1;
+        } else {
+            dayDetailDao.delete(dayDetail);
+            return 1;
+        }
+    }
+
+    @Override
+    public List<DayDetail> findAll() {
+        return dayDetailDao.findAll();
+    }
+
+    @Override
+    public List<DayDetail> findByMode(String mode) {
+        return dayDetailDao.findByMode(mode);
+    }
+
+    public DayDetailDao getDayDetailDao() {
+        return dayDetailDao;
+    }
+
+    public void setDayDetailDao(DayDetailDao dayDetailDao) {
+        this.dayDetailDao = dayDetailDao;
+    }
+
 }

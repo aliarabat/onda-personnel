@@ -6,6 +6,7 @@
 package com.onda.personnel.bean;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +23,7 @@ import javax.persistence.ManyToMany;
 @Entity
 public class DayDetail implements Serializable {
 
-    @ManyToMany(mappedBy = "dayDetails")
-    private List<Day> days;
+   
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -111,6 +111,7 @@ public class DayDetail implements Serializable {
         return hash;
     }
 
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

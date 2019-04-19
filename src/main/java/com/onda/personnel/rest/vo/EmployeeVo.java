@@ -10,7 +10,9 @@ package com.onda.personnel.rest.vo;
  * @author AMINE
  */
 public class EmployeeVo {
+
     private Long id;
+    private String  matricule;
     private String firstName;
     private String lastName;
 
@@ -26,6 +28,14 @@ public class EmployeeVo {
         return firstName;
     }
 
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
+  
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -37,6 +47,5 @@ public class EmployeeVo {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
-    
+
 }
