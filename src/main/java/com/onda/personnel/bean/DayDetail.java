@@ -32,9 +32,7 @@ public class DayDetail implements Serializable {
     private Integer hn;
     private Integer he;
     private String mode;
-    @ManyToMany(mappedBy = "dayDetails")
-    private List<Day> days;
-
+    
     public Long getId() {
         return id;
     }
@@ -65,14 +63,6 @@ public class DayDetail implements Serializable {
 
     public void setEndingTime(LocalTime endingTime) {
         this.endingTime = endingTime;
-    }
-
-    public List<Day> getDays() {
-        return days;
-    }
-
-    public void setDays(List<Day> days) {
-        this.days = days;
     }
 
     public Integer getPan() {
