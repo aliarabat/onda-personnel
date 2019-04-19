@@ -24,14 +24,11 @@ public class Day implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany
-    private List<DayDetail> dayDetails;
     private Integer pan;
     private Integer hn;
     private Integer he;
-    
-
-    
+    @OneToMany
+    private List<DayDetail> dayDetails;
 
     public Long getId() {
         return id;

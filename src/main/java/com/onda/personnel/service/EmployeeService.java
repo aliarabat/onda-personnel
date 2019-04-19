@@ -12,7 +12,7 @@ import com.onda.personnel.bean.Employee;
  * @author AMINE
  */
 public interface EmployeeService {
-        public Employee findByMatricule(Long matricule);
+        public Employee findByMatricule(Integer matricule);
         public int createEmployee(Employee employee);
-        public int editEmployee(Long matricule,Employee newEmployee);
+        public int editEmployee(Integer matricule,Employee newEmployee);
 }

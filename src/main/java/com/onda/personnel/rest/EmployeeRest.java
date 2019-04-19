@@ -6,8 +6,11 @@
 package com.onda.personnel.rest;
 
 import com.onda.personnel.bean.Employee;
+import com.onda.personnel.rest.converter.AbstractConverter;
+import com.onda.personnel.rest.vo.EmployeeVo;
 import com.onda.personnel.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,18 +29,25 @@ public class EmployeeRest {
     @Autowired
     EmployeeService employeeService;
     
+    @Autowired
+    @Qualifier("employeeConverter")
+    private AbstractConverter<Employee,EmployeeVo> employeeConverter;
+    
     @GetMapping("/")
-    public Employee findByMatricule(@PathVariable Long matricule) {
-        return employeeService.findByMatricule(matricule);
+    public EmployeeVo findByMatricule(@PathVariable Integer matricule) {
+        Employee checkEmployee=employeeService.findByMatricule(matricule);
+        return employeeConverter.toVo(checkEmployee);
     }
 
 @PostMapping("/")
-public int createEmployee(@RequestBody Employee employee) {
+public int createEmployee(@RequestBody EmployeeVo employeeVo) {
+    Employee employee=employeeConverter.toItem(employeeVo);
         return employeeService.createEmployee(employee);
     }
 
 @PutMapping("/matricule/{matricule}")
-public int editEmployee(@PathVariable Long matricule,@RequestBody Employee newEmployee) {
+public int editEmployee(@PathVariable Integer matricule,@RequestBody EmployeeVo newEmployeeVo) {
+    Employee newEmployee=employeeConverter.toItem(newEmployeeVo);
         return employeeService.editEmployee(matricule, newEmployee);
     }
 
@@ -53,6 +63,16 @@ public int editEmployee(@PathVariable Long matricule,@RequestBody Employee newEm
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
+
+    public AbstractConverter<Employee, EmployeeVo> getEmployeeConverter() {
+        return employeeConverter;
+    }
+
+    public void setEmployeeConverter(AbstractConverter<Employee, EmployeeVo> employeeConverter) {
+        this.employeeConverter = employeeConverter;
+    }
+    
+    
     
     
 }

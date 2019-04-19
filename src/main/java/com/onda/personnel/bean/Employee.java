@@ -22,10 +22,9 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long matricule;
+    private Integer matricule;
     private String firstName;
     private String lastName;
-    
 
     public Long getId() {
         return id;
@@ -35,13 +34,15 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public Long getMatricule() {
+    public Integer getMatricule() {
         return matricule;
     }
 
-    public void setMatricule(Long matricule) {
+    public void setMatricule(Integer matricule) {
         this.matricule = matricule;
     }
+
+    
     
 
     public String getFirstName() {
@@ -59,8 +60,6 @@ public class Employee implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -86,5 +85,5 @@ public class Employee implements Serializable {
     public String toString() {
         return "javaapplication1.Employee[ id=" + id + " ]";
     }
-    
+
 }

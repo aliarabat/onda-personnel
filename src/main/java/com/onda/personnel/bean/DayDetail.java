@@ -97,8 +97,6 @@ public class DayDetail implements Serializable {
     public void setMode(String mode) {
         this.mode = mode;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -124,5 +122,5 @@ public class DayDetail implements Serializable {
     public String toString() {
         return "javaapplication1.DayDetail[ id=" + id + " ]";
     }
-    
+
 }

@@ -12,11 +12,12 @@ import java.util.List;
  * @author AMINE
  */
 public class DayVo {
-     private Long id;
-    private List<DayDetailVo> dayDetails;
+
+    private Long id;
     private String pan;
     private String hn;
     private String he;
+    private List<DayDetailVo> dayDetails;
 
     public Long getId() {
         return id;
@@ -57,7 +58,5 @@ public class DayVo {
     public void setHe(String he) {
         this.he = he;
     }
-    
-    
-}
 
+}

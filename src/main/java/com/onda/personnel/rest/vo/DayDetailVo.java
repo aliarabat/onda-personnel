@@ -12,7 +12,7 @@ import java.util.List;
  * @author AMINE
  */
 public class DayDetailVo {
-    private List<DayVo> days;
+
     private Long id;
     private String wording;
     private String startingTime;
@@ -21,6 +21,7 @@ public class DayDetailVo {
     private String hn;
     private String he;
     private String mode;
+    private List<DayVo> days;
 
     public List<DayVo> getDays() {
         return days;
@@ -93,6 +94,5 @@ public class DayDetailVo {
     public void setMode(String mode) {
         this.mode = mode;
     }
-    
-    
+
 }

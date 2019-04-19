@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeDao employeeDao;
 
     @Override
-    public Employee findByMatricule(Long matricule) {
+    public Employee findByMatricule(Integer matricule) {
         return employeeDao.findByMatricule(matricule);
     }
 
@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public int editEmployee(Long matricule, Employee newEmployee) {
+    public int editEmployee(Integer matricule, Employee newEmployee) {
         Employee checkEmployee = findByMatricule(matricule);
         if (checkEmployee == null) {
             return -1;
