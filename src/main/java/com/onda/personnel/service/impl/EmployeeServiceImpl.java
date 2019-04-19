@@ -52,6 +52,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Override
+    public int deleteEmployee(Integer matricule) {
+        Employee checkEmployee = findByMatricule(matricule);
+        if (checkEmployee == null) {
+            return -1;
+
+        } else {
+            employeeDao.delete(checkEmployee);
+            return 1;
+        }
+    }
+
     public EmployeeDao getEmployeeDao() {
         return employeeDao;
     }
