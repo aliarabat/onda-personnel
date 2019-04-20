@@ -22,4 +22,5 @@ public interface WorkDetailSevice {
     public void saveWorkDetail(WorkDetail workDetail);
 
     public void createWorkDetail(Employee emp, LocalDate workDetailDate, List<Day> days);
+    // public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate);
 }

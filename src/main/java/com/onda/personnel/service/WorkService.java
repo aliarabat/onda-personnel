@@ -8,6 +8,7 @@ package com.onda.personnel.service;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
+import java.time.LocalDate;
 
 /**
  *
@@ -18,4 +19,6 @@ public interface WorkService {
     public void saveWork(Work work);
 
     public void createWork(Employee emp, WorkDetail workDetail);
+
+    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, LocalDate workDetailDate);
 }

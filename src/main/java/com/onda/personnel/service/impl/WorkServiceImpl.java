@@ -10,6 +10,7 @@ import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.service.WorkService;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,11 @@ public class WorkServiceImpl implements WorkService {
         work.setEmployee(emp);
         work.setWorkDetail(workDetail);
         saveWork(work);
+    }
+
+    @Override
+    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, LocalDate workDetailDate) {
+        return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, workDetailDate);
     }
 
     public WorkDao getWorkDao() {

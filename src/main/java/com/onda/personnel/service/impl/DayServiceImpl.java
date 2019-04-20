@@ -53,7 +53,7 @@ public class DayServiceImpl implements DayService {
             for (Day day : days) {
                 setDayInfos(day, day.getDayDetails());
             }
-            LocalDate workDetailDate = DateUtil.fromDateString(date);
+            LocalDate workDetailDate = DateUtil.fromStringToLocalDate(date);
             //instanciation of workDetail found and newWorkDetail
             workDetailSevice.createWorkDetail(emp, workDetailDate, days);
 

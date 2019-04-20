@@ -11,6 +11,7 @@ import com.onda.personnel.rest.vo.EmployeeVo;
 import com.onda.personnel.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class EmployeeRest {
     @Qualifier("employeeConverter")
     private AbstractConverter<Employee, EmployeeVo> employeeConverter;
 
-    @GetMapping("/")
+    @GetMapping("/matricule/{matricule}")
     public EmployeeVo findByMatricule(@PathVariable Integer matricule) {
         Employee checkEmployee = employeeService.findByMatricule(matricule);
         return employeeConverter.toVo(checkEmployee);
@@ -50,6 +51,11 @@ public class EmployeeRest {
     public int editEmployee(@PathVariable Integer matricule, @RequestBody EmployeeVo newEmployeeVo) {
         Employee newEmployee = employeeConverter.toItem(newEmployeeVo);
         return employeeService.editEmployee(matricule, newEmployee);
+    }
+
+    @DeleteMapping("/matricule/{matricule}")
+    public int deleteEmployee(@PathVariable Integer matricule) {
+        return employeeService.deleteEmployee(matricule);
     }
 
     public EmployeeService getEmployeeService() {

@@ -26,7 +26,7 @@ public class DateUtil {
     }
 
     public static LocalTime fromString(String string) {
-        if (string == null) {
+        if (string == null || string.equals("")) {
             return null;
         } else {
             LocalTime lt = LocalTime.parse(string);
@@ -61,7 +61,11 @@ public class DateUtil {
         return localDate.toString();
     }
     
-    public static LocalDate fromDateString(String date){
-        return LocalDate.parse(date);
+    public static LocalDate fromStringToLocalDate(String date){
+        if (date==null|| date.equals("")) {
+            return null;
+        } else {
+            return LocalDate.parse(date);
+        }
     }
 }

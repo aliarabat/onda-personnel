@@ -20,6 +20,8 @@ public class DayDetailVo {
     private String he;
     private String mode;
 
+    
+
     public Long getId() {
         return id;
     }

@@ -9,6 +9,7 @@ import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.dao.WorkDetailDao;
+import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.WorkDetailSevice;
 import com.onda.personnel.service.WorkService;
 import java.time.LocalDate;
@@ -24,22 +25,23 @@ import org.springframework.stereotype.Service;
 public class WorkDetailSeviceImpl implements WorkDetailSevice {
 
     @Autowired
-    private WorkDetailDao workDetailDao;
-
-    @Autowired
     private WorkService workService;
-    
+    @Autowired
+    private WorkDetailDao workDetailDao;
+    @Autowired
+    private EmployeeService employeeService;
+
+    /*@Override
+    public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate) {
+        if (workDetailDao.findByWorkDetailDate(workDetailDate).isEmpty()) {
+            return null;
+        } else {
+            return workDetailDao.findByWorkDetailDate(workDetailDate);
+        }
+    }*/
     @Override
     public WorkDetail findByWorkDetailDate(LocalDate localDate) {
         return workDetailDao.findByWorkDetailDate(localDate);
-    }
-
-    public WorkDetailDao getWorkDetailDao() {
-        return workDetailDao;
-    }
-
-    public void setWorkDetailDao(WorkDetailDao workDetailDao) {
-        this.workDetailDao = workDetailDao;
     }
 
     @Override
@@ -71,7 +73,7 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
                 saveWorkDetail(workDetail);
             } else {
                 saveWorkDetail(workDetail);
-                workService.createWork(emp,workDetail);
+                workService.createWork(emp, workDetail);
             }
         } else {
             saveWorkDetail(workDetail);
@@ -85,4 +87,27 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
         workDetail.setHjf(workDetail.getHjf() + day.getHe());
     }
 
+    public WorkDetailDao getWorkDetailDao() {
+        return workDetailDao;
+    }
+
+    public void setWorkDetailDao(WorkDetailDao workDetailDao) {
+        this.workDetailDao = workDetailDao;
+    }
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    public WorkService getWorkService() {
+        return workService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
+    }
 }

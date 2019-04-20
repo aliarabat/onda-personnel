@@ -6,6 +6,7 @@
 package com.onda.personnel.service;
 
 import com.onda.personnel.bean.Employee;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,6 @@ public interface EmployeeService {
         public Employee findByMatricule(Integer matricule);
         public int createEmployee(Employee employee);
         public int editEmployee(Integer matricule,Employee newEmployee);
+        public int deleteEmployee(Integer matricule);
+            public List<Employee> findAll();
 }
