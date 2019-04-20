@@ -32,8 +32,6 @@ public class DayDetailConverter extends AbstractConverter<DayDetail, DayDetailVo
             dayDetail.setWording(vo.getWording());
             dayDetail.setStartingTime(DateUtil.fromString(vo.getStartingTime()));
             dayDetail.setEndingTime(DateUtil.fromString(vo.getEndingTime()));
-
-            
             return dayDetail;
         }
     }
@@ -52,7 +50,6 @@ public class DayDetailConverter extends AbstractConverter<DayDetail, DayDetailVo
             dayDetailVo.setWording(item.getWording());
             dayDetailVo.setStartingTime(DateUtil.toString(item.getStartingTime()));
             dayDetailVo.setEndingTime(DateUtil.toString(item.getEndingTime()));
-
             return dayDetailVo;
         }
     }

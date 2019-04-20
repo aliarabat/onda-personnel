@@ -5,16 +5,15 @@
  */
 package com.onda.personnel.common.util;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  *
- * @author hp
+ * @author AMINE
  */
 public class DateUtil {
-
-    public static String toString(LocalTime lt) {
+       public static String toString(LocalTime lt) {
         if (lt == null) {
             return null;
         } else {
@@ -27,6 +26,14 @@ public class DateUtil {
             return null;
         } else {
             LocalTime lt = LocalTime.parse(string);
+            return lt;
+        }
+    }
+    public static LocalDate fromStringToLocalDate(String string) {
+        if (string == null) {
+            return null;
+        } else {
+            LocalDate lt = LocalDate.parse(string);
             return lt;
         }
     }

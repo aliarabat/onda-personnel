@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeRest {
 
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @Autowired
     @Qualifier("employeeConverter")
     private AbstractConverter<Employee, EmployeeVo> employeeConverter;
 
-    @GetMapping("/")
+    @GetMapping("/matricule/{matricule}")
     public EmployeeVo findByMatricule(@PathVariable Integer matricule) {
         Employee checkEmployee = employeeService.findByMatricule(matricule);
         return employeeConverter.toVo(checkEmployee);

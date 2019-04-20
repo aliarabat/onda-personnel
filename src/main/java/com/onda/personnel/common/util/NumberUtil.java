@@ -28,15 +28,6 @@ public class NumberUtil {
             return String.valueOf(value);
         }
     }
-    
-    
-    public static String longToString(Long value) {
-        if (value == null) {
-            return CHAINE_VIDE;
-        } else {
-            return String.valueOf(value);
-        }
-    }
 
     public static Integer toInteger(String value) {
         if (value == null || value.isEmpty()) {
@@ -53,4 +44,6 @@ public class NumberUtil {
             return Long.parseLong(value);
         }
     }
+    
+ 
 }

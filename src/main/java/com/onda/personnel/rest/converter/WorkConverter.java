@@ -7,11 +7,13 @@ package com.onda.personnel.rest.converter;
 
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.rest.vo.WorkVo;
+import org.springframework.stereotype.Component;
 
 /**
  *
- * @author hp
+ * @author AMINE
  */
+@Component
 public class WorkConverter extends AbstractConverter<Work, WorkVo> {
 
     @Override
@@ -40,4 +42,5 @@ public class WorkConverter extends AbstractConverter<Work, WorkVo> {
         }
     }
 
+    
 }

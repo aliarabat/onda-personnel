@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
-   
 
     @Override
     public Employee toItem(EmployeeVo vo) {
@@ -25,6 +24,9 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
         } else {
             Employee emp = new Employee();
             emp.setId(vo.getId());
+            emp.setMatricule(NumberUtil.toInteger(vo.getMatricule()));
+            emp.setFirstName(vo.getFirstName());
+            emp.setLastName(vo.getLastName());
             emp.setFirstName(vo.getFirstName());
             emp.setLastName(vo.getLastName());
             emp.setMatricule(NumberUtil.toInteger(vo.getMatricule()));
@@ -39,9 +41,9 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
         } else {
             EmployeeVo empVo = new EmployeeVo();
             empVo.setId(item.getId());
+            empVo.setMatricule(NumberUtil.toString(item.getMatricule()));
             empVo.setFirstName(item.getFirstName());
             empVo.setLastName(item.getLastName());
-            empVo.setMatricule(NumberUtil.toString(item.getMatricule()));
             return empVo;
         }
     }

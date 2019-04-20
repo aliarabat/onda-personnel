@@ -42,9 +42,6 @@ public class Employee implements Serializable {
         this.matricule = matricule;
     }
 
-    
-    
-
     public String getFirstName() {
         return firstName;
     }

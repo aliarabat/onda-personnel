@@ -28,6 +28,14 @@ public class EmployeeVo {
         return firstName;
     }
 
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -39,14 +47,5 @@ public class EmployeeVo {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    public String getMatricule() {
-        return matricule;
-    }
-
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
-    
 
 }

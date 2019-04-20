@@ -5,8 +5,9 @@
  */
 package com.onda.personnel.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,8 @@ public class WorkDetail implements Serializable {
     private Long id;
     @OneToMany
     private List<Day> days;
-    private Date workDetailDate;
+
+    private LocalDate workDetailDate;
     private Integer pan;
     private Integer hn;
     private Integer hjf;
@@ -48,13 +50,15 @@ public class WorkDetail implements Serializable {
         this.days = days;
     }
 
-    public Date getWorkDetailDate() {
+    public LocalDate getWorkDetailDate() {
         return workDetailDate;
     }
 
-    public void setWorkDetailDate(Date workDetailDate) {
+    public void setWorkDetailDate(LocalDate workDetailDate) {
         this.workDetailDate = workDetailDate;
     }
+
+    
 
     public Integer getPan() {
         return pan;

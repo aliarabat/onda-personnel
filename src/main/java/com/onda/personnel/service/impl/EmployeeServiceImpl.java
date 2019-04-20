@@ -8,6 +8,7 @@ package com.onda.personnel.service.impl;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.dao.EmployeeDao;
 import com.onda.personnel.service.EmployeeService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +64,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             return 1;
         }
     }
+    
+    @Override
+    public List<Employee> findAll() {
+return employeeDao.findAll();
+    }
+
 
     public EmployeeDao getEmployeeDao() {
         return employeeDao;
@@ -72,4 +79,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeDao = employeeDao;
     }
 
+    
 }

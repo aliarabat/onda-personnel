@@ -5,10 +5,14 @@
  */
 package com.onda.personnel.service;
 
+import com.onda.personnel.bean.WorkDetail;
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  *
  * @author AMINE
  */
 public interface WorkDetailSevice {
-    
+            public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate);
 }

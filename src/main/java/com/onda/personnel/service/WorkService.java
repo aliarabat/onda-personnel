@@ -5,10 +5,13 @@
  */
 package com.onda.personnel.service;
 
+import com.onda.personnel.bean.Work;
+import java.time.LocalDate;
+
 /**
  *
  * @author AMINE
  */
 public interface WorkService {
-    
+        public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, LocalDate workDetailDate);
 }

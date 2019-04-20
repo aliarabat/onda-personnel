@@ -15,14 +15,14 @@ import org.springframework.stereotype.Component;
  * @author AMINE
  */
 @Component
-public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetailVo>{
+public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetailVo> {
 
     @Override
     public WorkDetail toItem(WorkDetailVo vo) {
-        if (vo==null) {
+        if (vo == null) {
             return null;
         } else {
-            WorkDetail workDetail=new WorkDetail();
+            WorkDetail workDetail = new WorkDetail();
             workDetail.setId(vo.getId());
             workDetail.setHjf(NumberUtil.toInteger(vo.getHjf()));
             workDetail.setHn(NumberUtil.toInteger(vo.getHn()));
@@ -34,10 +34,10 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
 
     @Override
     public WorkDetailVo toVo(WorkDetail item) {
-        if (item==null) {
+        if (item == null) {
             return null;
         } else {
-            WorkDetailVo workDetailVo=new WorkDetailVo();
+            WorkDetailVo workDetailVo = new WorkDetailVo();
             workDetailVo.setId(item.getId());
             workDetailVo.setHjf(NumberUtil.toString(item.getHjf()));
             workDetailVo.setHn(NumberUtil.toString(item.getHn()));
@@ -46,5 +46,5 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
             return workDetailVo;
         }
     }
-    
+
 }

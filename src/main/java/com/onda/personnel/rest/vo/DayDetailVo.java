@@ -5,8 +5,6 @@
  */
 package com.onda.personnel.rest.vo;
 
-import java.util.List;
-
 /**
  *
  * @author AMINE
