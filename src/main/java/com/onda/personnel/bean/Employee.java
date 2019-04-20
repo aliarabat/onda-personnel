@@ -22,6 +22,7 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Integer matricule;
     private String firstName;
     private String lastName;
 
@@ -31,6 +32,14 @@ public class Employee implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(Integer matricule) {
+        this.matricule = matricule;
     }
 
     public String getFirstName() {

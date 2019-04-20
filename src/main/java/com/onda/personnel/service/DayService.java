@@ -5,10 +5,15 @@
  */
 package com.onda.personnel.service;
 
+import com.onda.personnel.bean.Day;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author AMINE
  */
 public interface DayService {
-    
+
+    public int createDay(Integer matricule, String workDetailDate,List<Day> days);
 }

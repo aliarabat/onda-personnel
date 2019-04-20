@@ -6,6 +6,7 @@
 package com.onda.personnel.dao;
 
 import com.onda.personnel.bean.WorkDetail;
+import java.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author AMINE
  */
 @Repository
-public interface  WorkDetailDao extends JpaRepository<WorkDetail, Long>{
-    
+public interface WorkDetailDao extends JpaRepository<WorkDetail, Long> {
+
+    public WorkDetail findByWorkDetailDate(LocalDate localDate);
 }

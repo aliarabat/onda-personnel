@@ -12,6 +12,7 @@ package com.onda.personnel.rest.vo;
 public class EmployeeVo {
 
     private Long id;
+    private String matricule;
     private String firstName;
     private String lastName;
 
@@ -25,6 +26,14 @@ public class EmployeeVo {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
 
     public void setFirstName(String firstName) {

@@ -5,10 +5,21 @@
  */
 package com.onda.personnel.service;
 
+import com.onda.personnel.bean.Day;
+import com.onda.personnel.bean.Employee;
+import com.onda.personnel.bean.WorkDetail;
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  *
  * @author AMINE
  */
 public interface WorkDetailSevice {
-    
+
+    public WorkDetail findByWorkDetailDate(LocalDate localDate);
+
+    public void saveWorkDetail(WorkDetail workDetail);
+
+    public void createWorkDetail(Employee emp, LocalDate workDetailDate, List<Day> days);
 }

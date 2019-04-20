@@ -5,10 +5,17 @@
  */
 package com.onda.personnel.service;
 
+import com.onda.personnel.bean.Employee;
+import com.onda.personnel.bean.Work;
+import com.onda.personnel.bean.WorkDetail;
+
 /**
  *
  * @author AMINE
  */
 public interface WorkService {
-    
+
+    public void saveWork(Work work);
+
+    public void createWork(Employee emp, WorkDetail workDetail);
 }

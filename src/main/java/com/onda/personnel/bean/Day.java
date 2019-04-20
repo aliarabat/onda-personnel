@@ -5,6 +5,8 @@
  */
 package com.onda.personnel.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -38,10 +40,12 @@ public class Day implements Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
     public List<DayDetail> getDayDetails() {
         return dayDetails;
     }
 
+    @JsonSetter
     public void setDayDetails(List<DayDetail> dayDetails) {
         this.dayDetails = dayDetails;
     }

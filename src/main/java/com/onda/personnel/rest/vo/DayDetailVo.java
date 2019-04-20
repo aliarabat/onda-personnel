@@ -5,8 +5,6 @@
  */
 package com.onda.personnel.rest.vo;
 
-import java.util.List;
-
 /**
  *
  * @author AMINE
@@ -21,15 +19,6 @@ public class DayDetailVo {
     private String hn;
     private String he;
     private String mode;
-    private List<DayVo> days;
-
-    public List<DayVo> getDays() {
-        return days;
-    }
-
-    public void setDays(List<DayVo> days) {
-        this.days = days;
-    }
 
     public Long getId() {
         return id;

@@ -5,8 +5,10 @@
  */
 package com.onda.personnel.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +29,7 @@ public class WorkDetail implements Serializable {
     private Long id;
     @OneToMany
     private List<Day> days;
-    private Date workDetailDate;
+    private LocalDate workDetailDate;
     private Integer pan;
     private Integer hn;
     private Integer hjf;
@@ -40,19 +42,21 @@ public class WorkDetail implements Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
     public List<Day> getDays() {
         return days;
     }
 
+    @JsonSetter
     public void setDays(List<Day> days) {
         this.days = days;
     }
 
-    public Date getWorkDetailDate() {
+    public LocalDate getWorkDetailDate() {
         return workDetailDate;
     }
 
-    public void setWorkDetailDate(Date workDetailDate) {
+    public void setWorkDetailDate(LocalDate workDetailDate) {
         this.workDetailDate = workDetailDate;
     }
 
@@ -80,8 +84,6 @@ public class WorkDetail implements Serializable {
         this.hjf = hjf;
     }
 
-    
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -106,5 +108,5 @@ public class WorkDetail implements Serializable {
     public String toString() {
         return "javaapplication1.WorkDetail[ id=" + id + " ]";
     }
-    
+
 }

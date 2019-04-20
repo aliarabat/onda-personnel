@@ -6,6 +6,7 @@
 package com.onda.personnel.rest.converter;
 
 import com.onda.personnel.bean.Employee;
+import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.rest.vo.EmployeeVo;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +24,12 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
         } else {
             Employee emp = new Employee();
             emp.setId(vo.getId());
+            emp.setMatricule(NumberUtil.toInteger(vo.getMatricule()));
             emp.setFirstName(vo.getFirstName());
             emp.setLastName(vo.getLastName());
+            emp.setFirstName(vo.getFirstName());
+            emp.setLastName(vo.getLastName());
+            emp.setMatricule(NumberUtil.toInteger(vo.getMatricule()));
             return emp;
         }
     }
@@ -36,6 +41,7 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
         } else {
             EmployeeVo empVo = new EmployeeVo();
             empVo.setId(item.getId());
+            empVo.setMatricule(NumberUtil.toString(item.getMatricule()));
             empVo.setFirstName(item.getFirstName());
             empVo.setLastName(item.getLastName());
             return empVo;
