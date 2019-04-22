@@ -5,6 +5,14 @@
  */
 package com.onda.personnel.rest;
 
+import com.onda.personnel.bean.Work;
+import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.service.WorkService;
+import java.time.LocalDate;
+import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,5 +23,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/personnel-api/personnels/work")
 public class WorkRest {
-    
+
+    @Autowired
+    private WorkService workService;
+
+    @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
+    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule,@PathVariable String workDetailDate) {
+        return workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, new Date(workDetailDate));
+    }
+
+    @GetMapping("/matricule/{matricule}")
+    public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(@PathVariable Integer matricule) {
+        return workService.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(matricule);
+    }
+
+    public WorkService getWorkService() {
+        return workService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
+    }
+
 }

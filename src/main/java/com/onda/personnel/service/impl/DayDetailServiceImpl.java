@@ -34,9 +34,15 @@ public class DayDetailServiceImpl implements DayDetailService {
         if (dd != null) {
             return null;
         } else {
-            dayDetail.setStartingTime(dayDetail.getStartingTime().plusHours(1));
-            dayDetail.setEndingTime(dayDetail.getEndingTime().plusHours(1));
-            dayDetailDao.save(dayDetail);
+            dd=new DayDetail();
+            dd.setStartingTime(dayDetail.getStartingTime().plusHours(1));
+            dd.setEndingTime(dayDetail.getEndingTime().plusHours(1));
+            dd.setHe(dayDetail.getHe());
+            dd.setHn(dayDetail.getHn());
+            dd.setPan(dayDetail.getPan());
+            dd.setMode(dayDetail.getMode());
+            dd.setWording(dayDetail.getWording());
+            dayDetailDao.save(dd);
             return dd;
         }
     }

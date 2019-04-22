@@ -9,12 +9,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,12 +31,25 @@ public class WorkDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany
-    private List<Day> days;
     private LocalDate workDetailDate;
     private Integer pan;
     private Integer hn;
     private Integer hjf;
+    @Temporal(TemporalType.DATE)
+    private Date testDate;
+    @OneToMany
+    private List<Day> days;
+
+    public WorkDetail() {
+    }
+
+    public WorkDetail(List<Day> days, Date workDetailDate, Integer pan, Integer hn, Integer hjf) {
+        this.days = days;
+        this.testDate = workDetailDate;
+        this.pan = pan;
+        this.hn = hn;
+        this.hjf = hjf;
+    }
 
     public Long getId() {
         return id;
@@ -82,6 +99,14 @@ public class WorkDetail implements Serializable {
 
     public void setHjf(Integer hjf) {
         this.hjf = hjf;
+    }
+
+    public Date getTestDate() {
+        return testDate;
+    }
+
+    public void setTestDate(Date testDate) {
+        this.testDate = testDate;
     }
 
     @Override

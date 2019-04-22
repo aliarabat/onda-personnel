@@ -8,7 +8,7 @@ package com.onda.personnel.service;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -20,5 +20,7 @@ public interface WorkService {
 
     public void createWork(Employee emp, WorkDetail workDetail);
 
-    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, LocalDate workDetailDate);
+    public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate);
+    
+    public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule);
 }

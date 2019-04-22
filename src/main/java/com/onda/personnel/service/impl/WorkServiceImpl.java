@@ -10,7 +10,7 @@ import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.service.WorkService;
-import java.time.LocalDate;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +38,8 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, LocalDate workDetailDate) {
-        return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, workDetailDate);
+    public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate) {
+        return workDao.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, workDetailDate);
     }
 
     public WorkDao getWorkDao() {
@@ -48,6 +48,11 @@ public class WorkServiceImpl implements WorkService {
 
     public void setWorkDao(WorkDao workDao) {
         this.workDao = workDao;
+    }
+
+    @Override
+    public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule) {
+        return workDao.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(matricule);
     }
 
 }

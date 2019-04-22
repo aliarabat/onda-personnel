@@ -9,6 +9,7 @@ import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.WorkDetail;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +22,6 @@ public interface WorkDetailSevice {
 
     public void saveWorkDetail(WorkDetail workDetail);
 
-    public void createWorkDetail(Employee emp, LocalDate workDetailDate, List<Day> days);
+    public void createWorkDetail(Employee emp, Date workDetailDate, List<Day> days);
     // public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate);
 }

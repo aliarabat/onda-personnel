@@ -38,6 +38,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave</artifactId>
+            <version>5.6.1</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

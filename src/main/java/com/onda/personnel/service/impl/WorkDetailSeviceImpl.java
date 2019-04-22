@@ -7,13 +7,19 @@ package com.onda.personnel.service.impl;
 
 import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.Employee;
+import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
+import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.WorkDetailDao;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.WorkDetailSevice;
 import com.onda.personnel.service.WorkService;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +37,8 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
     @Autowired
     private EmployeeService employeeService;
 
+    private static final Logger log = LoggerFactory.getLogger(WorkDetailSeviceImpl.class);
+    
     /*@Override
     public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate) {
         if (workDetailDao.findByWorkDetailDate(workDetailDate).isEmpty()) {
@@ -50,34 +58,52 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
     }
 
     @Override
-    public void createWorkDetail(Employee emp, LocalDate workDetailDate, List<Day> days) {
-        WorkDetail workDetail = findByWorkDetailDate(workDetailDate);
-        WorkDetail newWorkDetail = new WorkDetail();
-        int workDetailListLength = workDetailDate.lengthOfMonth();
-        if (workDetail == null) {
-            workDetail = new WorkDetail();
+    public void createWorkDetail(Employee emp, Date workDetailDate, List<Day> days) {
+        Work work = workService.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(emp.getMatricule());
+        //WorkDetail workDetail = findByWorkDetailDate(workDetailDate);
+        WorkDetail workDetail;
+        int workDetailListLength = DateUtil.fromDate(workDetailDate).lengthOfMonth();
+        if (work == null || work.getWorkDetail()==null) {
+            work = new Work();
+            work.setEmployee(emp);
+            workDetail=new WorkDetail(new ArrayList(), workDetailDate, 0, 0, 0);
+            workDetail.setTestDate(new Date());
+        }else{
+            workDetail=workDetailDao.getOne(work.getWorkDetail().getId());
+            System.out.println("voici la date ==> "+workDetail.getWorkDetailDate());
+            System.out.println("voici le nombre de days avant => "+workDetail.getDays().size());
         }
-        newWorkDetail.setWorkDetailDate(workDetailDate.plusMonths(1));
-        for (Day day : days) {
-            if (workDetailListLength > workDetail.getDays().size()) {
-                workDetail.getDays().add(day);
-                setOtherInfos(workDetail, day);
-            } else {
-                setOtherInfos(newWorkDetail, day);
-                newWorkDetail.getDays().add(day);
+        LocalDate ld=DateUtil.fromDate(workDetailDate).plusMonths(1);
+        WorkDetail newWorkDetail=new WorkDetail(new ArrayList(), DateUtil.toDate(ld), 0, 0, 0);
+        try {
+            for (Day day : days) {
+                if (workDetailListLength > workDetail.getDays().size()) {
+                    setOtherInfos(workDetail, day);
+                    workDetail.getDays().add(day);
+                } else {
+                    setOtherInfos(newWorkDetail, day);
+                    newWorkDetail.getDays().add(day);
+                }
             }
+            System.out.println("voici le nombre de days apres => "+workDetail.getDays().size());
+        } catch (NullPointerException e) {
+            log.error("null sur le bloc boucle for "+ e.getMessage());
         }
 
         if (newWorkDetail.getDays() == null || newWorkDetail.getDays().isEmpty()) {
-            if (workDetailListLength > workDetail.getDays().size()) {
-                saveWorkDetail(workDetail);
-            } else {
-                saveWorkDetail(workDetail);
-                workService.createWork(emp, workDetail);
-            }
+            saveWorkDetail(workDetail);
+            work.setWorkDetail(workDetail);
+            workService.saveWork(work);
+            System.out.println("1");
         } else {
+            System.out.println("2");
+            Work newWork=new Work();
             saveWorkDetail(workDetail);
             saveWorkDetail(newWorkDetail);
+            newWork.setEmployee(emp);
+            newWork.setWorkDetail(newWorkDetail);
+            workService.saveWork(work);
+            workService.saveWork(newWork);
         }
     }
 
