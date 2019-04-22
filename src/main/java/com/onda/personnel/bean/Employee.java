@@ -25,39 +25,109 @@ public class Employee implements Serializable {
     private Integer matricule;
     private String firstName;
     private String lastName;
+    private String fonction;
+    private String type;
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getMatricule() {
         return matricule;
     }
 
+    /**
+     *
+     * @param matricule
+     */
     public void setMatricule(Integer matricule) {
         this.matricule = matricule;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     *
+     * @param firstName
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     *
+     * @param lastName
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     *
+     * @return
+     */
+    public String getFonction() {
+        return fonction;
+    }
+
+    /**
+     *
+     * @param fonction
+     */
+    public void setFonction(String fonction) {
+        this.fonction = fonction;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     *
+     * @param type
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -65,6 +135,11 @@ public class Employee implements Serializable {
         return hash;
     }
 
+    /**
+     *
+     * @param object
+     * @return
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -78,6 +153,10 @@ public class Employee implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "javaapplication1.Employee[ id=" + id + " ]";

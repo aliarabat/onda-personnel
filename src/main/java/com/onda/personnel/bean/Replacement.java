@@ -6,32 +6,36 @@
 package com.onda.personnel.bean;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Xrio
  */
 @Entity
-public class DayDetail implements Serializable {
+public class Replacement implements Serializable, Absence {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String reference;
-    private String wording;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
-    private Integer pan;
-    private Integer hn;
-    private Integer he;
-    private String mode;
+    @OneToOne
+    private Employee originalEmployee;
+    @OneToOne
+    private Employee replacedEmpolyee;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date replacementDate;
+    @OneToMany
+    private List<DayDetail> dayDetails;
 
     /**
      *
@@ -69,112 +73,64 @@ public class DayDetail implements Serializable {
      *
      * @return
      */
-    public String getWording() {
-        return wording;
+    public Employee getOriginalEmployee() {
+        return originalEmployee;
     }
 
     /**
      *
-     * @param wording
+     * @param originalEmployee
      */
-    public void setWording(String wording) {
-        this.wording = wording;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public LocalTime getStartingTime() {
-        return startingTime;
-    }
-
-    /**
-     *
-     * @param startingTime
-     */
-    public void setStartingTime(LocalTime startingTime) {
-        this.startingTime = startingTime;
+    public void setOriginalEmployee(Employee originalEmployee) {
+        this.originalEmployee = originalEmployee;
     }
 
     /**
      *
      * @return
      */
-    public LocalTime getEndingTime() {
-        return endingTime;
+    public Employee getReplacedEmpolyee() {
+        return replacedEmpolyee;
     }
 
     /**
      *
-     * @param endingTime
+     * @param replacedEmpolyee
      */
-    public void setEndingTime(LocalTime endingTime) {
-        this.endingTime = endingTime;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getPan() {
-        return pan;
-    }
-
-    /**
-     *
-     * @param pan
-     */
-    public void setPan(Integer pan) {
-        this.pan = pan;
+    public void setReplacedEmpolyee(Employee replacedEmpolyee) {
+        this.replacedEmpolyee = replacedEmpolyee;
     }
 
     /**
      *
      * @return
      */
-    public Integer getHn() {
-        return hn;
+    public Date getReplacementDate() {
+        return replacementDate;
     }
 
     /**
      *
-     * @param hn
+     * @param replacementDate
      */
-    public void setHn(Integer hn) {
-        this.hn = hn;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getHe() {
-        return he;
-    }
-
-    /**
-     *
-     * @param he
-     */
-    public void setHe(Integer he) {
-        this.he = he;
+    public void setReplacementDate(Date replacementDate) {
+        this.replacementDate = replacementDate;
     }
 
     /**
      *
      * @return
      */
-    public String getMode() {
-        return mode;
+    public List<DayDetail> getDayDetails() {
+        return dayDetails;
     }
 
     /**
      *
-     * @param mode
+     * @param dayDetails
      */
-    public void setMode(String mode) {
-        this.mode = mode;
+    public void setDayDetails(List<DayDetail> dayDetails) {
+        this.dayDetails = dayDetails;
     }
 
     /**
@@ -196,10 +152,10 @@ public class DayDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DayDetail)) {
+        if (!(object instanceof Replacement)) {
             return false;
         }
-        DayDetail other = (DayDetail) object;
+        Replacement other = (Replacement) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -212,7 +168,7 @@ public class DayDetail implements Serializable {
      */
     @Override
     public String toString() {
-        return "javaapplication1.DayDetail[ id=" + id + " ]";
+        return "onda.personnel.horaire.model.Replacement[ id=" + id + " ]";
     }
 
 }

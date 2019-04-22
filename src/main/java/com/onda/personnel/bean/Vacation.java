@@ -6,32 +6,30 @@
 package com.onda.personnel.bean;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.time.LocalTime;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Xrio
  */
 @Entity
-public class DayDetail implements Serializable {
+public class Vacation implements Serializable, Absence {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String reference;
-    private String wording;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
-    private Integer pan;
-    private Integer hn;
-    private Integer he;
-    private String mode;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date startingDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date endingDate;
+    private String type;
 
     /**
      *
@@ -69,114 +67,52 @@ public class DayDetail implements Serializable {
      *
      * @return
      */
-    public String getWording() {
-        return wording;
+    public Date getStartingDate() {
+        return startingDate;
     }
 
     /**
      *
-     * @param wording
+     * @param startingDate
      */
-    public void setWording(String wording) {
-        this.wording = wording;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public LocalTime getStartingTime() {
-        return startingTime;
-    }
-
-    /**
-     *
-     * @param startingTime
-     */
-    public void setStartingTime(LocalTime startingTime) {
-        this.startingTime = startingTime;
+    public void setStartingDate(Date startingDate) {
+        this.startingDate = startingDate;
     }
 
     /**
      *
      * @return
      */
-    public LocalTime getEndingTime() {
-        return endingTime;
+    public Date getEndingDate() {
+        return endingDate;
     }
 
     /**
      *
-     * @param endingTime
+     * @param endingDate
      */
-    public void setEndingTime(LocalTime endingTime) {
-        this.endingTime = endingTime;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getPan() {
-        return pan;
-    }
-
-    /**
-     *
-     * @param pan
-     */
-    public void setPan(Integer pan) {
-        this.pan = pan;
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
     }
 
     /**
      *
      * @return
      */
-    public Integer getHn() {
-        return hn;
+    public String getType() {
+        return type;
     }
 
     /**
      *
-     * @param hn
+     * @param type
      */
-    public void setHn(Integer hn) {
-        this.hn = hn;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Integer getHe() {
-        return he;
-    }
-
-    /**
-     *
-     * @param he
-     */
-    public void setHe(Integer he) {
-        this.he = he;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getMode() {
-        return mode;
-    }
-
-    /**
-     *
-     * @param mode
-     */
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
-
+    
+    
     /**
      *
      * @return
@@ -196,10 +132,10 @@ public class DayDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DayDetail)) {
+        if (!(object instanceof Vacation)) {
             return false;
         }
-        DayDetail other = (DayDetail) object;
+        Vacation other = (Vacation) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -212,7 +148,7 @@ public class DayDetail implements Serializable {
      */
     @Override
     public String toString() {
-        return "javaapplication1.DayDetail[ id=" + id + " ]";
+        return "onda.personnel.horaire.model.Vacation[ id=" + id + " ]";
     }
-
+    
 }

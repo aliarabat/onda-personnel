@@ -6,32 +6,33 @@
 package com.onda.personnel.bean;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.time.LocalTime;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Xrio
  */
 @Entity
-public class DayDetail implements Serializable {
+public class Mission implements Serializable, Absence {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String reference;
-    private String wording;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
-    private Integer pan;
-    private Integer hn;
-    private Integer he;
-    private String mode;
+    @OneToOne
+    private Employee employee;
+    private String type;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date startingDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date endingDate;
 
     /**
      *
@@ -69,114 +70,68 @@ public class DayDetail implements Serializable {
      *
      * @return
      */
-    public String getWording() {
-        return wording;
+    public Employee getEmployee() {
+        return employee;
     }
 
     /**
      *
-     * @param wording
+     * @param employee
      */
-    public void setWording(String wording) {
-        this.wording = wording;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public LocalTime getStartingTime() {
-        return startingTime;
-    }
-
-    /**
-     *
-     * @param startingTime
-     */
-    public void setStartingTime(LocalTime startingTime) {
-        this.startingTime = startingTime;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     /**
      *
      * @return
      */
-    public LocalTime getEndingTime() {
-        return endingTime;
+    public String getType() {
+        return type;
     }
 
     /**
      *
-     * @param endingTime
+     * @param type
      */
-    public void setEndingTime(LocalTime endingTime) {
-        this.endingTime = endingTime;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getPan() {
-        return pan;
-    }
-
-    /**
-     *
-     * @param pan
-     */
-    public void setPan(Integer pan) {
-        this.pan = pan;
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
      *
      * @return
      */
-    public Integer getHn() {
-        return hn;
+    public Date getStartingDate() {
+        return startingDate;
     }
 
     /**
      *
-     * @param hn
+     * @param startingDate
      */
-    public void setHn(Integer hn) {
-        this.hn = hn;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getHe() {
-        return he;
-    }
-
-    /**
-     *
-     * @param he
-     */
-    public void setHe(Integer he) {
-        this.he = he;
+    public void setStartingDate(Date startingDate) {
+        this.startingDate = startingDate;
     }
 
     /**
      *
      * @return
      */
-    public String getMode() {
-        return mode;
+    public Date getEndingDate() {
+        return endingDate;
     }
 
     /**
      *
-     * @param mode
+     * @param endingDate
      */
-    public void setMode(String mode) {
-        this.mode = mode;
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
     }
 
+    
+    
     /**
      *
      * @return
@@ -196,10 +151,10 @@ public class DayDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DayDetail)) {
+        if (!(object instanceof Mission)) {
             return false;
         }
-        DayDetail other = (DayDetail) object;
+        Mission other = (Mission) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -212,7 +167,7 @@ public class DayDetail implements Serializable {
      */
     @Override
     public String toString() {
-        return "javaapplication1.DayDetail[ id=" + id + " ]";
+        return "onda.personnel.horaire.model.Mission[ id=" + id + " ]";
     }
 
 }
