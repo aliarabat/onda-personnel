@@ -44,7 +44,7 @@ public class DayServiceImpl implements DayService {
     private DayDetailService dayDetailService;
 
     @Override
-    public int createDay(Integer matricule, String date, List<Day> days) {
+    public int createDay(Integer matricule, List<Day> days) {
         Employee emp = employeeService.findByMatricule(matricule);
         if (emp == null) {
             return -1;
@@ -57,9 +57,7 @@ public class DayServiceImpl implements DayService {
             }
             //LocalDate workDetailDate = DateUtil.fromStringToLocalDate(date).plusDays(1);
             //instanciation of workDetail found and newWorkDetail
-            workDetailSevice.createWorkDetail(emp, Date.valueOf(date), daysSaved);
-            System.out.println("hha la date => "+Date.valueOf(date));
-
+            workDetailSevice.createWorkDetail(emp, daysSaved);
             return 1;
         }
     }

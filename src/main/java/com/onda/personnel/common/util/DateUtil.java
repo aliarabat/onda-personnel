@@ -5,10 +5,14 @@
  */
 package com.onda.personnel.common.util;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -43,29 +47,38 @@ public class DateUtil {
             return Date.from(instant);
         }
     }
-    
+
     public static LocalDate fromDate(java.util.Date date) {
         return asLocalDate(date, ZoneId.systemDefault());
     }
-    public static LocalDate asLocalDate(java.util.Date date, ZoneId zone) {
-        if (date == null)
-            return null;
 
-        if (date instanceof java.sql.Date)
+    public static LocalDate asLocalDate(java.util.Date date, ZoneId zone) {
+        if (date == null) {
+            return null;
+        }
+
+        if (date instanceof java.sql.Date) {
             return ((java.sql.Date) date).toLocalDate();
-        else
+        } else {
             return Instant.ofEpochMilli(date.getTime()).atZone(zone).toLocalDate();
+        }
     }
-    
-    public static String toString(LocalDate localDate){
+
+    public static String toString(LocalDate localDate) {
         return localDate.toString();
     }
-    
-    public static LocalDate fromStringToLocalDate(String date){
-        if (date==null|| date.equals("")) {
+
+    public static LocalDate fromStringToLocalDate(String date) {
+        if (date == null || date.equals("")) {
             return null;
         } else {
             return LocalDate.parse(date);
         }
+    }
+
+    public static LocalDate getFirstMonday(DayOfWeek dayOfWeek) {
+        LocalDate d = LocalDate.now();
+        LocalDate d2 = d.with(TemporalAdjusters.dayOfWeekInMonth(1, dayOfWeek));
+        return d2;
     }
 }

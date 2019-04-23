@@ -27,9 +27,9 @@ public class DayRest {
     @Autowired
     private DayService dayService;
 
-    @PostMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
-    public int createDay(@PathVariable Integer matricule,@PathVariable String workDetailDate,@RequestBody List<Day> days) {
-        return dayService.createDay(matricule, workDetailDate, days);
+    @PostMapping("/matricule/{matricule}")
+    public int createDay(@PathVariable Integer matricule,@RequestBody List<Day> days) {
+        return dayService.createDay(matricule, days);
     }
 
     public DayService getDayService() {

@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface DayService {
 
-    public int createDay(Integer matricule, String workDetailDate,List<Day> days);
+    public int createDay(Integer matricule,List<Day> days);
 }

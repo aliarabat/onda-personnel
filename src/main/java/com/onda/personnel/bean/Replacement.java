@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
  * @author Xrio
  */
 @Entity
-public class Replacement implements Serializable, Absence {
+public class Replacement extends Absence implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

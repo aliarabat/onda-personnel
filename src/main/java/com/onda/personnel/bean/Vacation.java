@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
  * @author Xrio
  */
 @Entity
-public class Vacation implements Serializable, Absence {
+public class Vacation extends Absence implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -111,8 +111,6 @@ public class Vacation implements Serializable, Absence {
         this.type = type;
     }
 
-    
-    
     /**
      *
      * @return
@@ -150,5 +148,5 @@ public class Vacation implements Serializable, Absence {
     public String toString() {
         return "onda.personnel.horaire.model.Vacation[ id=" + id + " ]";
     }
-    
+
 }

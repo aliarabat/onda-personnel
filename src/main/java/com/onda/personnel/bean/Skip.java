@@ -17,7 +17,7 @@ import javax.persistence.Id;
  * @author Xrio
  */
 @Entity
-public class Skip implements Serializable, Absence {
+public class Skip extends Absence implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

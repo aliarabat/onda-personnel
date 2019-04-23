@@ -14,7 +14,9 @@ import com.onda.personnel.dao.WorkDetailDao;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.WorkDetailSevice;
 import com.onda.personnel.service.WorkService;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
     private EmployeeService employeeService;
 
     private static final Logger log = LoggerFactory.getLogger(WorkDetailSeviceImpl.class);
-    
+
     /*@Override
     public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate) {
         if (workDetailDao.findByWorkDetailDate(workDetailDate).isEmpty()) {
@@ -58,23 +60,27 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
     }
 
     @Override
-    public void createWorkDetail(Employee emp, Date workDetailDate, List<Day> days) {
+    public void createWorkDetail(Employee emp, List<Day> days) {
         Work work = workService.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(emp.getMatricule());
         //WorkDetail workDetail = findByWorkDetailDate(workDetailDate);
         WorkDetail workDetail;
-        int workDetailListLength = DateUtil.fromDate(workDetailDate).lengthOfMonth();
-        if (work == null || work.getWorkDetail()==null) {
+        int workDetailListLength = DateUtil.fromDate(new Date()).lengthOfMonth();
+        log.info("the first value of workDetailListLength ==> " + workDetailListLength);
+        if (work == null || work.getWorkDetail() == null) {
             work = new Work();
             work.setEmployee(emp);
-            workDetail=new WorkDetail(new ArrayList(), workDetailDate, 0, 0, 0);
-            workDetail.setTestDate(new Date());
-        }else{
-            workDetail=workDetailDao.getOne(work.getWorkDetail().getId());
-            System.out.println("voici la date ==> "+workDetail.getWorkDetailDate());
-            System.out.println("voici le nombre de days avant => "+workDetail.getDays().size());
+            workDetail = new WorkDetail(new ArrayList(), new Date(), 0, 0, 0);
+            log.info("voici le workDetail ancien => " + workDetailListLength);
+            workDetail.setTestDate(DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY)));
+            workDetailListLength = workDetailListLength - DateUtil.getFirstMonday(DayOfWeek.MONDAY).getDayOfMonth() + 1;
+            log.info("( 1 ==> " + workDetailListLength + " ), ( 2 ==> " + DateUtil.getFirstMonday(DayOfWeek.MONDAY).getDayOfMonth() + " )");
+        } else {
+            workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
+            System.out.println("voici la date ==> " + workDetail.getWorkDetailDate());
+            System.out.println("voici le nombre de days avant => " + workDetail.getDays().size());
         }
-        LocalDate ld=DateUtil.fromDate(workDetailDate).plusMonths(1);
-        WorkDetail newWorkDetail=new WorkDetail(new ArrayList(), DateUtil.toDate(ld), 0, 0, 0);
+        LocalDate ld = DateUtil.fromDate(new Date(workDetail.getTestDate().getYear(),workDetail.getTestDate().getMonth(),1)).plusMonths(1);
+        WorkDetail newWorkDetail = new WorkDetail(new ArrayList(), DateUtil.toDate(ld), 0, 0, 0);
         try {
             for (Day day : days) {
                 if (workDetailListLength > workDetail.getDays().size()) {
@@ -85,9 +91,9 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
                     newWorkDetail.getDays().add(day);
                 }
             }
-            System.out.println("voici le nombre de days apres => "+workDetail.getDays().size());
+            System.out.println("voici le nombre de days apres => " + workDetail.getDays().size());
         } catch (NullPointerException e) {
-            log.error("null sur le bloc boucle for "+ e.getMessage());
+            log.error("null sur le bloc boucle for " + e.getMessage());
         }
 
         if (newWorkDetail.getDays() == null || newWorkDetail.getDays().isEmpty()) {
@@ -97,7 +103,7 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
             System.out.println("1");
         } else {
             System.out.println("2");
-            Work newWork=new Work();
+            Work newWork = new Work();
             saveWorkDetail(workDetail);
             saveWorkDetail(newWorkDetail);
             newWork.setEmployee(emp);
