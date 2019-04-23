@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
  * @author Xrio
  */
 @Entity
-public class Vacation extends Absence implements Serializable {
+public class Vacation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -6,12 +6,12 @@
 package com.onda.personnel.bean;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.time.LocalTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -32,6 +32,10 @@ public class DayDetail implements Serializable {
     private Integer hn;
     private Integer he;
     private String mode;
+    @OneToOne
+    private Replacement replacement;
+    @OneToOne
+    private Skip skip;
 
     /**
      *
@@ -186,6 +190,22 @@ public class DayDetail implements Serializable {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
+    }
+
+    public Replacement getReplacement() {
+        return replacement;
+    }
+
+    public void setReplacement(Replacement replacement) {
+        this.replacement = replacement;
+    }
+
+    public Skip getSkip() {
+        return skip;
+    }
+
+    public void setSkip(Skip skip) {
+        this.skip = skip;
     }
 
     /**

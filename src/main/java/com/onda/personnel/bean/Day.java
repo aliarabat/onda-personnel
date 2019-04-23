@@ -9,12 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -30,10 +31,12 @@ public class Day implements Serializable {
     private Integer pan;
     private Integer hn;
     private Integer he;
-    @OneToMany
-    private List<Absence> absence;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<DayDetail> dayDetails;
+    @OneToOne
+    private Vacation vacation;
+    @OneToOne
+    private Mission mission;
 
     /**
      *
@@ -117,20 +120,20 @@ public class Day implements Serializable {
         this.he = he;
     }
 
-    /**
-     *
-     * @return
-     */
-    public List<Absence> getAbsence() {
-        return absence;
+    public Vacation getVacation() {
+        return vacation;
     }
 
-    /**
-     *
-     * @param absence
-     */
-    public void setAbsence(List<Absence> absence) {
-        this.absence = absence;
+    public void setVacation(Vacation vacation) {
+        this.vacation = vacation;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
     }
 
     /**

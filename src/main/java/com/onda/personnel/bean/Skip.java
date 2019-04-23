@@ -17,7 +17,7 @@ import javax.persistence.Id;
  * @author Xrio
  */
 @Entity
-public class Skip extends Absence implements Serializable {
+public class Skip implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -107,8 +107,6 @@ public class Skip extends Absence implements Serializable {
     public void setSkipDate(Date skipDate) {
         this.skipDate = skipDate;
     }
-    
-    
 
     /**
      *
@@ -147,5 +145,5 @@ public class Skip extends Absence implements Serializable {
     public String toString() {
         return "onda.personnel.horaire.model.Skip[ id=" + id + " ]";
     }
-    
+
 }

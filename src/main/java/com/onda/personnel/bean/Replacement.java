@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
  * @author Xrio
  */
 @Entity
-public class Replacement extends Absence implements Serializable {
+public class Replacement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,8 +34,6 @@ public class Replacement extends Absence implements Serializable {
     private Employee replacedEmpolyee;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date replacementDate;
-    @OneToMany
-    private List<DayDetail> dayDetails;
 
     /**
      *
@@ -115,22 +113,6 @@ public class Replacement extends Absence implements Serializable {
      */
     public void setReplacementDate(Date replacementDate) {
         this.replacementDate = replacementDate;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public List<DayDetail> getDayDetails() {
-        return dayDetails;
-    }
-
-    /**
-     *
-     * @param dayDetails
-     */
-    public void setDayDetails(List<DayDetail> dayDetails) {
-        this.dayDetails = dayDetails;
     }
 
     /**
