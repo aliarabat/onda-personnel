@@ -39,7 +39,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate) {
-        return workDao.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, workDetailDate);
+        return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, workDetailDate);
     }
 
     public WorkDao getWorkDao() {
@@ -52,7 +52,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule) {
-        return workDao.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(matricule);
+        return workDao.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
     }
 
 }

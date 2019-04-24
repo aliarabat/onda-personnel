@@ -19,20 +19,7 @@ public class WorkDetailVo {
     private String pan;
     private String hn;
     private String hjf;
-    private String testDate;
     private List<DayVo> days;
-
-    public String getTestDate() {
-        return testDate;
-    }
-
-    public void setTestDate(String testDate) {
-        this.testDate = testDate;
-    }
-
-   
-
-    
     
     public Long getId() {
         return id;

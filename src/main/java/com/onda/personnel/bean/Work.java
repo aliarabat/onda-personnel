@@ -38,6 +38,10 @@ public class Work implements Serializable {
         this.workDetail=workDetail;
     }
 
+    public Work() {
+
+    }
+
     public Long getId() {
         return id;
     }

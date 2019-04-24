@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WorkDao extends JpaRepository<Work, Long>{
     
-    public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate);
+    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date workDetailDate);
     
-    public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule);
+    public Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule);
 }

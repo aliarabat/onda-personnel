@@ -30,7 +30,7 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
             workDetail.setHn(NumberUtil.toInteger(vo.getHn()));
             workDetail.setPan(NumberUtil.toInteger(vo.getPan()));
             workDetail.setDays(new DayConverter().toItem(vo.getDays()));
-            workDetail.setTestDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getTestDate())));
+            workDetail.setWorkDetailDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getWorkDetailDate())));
             return workDetail;
         }
     }
@@ -46,7 +46,7 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
             workDetailVo.setHn(NumberUtil.toString(item.getHn()));
             workDetailVo.setPan(NumberUtil.toString(item.getPan()));
             workDetailVo.setDays(new DayConverter().toVo(item.getDays()));
-            workDetailVo.setTestDate(DateUtil.toString(DateUtil.fromDate(item.getTestDate())));
+            workDetailVo.setWorkDetailDate(DateUtil.toString(DateUtil.fromDate(item.getWorkDetailDate())));
             return workDetailVo;
         }
     }
