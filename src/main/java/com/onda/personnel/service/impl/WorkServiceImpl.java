@@ -11,7 +11,6 @@ import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.service.WorkService;
 import java.util.Date;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +39,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate) {
-        return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, workDetailDate);
+        return workDao.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, workDetailDate);
     }
 
     public WorkDao getWorkDao() {
@@ -53,40 +52,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule) {
-        return workDao.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
-    }
-
-    @Override
-    public List<Work> findByEmployeeMatricule(Integer matricule) {
-        return workDao.findByEmployeeMatricule(matricule);
-    }
-/*
-    @Override
-    public int saveEmployeeInHistory(Employee emp) {
-        List<Work> works = findByEmployeeMatricule(emp.getMatricule());
-        if (works == null || works.isEmpty()) {
-            return -1;
-        } else {
-            EmployeeHistory history = new EmployeeHistory(emp.getMatricule(), emp.getFirstName(), emp.getLastName(), new Date());
-            historyService.saveHistory(history);
-            for (Work work : works) {
-                work.setEmployee(null);
-                work.setHistory(history);
-                saveWork(work);
-            }
-            return 1;
-        }
-    }
-*/
-    @Override
-    public void deleteWork(Integer matricule, Date workDetailDate) {
-        Work work = findByEmployeeMatriculeAndWorkDetailTestDate(matricule, workDetailDate);
-        workDao.delete(work);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        workDao.deleteById(id);
+        return workDao.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(matricule);
     }
 
 }

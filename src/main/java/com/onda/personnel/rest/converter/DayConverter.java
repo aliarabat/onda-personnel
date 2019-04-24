@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
  *
  * @author AMINE
  */
-@Component
-public class DayConverter extends AbstractConverter<Day, DayVo> {
 
+@Component
+public class DayConverter extends AbstractConverter<Day, DayVo>  {
     @Override
     public Day toItem(DayVo vo) {
         if (vo == null) {

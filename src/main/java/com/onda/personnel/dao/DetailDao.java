@@ -5,8 +5,8 @@
  */
 package com.onda.personnel.dao;
 
-import com.onda.personnel.bean.Work;
-import java.util.Date;
+import com.onda.personnel.bean.Detail;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +15,11 @@ import org.springframework.stereotype.Repository;
  * @author AMINE
  */
 @Repository
-public interface WorkDao extends JpaRepository<Work, Long>{
-    
-    public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate);
-    
-    public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule);
+public interface DetailDao extends JpaRepository<Detail, Long> {
+
+    public Detail findByWording(String wording);
+
+    public List<Detail> findAll();
+
+    public List<Detail> findByMode(String mode);
 }

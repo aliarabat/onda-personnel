@@ -12,15 +12,9 @@ package com.onda.personnel.rest.vo;
 public class DayDetailVo {
 
     private Long id;
-    private String wording;
-    private String startingTime;
-    private String endingTime;
-    private String pan;
-    private String hn;
-    private String he;
-    private String mode;
-
-    
+    private DetailVo detailVo;
+    private ReplacementVo replacementVo;
+    private SkipVo skipVo;
 
     public Long getId() {
         return id;
@@ -30,60 +24,27 @@ public class DayDetailVo {
         this.id = id;
     }
 
-    public String getWording() {
-        return wording;
+    public DetailVo getDetailVo() {
+        return detailVo;
     }
 
-    public void setWording(String wording) {
-        this.wording = wording;
+    public void setDetailVo(DetailVo detailVo) {
+        this.detailVo = detailVo;
     }
 
-    public String getStartingTime() {
-        return startingTime;
+    public ReplacementVo getReplacementVo() {
+        return replacementVo;
     }
 
-    public void setStartingTime(String startingTime) {
-        this.startingTime = startingTime;
+    public void setReplacementVo(ReplacementVo replacementVo) {
+        this.replacementVo = replacementVo;
     }
 
-    public String getEndingTime() {
-        return endingTime;
+    public SkipVo getSkipVo() {
+        return skipVo;
     }
 
-    public void setEndingTime(String endingTime) {
-        this.endingTime = endingTime;
+    public void setSkipVo(SkipVo skipVo) {
+        this.skipVo = skipVo;
     }
-
-    public String getPan() {
-        return pan;
-    }
-
-    public void setPan(String pan) {
-        this.pan = pan;
-    }
-
-    public String getHn() {
-        return hn;
-    }
-
-    public void setHn(String hn) {
-        this.hn = hn;
-    }
-
-    public String getHe() {
-        return he;
-    }
-
-    public void setHe(String he) {
-        this.he = he;
-    }
-
-    public String getMode() {
-        return mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
-
 }

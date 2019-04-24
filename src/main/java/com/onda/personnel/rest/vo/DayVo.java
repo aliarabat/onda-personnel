@@ -5,7 +5,10 @@
  */
 package com.onda.personnel.rest.vo;
 
+import com.onda.personnel.bean.Mission;
+import com.onda.personnel.bean.Vacation;
 import java.util.List;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -18,6 +21,9 @@ public class DayVo {
     private String hn;
     private String he;
     private List<DayDetailVo> dayDetails;
+    private String date;
+    private VacationVo vacation;
+    private MissionVo mission;
 
     public Long getId() {
         return id;
@@ -25,6 +31,30 @@ public class DayVo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public VacationVo getVacation() {
+        return vacation;
+    }
+
+    public MissionVo getMission() {
+        return mission;
+    }
+
+    public void setVacation(VacationVo vacation) {
+        this.vacation = vacation;
+    }
+
+    public void setMission(MissionVo mission) {
+        this.mission = mission;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public List<DayDetailVo> getDayDetails() {

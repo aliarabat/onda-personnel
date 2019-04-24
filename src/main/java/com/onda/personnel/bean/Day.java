@@ -8,6 +8,7 @@ package com.onda.personnel.bean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -33,6 +36,8 @@ public class Day implements Serializable {
     private Integer he;
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<DayDetail> dayDetails;
+    @Temporal(TemporalType.DATE)
+    private Date date;
     @OneToOne
     private Vacation vacation;
     @OneToOne
@@ -63,6 +68,15 @@ public class Day implements Serializable {
         return dayDetails;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    
     /**
      *
      * @param dayDetails

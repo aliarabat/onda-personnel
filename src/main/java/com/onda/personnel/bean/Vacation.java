@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -24,6 +25,8 @@ public class Vacation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToOne
+    private Employee employee;
     private String reference;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startingDate;
@@ -53,6 +56,14 @@ public class Vacation implements Serializable {
      */
     public String getReference() {
         return reference;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     /**

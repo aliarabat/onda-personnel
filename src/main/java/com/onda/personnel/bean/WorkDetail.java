@@ -32,11 +32,12 @@ public class WorkDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private LocalDate workDetailDate;
     private Integer pan;
     private Integer hn;
     private Integer hjf;
     @Temporal(TemporalType.DATE)
-    private Date workDetailDate;
+    private Date testDate;
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Day> days;
 
@@ -45,7 +46,7 @@ public class WorkDetail implements Serializable {
 
     public WorkDetail(List<Day> days, Date workDetailDate, Integer pan, Integer hn, Integer hjf) {
         this.days = days;
-        this.workDetailDate = workDetailDate;
+        this.testDate = workDetailDate;
         this.pan = pan;
         this.hn = hn;
         this.hjf = hjf;
@@ -69,11 +70,11 @@ public class WorkDetail implements Serializable {
         this.days = days;
     }
 
-    public Date getWorkDetailDate() {
+    public LocalDate getWorkDetailDate() {
         return workDetailDate;
     }
 
-    public void setWorkDetailDate(Date workDetailDate) {
+    public void setWorkDetailDate(LocalDate workDetailDate) {
         this.workDetailDate = workDetailDate;
     }
 
@@ -99,6 +100,14 @@ public class WorkDetail implements Serializable {
 
     public void setHjf(Integer hjf) {
         this.hjf = hjf;
+    }
+
+    public Date getTestDate() {
+        return testDate;
+    }
+
+    public void setTestDate(Date testDate) {
+        this.testDate = testDate;
     }
 
     @Override

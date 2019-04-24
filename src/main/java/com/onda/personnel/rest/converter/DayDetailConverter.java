@@ -6,8 +6,6 @@
 package com.onda.personnel.rest.converter;
 
 import com.onda.personnel.bean.DayDetail;
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.rest.vo.DayDetailVo;
 import org.springframework.stereotype.Component;
 
@@ -25,13 +23,9 @@ public class DayDetailConverter extends AbstractConverter<DayDetail, DayDetailVo
         } else {
             DayDetail dayDetail = new DayDetail();
             dayDetail.setId(vo.getId());
-            dayDetail.setHe(NumberUtil.toInteger(vo.getHe()));
-            dayDetail.setHn(NumberUtil.toInteger(vo.getHn()));
-            dayDetail.setPan(NumberUtil.toInteger(vo.getPan()));
-            dayDetail.setMode(vo.getMode());
-            dayDetail.setWording(vo.getWording());
-            dayDetail.setStartingTime(DateUtil.fromString(vo.getStartingTime()));
-            dayDetail.setEndingTime(DateUtil.fromString(vo.getEndingTime()));
+            dayDetail.setDetail(new DetailConverter().toItem(vo.getDetailVo()));
+            dayDetail.setReplacement(new ReplacementConverter().toItem(vo.getReplacementVo()));
+            dayDetail.setSkip(new SkipConverter().toItem(vo.getSkipVo()));
             return dayDetail;
         }
     }
@@ -41,16 +35,12 @@ public class DayDetailConverter extends AbstractConverter<DayDetail, DayDetailVo
         if (item == null) {
             return null;
         } else {
-            DayDetailVo dayDetailVo = new DayDetailVo();
-            dayDetailVo.setId(item.getId());
-            dayDetailVo.setHe(NumberUtil.toString(item.getHe()));
-            dayDetailVo.setHn(NumberUtil.toString(item.getHn()));
-            dayDetailVo.setPan(NumberUtil.toString(item.getPan()));
-            dayDetailVo.setMode(item.getMode());
-            dayDetailVo.setWording(item.getWording());
-            dayDetailVo.setStartingTime(DateUtil.toString(item.getStartingTime()));
-            dayDetailVo.setEndingTime(DateUtil.toString(item.getEndingTime()));
-            return dayDetailVo;
+            DayDetailVo dVo = new DayDetailVo();
+            dVo.setId(item.getId());
+            dVo.setDetailVo(new DetailConverter().toVo(item.getDetail()));
+            dVo.setReplacementVo(new ReplacementConverter().toVo(item.getReplacement()));
+            dVo.setSkipVo(new SkipConverter().toVo(item.getSkip()));
+            return dVo;
         }
     }
 

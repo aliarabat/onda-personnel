@@ -6,8 +6,10 @@
 package com.onda.personnel.rest.converter;
 
 import com.onda.personnel.bean.WorkDetail;
+import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.rest.vo.WorkDetailVo;
+import java.util.Date;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,6 +30,7 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
             workDetail.setHn(NumberUtil.toInteger(vo.getHn()));
             workDetail.setPan(NumberUtil.toInteger(vo.getPan()));
             workDetail.setDays(new DayConverter().toItem(vo.getDays()));
+            workDetail.setTestDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getTestDate())));
             return workDetail;
         }
     }
@@ -43,6 +46,7 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
             workDetailVo.setHn(NumberUtil.toString(item.getHn()));
             workDetailVo.setPan(NumberUtil.toString(item.getPan()));
             workDetailVo.setDays(new DayConverter().toVo(item.getDays()));
+            workDetailVo.setTestDate(DateUtil.toString(DateUtil.fromDate(item.getTestDate())));
             return workDetailVo;
         }
     }

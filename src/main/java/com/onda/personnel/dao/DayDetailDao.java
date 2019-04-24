@@ -6,7 +6,6 @@
 package com.onda.personnel.dao;
 
 import com.onda.personnel.bean.DayDetail;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author AMINE
  */
 @Repository
-public interface DayDetailDao extends JpaRepository<DayDetail, Long> {
-
-    public DayDetail findByWording(String wording);
-
-    public List<DayDetail> findByMode(String mode);
+public interface DayDetailDao extends JpaRepository<DayDetail, Long>{
+    
+    
 }

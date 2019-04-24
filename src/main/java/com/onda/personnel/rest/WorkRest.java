@@ -11,7 +11,6 @@ import com.onda.personnel.service.WorkService;
 import java.time.LocalDate;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,18 +28,13 @@ public class WorkRest {
     private WorkService workService;
 
     @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
-    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule, @PathVariable String workDetailDate) {
+    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule,@PathVariable String workDetailDate) {
         return workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, new Date(workDetailDate));
     }
 
     @GetMapping("/matricule/{matricule}")
     public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(@PathVariable Integer matricule) {
         return workService.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(matricule);
-    }
-
-    @DeleteMapping("/id/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-        workService.deleteById(id);
     }
 
     public WorkService getWorkService() {

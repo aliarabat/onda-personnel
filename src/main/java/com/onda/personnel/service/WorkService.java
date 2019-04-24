@@ -9,7 +9,6 @@ import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -22,14 +21,6 @@ public interface WorkService {
     public void createWork(Employee emp, WorkDetail workDetail);
 
     public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate);
-
+    
     public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule);
-
-    public List<Work> findByEmployeeMatricule(Integer matricule);
-
-    //public int saveEmployeeInHistory(Employee employee);
-
-    public void deleteById(Long id);
-
-    public void deleteWork(Integer matricule, Date workDetailDate);
 }
