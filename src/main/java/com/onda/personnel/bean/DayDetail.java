@@ -24,18 +24,13 @@ public class DayDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String reference;
-    private String wording;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
-    private Integer pan;
-    private Integer hn;
-    private Integer he;
-    private String mode;
+    @OneToOne
+    private Detail detail;
     @OneToOne
     private Replacement replacement;
     @OneToOne
     private Skip skip;
+    
 
     /**
      *
@@ -53,143 +48,12 @@ public class DayDetail implements Serializable {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getReference() {
-        return reference;
+    public Detail getDetail() {
+        return detail;
     }
 
-    /**
-     *
-     * @param reference
-     */
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getWording() {
-        return wording;
-    }
-
-    /**
-     *
-     * @param wording
-     */
-    public void setWording(String wording) {
-        this.wording = wording;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public LocalTime getStartingTime() {
-        return startingTime;
-    }
-
-    /**
-     *
-     * @param startingTime
-     */
-    public void setStartingTime(LocalTime startingTime) {
-        this.startingTime = startingTime;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public LocalTime getEndingTime() {
-        return endingTime;
-    }
-
-    /**
-     *
-     * @param endingTime
-     */
-    public void setEndingTime(LocalTime endingTime) {
-        this.endingTime = endingTime;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getPan() {
-        return pan;
-    }
-
-    /**
-     *
-     * @param pan
-     */
-    public void setPan(Integer pan) {
-        this.pan = pan;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getHn() {
-        return hn;
-    }
-
-    /**
-     *
-     * @param hn
-     */
-    public void setHn(Integer hn) {
-        this.hn = hn;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getHe() {
-        return he;
-    }
-
-    /**
-     *
-     * @param he
-     */
-    public void setHe(Integer he) {
-        this.he = he;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getMode() {
-        return mode;
-    }
-
-    /**
-     *
-     * @param mode
-     */
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public void setDetail(Detail detail) {
+        this.detail = detail;
     }
 
     public Replacement getReplacement() {
@@ -208,6 +72,8 @@ public class DayDetail implements Serializable {
         this.skip = skip;
     }
 
+    
+    
     /**
      *
      * @param object

@@ -8,17 +8,11 @@ package com.onda.personnel.service.impl;
 import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.Work;
-import com.onda.personnel.bean.WorkDetail;
-import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.service.DayDetailService;
 import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.WorkDetailSevice;
-import com.onda.personnel.service.WorkService;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +47,7 @@ public class DayServiceImpl implements DayService {
         } else {
             List<Day> daysSaved = new ArrayList<>();
             for (Day day : days) {
-                daysSaved.add(setDayInfos(day, day.getDayDetails()));
+                //daysSaved.add(setDayInfos(day, day.getDayDetails()));
             }
             //LocalDate workDetailDate = DateUtil.fromStringToLocalDate(date).plusDays(1);
             //instanciation of workDetail found and newWorkDetail
@@ -61,7 +55,7 @@ public class DayServiceImpl implements DayService {
             return 1;
         }
     }
-
+/*
     private Day setDayInfos(Day day, List<DayDetail> dayDetails) {
         day.setDayDetails(new ArrayList<>());
         Integer pan = 0, hn = 0, he = 0;
@@ -78,7 +72,7 @@ public class DayServiceImpl implements DayService {
         dayDao.save(day);
         return day;
     }
-
+*/
     public EmployeeService getEmployeeService() {
         return employeeService;
     }

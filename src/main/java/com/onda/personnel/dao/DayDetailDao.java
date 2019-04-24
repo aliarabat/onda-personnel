@@ -19,7 +19,5 @@ public interface DayDetailDao extends JpaRepository<DayDetail, Long> {
 
     public DayDetail findByWording(String wording);
 
-    public List<DayDetail> findAll();
-
     public List<DayDetail> findByMode(String mode);
 }

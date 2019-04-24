@@ -5,51 +5,33 @@
  */
 package com.onda.personnel.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.time.LocalTime;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Xrio
  */
 @Entity
-public class WorkDetail implements Serializable {
+public class Detail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String reference;
+    private String wording;
+    private LocalTime startingTime;
+    private LocalTime endingTime;
     private Integer pan;
     private Integer hn;
-    private Integer hjf;
-    @Temporal(TemporalType.DATE)
-    private Date workDetailDate;
-    @OneToMany(cascade = CascadeType.REMOVE)
-    private List<Day> days;
-
-    public WorkDetail() {
-    }
-
-    public WorkDetail(List<Day> days, Date workDetailDate, Integer pan, Integer hn, Integer hjf) {
-        this.days = days;
-        this.workDetailDate = workDetailDate;
-        this.pan = pan;
-        this.hn = hn;
-        this.hjf = hjf;
-    }
+    private Integer he;
+    private String mode;
 
     public Long getId() {
         return id;
@@ -59,22 +41,36 @@ public class WorkDetail implements Serializable {
         this.id = id;
     }
 
-    @JsonIgnore
-    public List<Day> getDays() {
-        return days;
+    public String getReference() {
+        return reference;
     }
 
-    @JsonSetter
-    public void setDays(List<Day> days) {
-        this.days = days;
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
-    public Date getWorkDetailDate() {
-        return workDetailDate;
+    public String getWording() {
+        return wording;
     }
 
-    public void setWorkDetailDate(Date workDetailDate) {
-        this.workDetailDate = workDetailDate;
+    public void setWording(String wording) {
+        this.wording = wording;
+    }
+
+    public LocalTime getStartingTime() {
+        return startingTime;
+    }
+
+    public void setStartingTime(LocalTime startingTime) {
+        this.startingTime = startingTime;
+    }
+
+    public LocalTime getEndingTime() {
+        return endingTime;
+    }
+
+    public void setEndingTime(LocalTime endingTime) {
+        this.endingTime = endingTime;
     }
 
     public Integer getPan() {
@@ -93,12 +89,20 @@ public class WorkDetail implements Serializable {
         this.hn = hn;
     }
 
-    public Integer getHjf() {
-        return hjf;
+    public Integer getHe() {
+        return he;
     }
 
-    public void setHjf(Integer hjf) {
-        this.hjf = hjf;
+    public void setHe(Integer he) {
+        this.he = he;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
     @Override
@@ -111,10 +115,10 @@ public class WorkDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WorkDetail)) {
+        if (!(object instanceof Detail)) {
             return false;
         }
-        WorkDetail other = (WorkDetail) object;
+        Detail other = (Detail) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +127,7 @@ public class WorkDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.WorkDetail[ id=" + id + " ]";
+        return "com.onda.personnel.bean.Detail[ id=" + id + " ]";
     }
 
 }

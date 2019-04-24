@@ -16,9 +16,9 @@ public interface DayDetailService {
 
     public DayDetail findByWording(String wording);
 
-    public DayDetail createDayDetail(DayDetail dayDetail);
+    //public DayDetail createDayDetail(DayDetail dayDetail);
 
-    public int updateDayDetail(String wording, DayDetail dayDetail);
+    //public int updateDayDetail(String wording, DayDetail dayDetail);
 
     public int deleteDayDeail(String wording);
 

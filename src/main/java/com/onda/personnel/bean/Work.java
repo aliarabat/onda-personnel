@@ -26,7 +26,7 @@ public class Work implements Serializable {
     private Long id;
     @OneToOne(cascade = CascadeType.REMOVE)
     private WorkDetail workDetail;
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
     private Employee employee;
 
     public Long getId() {

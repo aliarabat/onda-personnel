@@ -8,7 +8,6 @@ package com.onda.personnel.service.impl;
 import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.dao.DayDetailDao;
 import com.onda.personnel.service.DayDetailService;
-import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class DayDetailServiceImpl implements DayDetailService {
     public DayDetail findByWording(String wording) {
         return dayDetailDao.findByWording(wording);
     }
-
+/*
     @Override
     public DayDetail createDayDetail(DayDetail dayDetail) {
         DayDetail dd = findByWording(dayDetail.getWording());
@@ -64,7 +63,7 @@ public class DayDetailServiceImpl implements DayDetailService {
             return 1;
         }
     }
-
+*/
     @Override
     public int deleteDayDeail(String wording) {
         DayDetail dayDetail = findByWording(wording);

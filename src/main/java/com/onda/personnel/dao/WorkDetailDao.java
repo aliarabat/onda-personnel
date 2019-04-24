@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
  * @author AMINE
  */
 @Repository
-
 public interface WorkDetailDao extends JpaRepository<WorkDetail, Long> {
 
     public WorkDetail findByWorkDetailDate(LocalDate localDate);
