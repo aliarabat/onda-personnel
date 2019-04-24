@@ -61,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return -1;
 
         } else {
-            employeeDao.delete(checkEmployee);
+            checkEmployee.setExist(false);
             return 1;
         }
     }
