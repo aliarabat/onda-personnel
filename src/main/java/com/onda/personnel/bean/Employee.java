@@ -27,6 +27,7 @@ public class Employee implements Serializable {
     private String lastName;
     private String fonction;
     private String type;
+    private boolean isExist;
 
     /**
      *
@@ -124,10 +125,20 @@ public class Employee implements Serializable {
         this.type = type;
     }
 
+    public boolean isExist() {
+        return isExist;
+    }
+
+    public void setExist(boolean exist) {
+        isExist = exist;
+    }
+
     /**
      *
      * @return
      */
+
+
     @Override
     public int hashCode() {
         int hash = 0;

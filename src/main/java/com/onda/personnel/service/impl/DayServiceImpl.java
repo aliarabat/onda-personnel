@@ -53,7 +53,6 @@ public class DayServiceImpl implements DayService {
             for (Day day : days) {
                 daysSaved.add(setDayInfos(day, day.getDayDetails()));
             }
-            //LocalDate workDetailDate = DateUtil.fromStringToLocalDate(date).plusDays(1);
             //instanciation of workDetail found and newWorkDetail
             workDetailSevice.createWorkDetail(emp, daysSaved);
             return 1;
@@ -61,7 +60,6 @@ public class DayServiceImpl implements DayService {
     }
 
     private Day setDayInfos(Day day, List<DayDetail> dayDetails) {
-        day.setDayDetails(new ArrayList<>());
         Integer pan = 0, hn = 0, he = 0;
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());

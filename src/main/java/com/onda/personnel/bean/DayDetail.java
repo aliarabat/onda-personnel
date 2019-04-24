@@ -30,6 +30,8 @@ public class DayDetail implements Serializable {
     private Replacement replacement;
     @OneToOne
     private Skip skip;
+    @OneToOne
+    private Mission mission;
     
 
     /**
@@ -72,6 +74,13 @@ public class DayDetail implements Serializable {
         this.skip = skip;
     }
 
+    public Mission getMission() {
+        return mission;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
+    }
     
     
     /**

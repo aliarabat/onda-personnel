@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -32,24 +33,19 @@ public class WorkDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate workDetailDate;
-    private Integer pan;
-    private Integer hn;
-    private Integer hjf;
     @Temporal(TemporalType.DATE)
-    private Date testDate;
+    private Date workDetailDate;
+    private Integer pan = 0;
+    private Integer hn = 0;
+    private Integer hjf = 0;
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<Day> days;
+    private List<Day> days = new ArrayList<>();
 
     public WorkDetail() {
     }
 
-    public WorkDetail(List<Day> days, Date workDetailDate, Integer pan, Integer hn, Integer hjf) {
-        this.days = days;
-        this.testDate = workDetailDate;
-        this.pan = pan;
-        this.hn = hn;
-        this.hjf = hjf;
+    public WorkDetail(Date workDetailDate) {
+        this.workDetailDate = workDetailDate;
     }
 
     public Long getId() {
@@ -70,11 +66,11 @@ public class WorkDetail implements Serializable {
         this.days = days;
     }
 
-    public LocalDate getWorkDetailDate() {
+    public Date getWorkDetailDate() {
         return workDetailDate;
     }
 
-    public void setWorkDetailDate(LocalDate workDetailDate) {
+    public void setWorkDetailDate(Date workDetailDate) {
         this.workDetailDate = workDetailDate;
     }
 
@@ -100,14 +96,6 @@ public class WorkDetail implements Serializable {
 
     public void setHjf(Integer hjf) {
         this.hjf = hjf;
-    }
-
-    public Date getTestDate() {
-        return testDate;
-    }
-
-    public void setTestDate(Date testDate) {
-        this.testDate = testDate;
     }
 
     @Override

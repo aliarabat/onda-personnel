@@ -27,6 +27,7 @@ public class DayConverter extends AbstractConverter<Day, DayVo>  {
             d.setHe(NumberUtil.toInteger(vo.getHe()));
             d.setHn(NumberUtil.toInteger(vo.getHn()));
             d.setPan(NumberUtil.toInteger(vo.getPan()));
+            d.setVacation(new VacationConverter().toItem(vo.getVacation()));
             d.setDayDetails(new DayDetailConverter().toItem(vo.getDayDetails()));
             return d;
         }
@@ -42,6 +43,7 @@ public class DayConverter extends AbstractConverter<Day, DayVo>  {
             dVo.setHe(NumberUtil.toString(item.getHe()));
             dVo.setHn(NumberUtil.toString(item.getHn()));
             dVo.setPan(NumberUtil.toString(item.getPan()));
+            dVo.setVacation(new VacationConverter().toVo(item.getVacation()));
             dVo.setDayDetails(new DayDetailConverter().toVo(item.getDayDetails()));
             return dVo;
         }

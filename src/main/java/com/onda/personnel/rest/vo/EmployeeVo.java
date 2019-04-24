@@ -15,6 +15,9 @@ public class EmployeeVo {
     private String matricule;
     private String firstName;
     private String lastName;
+    private String fonction;
+    private String type;
+    private boolean isExist;
 
     public Long getId() {
         return id;
@@ -48,4 +51,27 @@ public class EmployeeVo {
         this.lastName = lastName;
     }
 
+    public String getFonction() {
+        return fonction;
+    }
+
+    public void setFonction(String fonction) {
+        this.fonction = fonction;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isExist() {
+        return isExist;
+    }
+
+    public void setExist(boolean exist) {
+        isExist = exist;
+    }
 }

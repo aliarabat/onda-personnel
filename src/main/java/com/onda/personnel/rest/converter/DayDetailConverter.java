@@ -26,6 +26,7 @@ public class DayDetailConverter extends AbstractConverter<DayDetail, DayDetailVo
             dayDetail.setDetail(new DetailConverter().toItem(vo.getDetailVo()));
             dayDetail.setReplacement(new ReplacementConverter().toItem(vo.getReplacementVo()));
             dayDetail.setSkip(new SkipConverter().toItem(vo.getSkipVo()));
+            dayDetail.setMission(new MissionConverter().toItem(vo.getMission()));
             return dayDetail;
         }
     }
@@ -40,6 +41,7 @@ public class DayDetailConverter extends AbstractConverter<DayDetail, DayDetailVo
             dVo.setDetailVo(new DetailConverter().toVo(item.getDetail()));
             dVo.setReplacementVo(new ReplacementConverter().toVo(item.getReplacement()));
             dVo.setSkipVo(new SkipConverter().toVo(item.getSkip()));
+            dVo.setMission(new MissionConverter().toVo(item.getMission()));
             return dVo;
         }
     }

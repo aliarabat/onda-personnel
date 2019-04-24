@@ -16,8 +16,6 @@ import com.onda.personnel.service.WorkDetailSevice;
 import com.onda.personnel.service.WorkService;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Year;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -67,47 +65,34 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
         int workDetailListLength = DateUtil.fromDate(new Date()).lengthOfMonth();
         log.info("the first value of workDetailListLength ==> " + workDetailListLength);
         if (work == null || work.getWorkDetail() == null) {
-            work = new Work();
-            work.setEmployee(emp);
-            workDetail = new WorkDetail(new ArrayList(), new Date(), 0, 0, 0);
-            log.info("voici le workDetail ancien => " + workDetailListLength);
-            workDetail.setTestDate(DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY)));
+            work = new Work(emp);
+            workDetail = new WorkDetail(DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY)));
             workDetailListLength = workDetailListLength - DateUtil.getFirstMonday(DayOfWeek.MONDAY).getDayOfMonth() + 1;
-            log.info("( 1 ==> " + workDetailListLength + " ), ( 2 ==> " + DateUtil.getFirstMonday(DayOfWeek.MONDAY).getDayOfMonth() + " )");
         } else {
             workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
-            System.out.println("voici la date ==> " + workDetail.getWorkDetailDate());
-            System.out.println("voici le nombre de days avant => " + workDetail.getDays().size());
         }
-        LocalDate ld = DateUtil.fromDate(new Date(workDetail.getTestDate().getYear(),workDetail.getTestDate().getMonth(),1)).plusMonths(1);
-        WorkDetail newWorkDetail = new WorkDetail(new ArrayList(), DateUtil.toDate(ld), 0, 0, 0);
+        LocalDate ld = DateUtil.fromDate(new Date(workDetail.getWorkDetailDate().getYear(),workDetail.getWorkDetailDate().getMonth(),1)).plusMonths(1);
+        WorkDetail newWorkDetail = new WorkDetail(DateUtil.toDate(ld));
         try {
             for (Day day : days) {
                 if (workDetailListLength > workDetail.getDays().size()) {
                     setOtherInfos(workDetail, day);
-                    workDetail.getDays().add(day);
                 } else {
                     setOtherInfos(newWorkDetail, day);
-                    newWorkDetail.getDays().add(day);
                 }
             }
-            System.out.println("voici le nombre de days apres => " + workDetail.getDays().size());
         } catch (NullPointerException e) {
-            log.error("null sur le bloc boucle for " + e.getMessage());
+            log.error("null in for-loop block " + e.getMessage());
         }
 
         if (newWorkDetail.getDays() == null || newWorkDetail.getDays().isEmpty()) {
             saveWorkDetail(workDetail);
             work.setWorkDetail(workDetail);
             workService.saveWork(work);
-            System.out.println("1");
         } else {
-            System.out.println("2");
-            Work newWork = new Work();
             saveWorkDetail(workDetail);
             saveWorkDetail(newWorkDetail);
-            newWork.setEmployee(emp);
-            newWork.setWorkDetail(newWorkDetail);
+            Work newWork = new Work(emp, newWorkDetail);
             workService.saveWork(work);
             workService.saveWork(newWork);
         }
@@ -117,6 +102,7 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
         workDetail.setPan(workDetail.getPan() + day.getPan());
         workDetail.setHn(workDetail.getHn() + day.getHn());
         workDetail.setHjf(workDetail.getHjf() + day.getHe());
+        workDetail.getDays().add(day);
     }
 
     public WorkDetailDao getWorkDetailDao() {

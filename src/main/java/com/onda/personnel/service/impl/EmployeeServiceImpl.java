@@ -33,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (checkEmployee != null) {
             return -1;
         } else {
+            employee.setExist(true);
             employeeDao.save(employee);
             return 1;
         }

@@ -8,6 +8,7 @@ package com.onda.personnel.bean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -35,13 +36,12 @@ public class Day implements Serializable {
     private Integer hn;
     private Integer he;
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<DayDetail> dayDetails;
+    private List<DayDetail> dayDetails=new ArrayList<>();
     @Temporal(TemporalType.DATE)
     private Date date;
     @OneToOne
     private Vacation vacation;
-    @OneToOne
-    private Mission mission;
+
 
     /**
      *
@@ -140,14 +140,6 @@ public class Day implements Serializable {
 
     public void setVacation(Vacation vacation) {
         this.vacation = vacation;
-    }
-
-    public Mission getMission() {
-        return mission;
-    }
-
-    public void setMission(Mission mission) {
-        this.mission = mission;
     }
 
     /**

@@ -23,7 +23,7 @@ public class DayVo {
     private List<DayDetailVo> dayDetails;
     private String date;
     private VacationVo vacation;
-    private MissionVo mission;
+
 
     public Long getId() {
         return id;
@@ -37,16 +37,8 @@ public class DayVo {
         return vacation;
     }
 
-    public MissionVo getMission() {
-        return mission;
-    }
-
     public void setVacation(VacationVo vacation) {
         this.vacation = vacation;
-    }
-
-    public void setMission(MissionVo mission) {
-        this.mission = mission;
     }
 
     public String getDate() {
