@@ -88,7 +88,7 @@ public class DayDetailServiceImpl implements DayDetailService {
                 DayDetail thedayDetail = new DayDetail();
                 Detail detail = detailService.findByWording(wordingDetail);
                 for (DayDetail dayDetail : listdayDetails) {
-                    if (dayDetail.getDetail().getId().compareTo(detail.getId())==0) {
+                    if (dayDetail.getDetail().getId()==detail.getId()) {
                         thedayDetail = dayDetail;
                     }
                 }
