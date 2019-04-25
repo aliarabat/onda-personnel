@@ -9,6 +9,7 @@ import com.onda.personnel.bean.Employee;
 import com.onda.personnel.dao.EmployeeDao;
 import com.onda.personnel.service.EmployeeService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +45,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public int editEmployee(Integer matricule, Employee newEmployee) {
-        Employee checkEmployee = findByMatricule(matricule);
+    public int editEmployee(Employee newEmployee) {
+        Employee checkEmployee = employeeDao.getOne(newEmployee.getId());
         if (checkEmployee == null) {
             return -1;
         } else {

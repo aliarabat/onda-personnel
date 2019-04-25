@@ -90,8 +90,10 @@ public class DayDetailServiceImpl implements DayDetailService {
                 for (DayDetail dayDetail : listdayDetails) {
                     if (dayDetail.getDetail().getId()==detail.getId()) {
                         thedayDetail = dayDetail;
+                        break;
                     }
                 }
+                System.out.println("The day Detail:"+thedayDetail);
                 Mission checkMission= missionService.createMisssion(matricule,mission);
                 if (checkMission != null) {
                     thedayDetail.setMission(checkMission);

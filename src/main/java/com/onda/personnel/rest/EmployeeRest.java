@@ -48,10 +48,10 @@ public class EmployeeRest {
         return employeeService.createEmployee(employees);
     }
 
-    @PutMapping("/matricule/{matricule}")
-    public int editEmployee(@PathVariable Integer matricule, @RequestBody EmployeeVo newEmployeeVo) {
+    @PutMapping("/")
+    public int editEmployee(@RequestBody EmployeeVo newEmployeeVo) {
         Employee newEmployee = employeeConverter.toItem(newEmployeeVo);
-        return employeeService.editEmployee(matricule, newEmployee);
+        return employeeService.editEmployee( newEmployee);
     }
 
     @DeleteMapping("/matricule/{matricule}")
