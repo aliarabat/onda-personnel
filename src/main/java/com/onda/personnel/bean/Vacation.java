@@ -34,6 +34,18 @@ public class Vacation implements Serializable {
     private Date endingDate;
     private String type;
 
+    public Vacation() {
+    }
+
+    public Vacation(Employee employee, Date startingDate, Date endingDate, String type) {
+        this.employee = employee;
+        this.startingDate = startingDate;
+        this.endingDate = endingDate;
+        this.type = type;
+    }
+
+   
+
     /**
      *
      * @return
@@ -58,6 +70,13 @@ public class Vacation implements Serializable {
         return reference;
     }
 
+   
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    
     public Employee getEmployee() {
         return employee;
     }

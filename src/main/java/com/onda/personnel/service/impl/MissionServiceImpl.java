@@ -5,10 +5,13 @@
  */
 package com.onda.personnel.service.impl;
 
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author AMINE
  */
+@Service
 public class MissionServiceImpl {
     
 }

@@ -27,9 +27,9 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
             emp.setMatricule(NumberUtil.toInteger(vo.getMatricule()));
             emp.setFirstName(vo.getFirstName());
             emp.setLastName(vo.getLastName());
-            emp.setFirstName(vo.getFirstName());
-            emp.setLastName(vo.getLastName());
-            emp.setMatricule(NumberUtil.toInteger(vo.getMatricule()));
+            emp.setFonction(vo.getFonction());
+            emp.setType(vo.getType());
+            emp.setExist(vo.isExist());
             return emp;
         }
     }
@@ -44,6 +44,9 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
             empVo.setMatricule(NumberUtil.toString(item.getMatricule()));
             empVo.setFirstName(item.getFirstName());
             empVo.setLastName(item.getLastName());
+            empVo.setFonction(item.getFonction());
+            empVo.setType(item.getType());
+            empVo.setExist(item.isExist());
             return empVo;
         }
     }

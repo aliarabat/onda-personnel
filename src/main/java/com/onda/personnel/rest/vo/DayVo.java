@@ -21,9 +21,8 @@ public class DayVo {
     private String hn;
     private String he;
     private List<DayDetailVo> dayDetails;
-    private String date;
+    private String dayDate;
     private VacationVo vacation;
-
 
     public Long getId() {
         return id;
@@ -41,13 +40,14 @@ public class DayVo {
         this.vacation = vacation;
     }
 
-    public String getDate() {
-        return date;
+    public String getDayDate() {
+        return dayDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDayDate(String dayDate) {
+        this.dayDate = dayDate;
     }
+
 
     public List<DayDetailVo> getDayDetails() {
         return dayDetails;

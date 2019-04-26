@@ -5,10 +5,13 @@
  */
 package com.onda.personnel.service;
 
+import com.onda.personnel.bean.Vacation;
+
 /**
  *
  * @author AMINE
  */
 public interface VacationService {
-    
+
+    public void saveVacation(Vacation vacation);
 }

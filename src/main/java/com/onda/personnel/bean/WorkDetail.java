@@ -19,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -36,8 +37,10 @@ public class WorkDetail implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date workDetailDate;
     private Integer pan = 0;
-    private Integer hn = 0;
-    private Integer hjf = 0;
+    @OneToOne
+    private Timing hn;
+    @OneToOne
+    private Timing hjf;
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Day> days = new ArrayList<>();
 
@@ -82,21 +85,23 @@ public class WorkDetail implements Serializable {
         this.pan = pan;
     }
 
-    public Integer getHn() {
+    public Timing getHn() {
         return hn;
     }
 
-    public void setHn(Integer hn) {
+    public void setHn(Timing hn) {
         this.hn = hn;
     }
 
-    public Integer getHjf() {
+    public Timing getHjf() {
         return hjf;
     }
 
-    public void setHjf(Integer hjf) {
+    public void setHjf(Timing hjf) {
         this.hjf = hjf;
     }
+
+
 
     @Override
     public int hashCode() {

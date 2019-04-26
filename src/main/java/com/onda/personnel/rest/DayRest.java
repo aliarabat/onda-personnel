@@ -6,7 +6,9 @@
 package com.onda.personnel.rest;
 
 import com.onda.personnel.bean.Day;
+import com.onda.personnel.bean.Vacation;
 import com.onda.personnel.service.DayService;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,13 @@ public class DayRest {
     public int createDay(@PathVariable Integer matricule,@RequestBody List<Day> days) {
         return dayService.createDay(matricule, days);
     }
+    
+    @PostMapping("/vacation/")
+    public int createVacation(@RequestBody Vacation vacation) {
+        return dayService.createVacation(vacation);
+    }
 
+  
     public DayService getDayService() {
         return dayService;
     }

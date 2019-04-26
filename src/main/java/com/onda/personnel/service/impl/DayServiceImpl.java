@@ -9,6 +9,11 @@ import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.bean.Detail;
 import com.onda.personnel.bean.Employee;
+import com.onda.personnel.bean.Timing;
+import com.onda.personnel.bean.Vacation;
+import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.common.util.PeriodUtil;
+import com.onda.personnel.common.util.betweenDate;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.service.DayDetailService;
 import com.onda.personnel.service.DayService;
@@ -19,6 +24,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.onda.personnel.service.DetailService;
+import com.onda.personnel.service.VacationService;
+import java.sql.Array;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -35,11 +44,15 @@ public class DayServiceImpl implements DayService {
 
     @Autowired
     private WorkDetailSevice workDetailSevice;
+
     @Autowired
     private DetailService detailService;
-    
+
     @Autowired
     private DayDetailService dayDetailService;
+
+    @Autowired
+    private VacationService vacationService;
 
     @Override
     public int createDay(Integer matricule, List<Day> days) {
@@ -60,21 +73,59 @@ public class DayServiceImpl implements DayService {
     }
 
     private Day setDayInfos(Day day, List<DayDetail> dayDetails) {
-        Integer pan = 0, hn = 0, he = 0;
+        Integer pan = 0;
+        Timing hn = new Timing(0, 0);
+        Timing he = new Timing(0, 0);
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
             dayDetail.setDetail(dd);
-            DayDetail dayDetail1= dayDetailService.createDayDetail(dayDetail);
+            DayDetail dayDetail1 = dayDetailService.createDayDetail(dayDetail);
             day.getDayDetails().add(dayDetail1);
             pan += dd.getPan();
-            hn += dd.getHn();
-            he += dd.getHe();
+//            hn += dd.getHn();
+//            he += dd.getHe();
         }
         day.setHn(hn);
         day.setHe(he);
         day.setPan(pan);
         dayDao.save(day);
         return day;
+    }
+
+    @Override
+    public int createVacation(Vacation vacation) {
+        int res = 0;
+        Employee emp = employeeService.findByMatricule(vacation.getEmployee().getMatricule());
+        LocalDate ldS = DateUtil.fromDate(vacation.getStartingDate());
+        LocalDate ldE = DateUtil.fromDate(vacation.getEndingDate());
+        System.out.println(ldE);
+        System.out.println(ldS);
+        System.out.println(vacation.getStartingDate());
+        if (emp == null) {
+            return res = -1;
+        }
+        else if (vacation.getType().equals("C.M") || vacation.getType().equals("C.AT") || vacation.getType().equals("C.EXCEP")) {
+            List<LocalDate> daysVacation = betweenDate.between(ldS, ldE);
+            for (LocalDate ld : daysVacation) {
+                Day day = dayDao.findByDayDate(DateUtil.toDate(ld));
+                vacation.setEmployee(emp);
+                day.setVacation(vacation);
+                vacationService.saveVacation(vacation);
+            }
+            return res = 1;
+            
+        } else if (vacation.getType().equals("C.R")) {
+            List<LocalDate> daysVacationWithoutSunday = betweenDate.withoutSunday(ldS, ldE);
+            for (LocalDate ld : daysVacationWithoutSunday) {
+                System.out.println(ld);
+                Day day = dayDao.findByDayDate(DateUtil.toDate(ld));
+                vacation.setEmployee(emp);
+                day.setVacation(vacation);
+                vacationService.saveVacation(vacation);
+            }
+            return res = 2;
+        }
+        return res;
     }
 
     public EmployeeService getEmployeeService() {
@@ -116,7 +167,5 @@ public class DayServiceImpl implements DayService {
     public void setDayDetailService(DayDetailService dayDetailService) {
         this.dayDetailService = dayDetailService;
     }
-
-  
 
 }

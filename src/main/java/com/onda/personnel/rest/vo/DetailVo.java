@@ -13,11 +13,11 @@ public class DetailVo {
 
     private Long id;
     private String wording;
-    private String startingTime;
-    private String endingTime;
+    private TimingVo startingTimeVo;
+    private TimingVo endingTimeVo;
     private String pan;
-    private String hn;
-    private String he;
+    private TimingVo hnVo;
+    private TimingVo heVo;
     private String mode;
 
     
@@ -38,21 +38,23 @@ public class DetailVo {
         this.wording = wording;
     }
 
-    public String getStartingTime() {
-        return startingTime;
+    public TimingVo getStartingTimeVo() {
+        return startingTimeVo;
     }
 
-    public void setStartingTime(String startingTime) {
-        this.startingTime = startingTime;
+    public void setStartingTimeVo(TimingVo startingTimeVo) {
+        this.startingTimeVo = startingTimeVo;
     }
 
-    public String getEndingTime() {
-        return endingTime;
+    public TimingVo getEndingTimeVo() {
+        return endingTimeVo;
     }
 
-    public void setEndingTime(String endingTime) {
-        this.endingTime = endingTime;
+    public void setEndingTimeVo(TimingVo endingTimeVo) {
+        this.endingTimeVo = endingTimeVo;
     }
+
+
 
     public String getPan() {
         return pan;
@@ -62,21 +64,23 @@ public class DetailVo {
         this.pan = pan;
     }
 
-    public String getHn() {
-        return hn;
+    public TimingVo getHnVo() {
+        return hnVo;
     }
 
-    public void setHn(String hn) {
-        this.hn = hn;
+    public void setHnVo(TimingVo hnVo) {
+        this.hnVo = hnVo;
     }
 
-    public String getHe() {
-        return he;
+    public TimingVo getHeVo() {
+        return heVo;
     }
 
-    public void setHe(String he) {
-        this.he = he;
+    public void setHeVo(TimingVo heVo) {
+        this.heVo = heVo;
     }
+
+
 
     public String getMode() {
         return mode;

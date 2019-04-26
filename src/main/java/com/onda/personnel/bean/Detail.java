@@ -7,6 +7,7 @@ package com.onda.personnel.bean;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,16 +27,17 @@ public class Detail implements Serializable {
     private Long id;
     private String reference;
     private String wording;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
-    private Integer pan;
-    private Integer hn;
-    private Integer he;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing startingTime;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing endingTime;
+    private int pan;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing hn;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing he;
     private String mode;
-    @OneToOne
-    private Replacement replacement;
-    @OneToOne
-    private Skip skip;
+
 
     /**
      *
@@ -69,117 +71,63 @@ public class Detail implements Serializable {
         this.reference = reference;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getWording() {
         return wording;
     }
 
-    /**
-     *
-     * @param wording
-     */
     public void setWording(String wording) {
         this.wording = wording;
     }
 
-    /**
-     *
-     * @return
-     */
-    public LocalTime getStartingTime() {
+    public Timing getStartingTime() {
         return startingTime;
     }
 
-    /**
-     *
-     * @param startingTime
-     */
-    public void setStartingTime(LocalTime startingTime) {
+    public void setStartingTime(Timing startingTime) {
         this.startingTime = startingTime;
     }
 
-    /**
-     *
-     * @return
-     */
-    public LocalTime getEndingTime() {
+    public Timing getEndingTime() {
         return endingTime;
     }
 
-    /**
-     *
-     * @param endingTime
-     */
-    public void setEndingTime(LocalTime endingTime) {
+    public void setEndingTime(Timing endingTime) {
         this.endingTime = endingTime;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Integer getPan() {
+    public int getPan() {
         return pan;
     }
 
-    /**
-     *
-     * @param pan
-     */
-    public void setPan(Integer pan) {
+    public void setPan(int pan) {
         this.pan = pan;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Integer getHn() {
+    public Timing getHn() {
         return hn;
     }
 
-    /**
-     *
-     * @param hn
-     */
-    public void setHn(Integer hn) {
+    public void setHn(Timing hn) {
         this.hn = hn;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Integer getHe() {
+    public Timing getHe() {
         return he;
     }
 
-    /**
-     *
-     * @param he
-     */
-    public void setHe(Integer he) {
+    public void setHe(Timing he) {
         this.he = he;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getMode() {
         return mode;
     }
 
-    /**
-     *
-     * @param mode
-     */
     public void setMode(String mode) {
         this.mode = mode;
     }
+
+
 
     /**
      *
@@ -192,21 +140,7 @@ public class Detail implements Serializable {
         return hash;
     }
 
-    public Replacement getReplacement() {
-        return replacement;
-    }
 
-    public void setReplacement(Replacement replacement) {
-        this.replacement = replacement;
-    }
-
-    public Skip getSkip() {
-        return skip;
-    }
-
-    public void setSkip(Skip skip) {
-        this.skip = skip;
-    }
 
     /**
      *

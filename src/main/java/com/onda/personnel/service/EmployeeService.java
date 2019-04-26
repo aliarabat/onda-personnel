@@ -16,9 +16,9 @@ public interface EmployeeService {
 
     public Employee findByMatricule(Integer matricule);
 
-    public int createEmployee(Employee employee);
+    public int createEmployee(List<Employee> employees);
 
-    public int editEmployee(Integer matricule, Employee newEmployee);
+    public int editEmployee(Employee newEmployee);
 
     public int deleteEmployee(Integer matricule);
 
