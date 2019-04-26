@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/Detail")
 public class DetailRest {
 

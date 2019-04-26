@@ -5,15 +5,17 @@
  */
 package com.onda.personnel.dao;
 
-import com.onda.personnel.bean.Vacation;
+import com.onda.personnel.bean.Replacement;
+import java.util.Date;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author AMINE
+ * @author JaafarDiyaou
  */
 @Repository
-public interface VacationDao extends JpaRepository<Vacation, Long>{
-    
+public interface ReplacementDao extends JpaRepository<Replacement, Long>{
+        public List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule,Date replacementDate); 
 }

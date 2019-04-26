@@ -5,15 +5,17 @@
  */
 package com.onda.personnel.dao;
 
-import com.onda.personnel.bean.Vacation;
+import com.onda.personnel.bean.Skip;
+import java.util.Date;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author AMINE
+ * @author JaafarDiyaou
  */
 @Repository
-public interface VacationDao extends JpaRepository<Vacation, Long>{
-    
+public interface SkipDao extends JpaRepository<Skip, Long> {
+      public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule,Date skipDate); 
 }

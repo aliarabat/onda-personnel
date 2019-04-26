@@ -31,8 +31,7 @@ public class Mission implements Serializable {
     private String type;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startingDate;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date endingDate;
+    
 
     /**
      *
@@ -118,17 +117,13 @@ public class Mission implements Serializable {
      *
      * @return
      */
-    public Date getEndingDate() {
-        return endingDate;
-    }
+    
 
     /**
      *
      * @param endingDate
      */
-    public void setEndingDate(Date endingDate) {
-        this.endingDate = endingDate;
-    }
+    
 
     /**
      *

@@ -141,7 +141,6 @@ public class Detail implements Serializable {
     }
 
 
-
     /**
      *
      * @param object

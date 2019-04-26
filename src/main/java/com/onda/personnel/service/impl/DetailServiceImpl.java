@@ -102,6 +102,6 @@ public class DetailServiceImpl implements DetailService {
         this.detailDao = detailDao;
     }
 
-   
+    
 
 }

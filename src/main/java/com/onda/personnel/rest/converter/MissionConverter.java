@@ -5,12 +5,9 @@
  */
 package com.onda.personnel.rest.converter;
 
-import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Mission;
 import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.rest.vo.MissionVo;
-import com.onda.personnel.rest.vo.WorkVo;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,7 +25,7 @@ public class MissionConverter extends AbstractConverter<Mission, MissionVo> {
             Mission miss = new Mission();
             miss.setId(vo.getId());
             miss.setReference(vo.getReference());
-            miss.setEndingDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getEndingDate())));
+
             miss.setStartingDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getStartingDate())));
             miss.setType(vo.getType());
             miss.setEmployee(new EmployeeConverter().toItem(vo.getEmployee()));
@@ -46,7 +43,7 @@ public class MissionConverter extends AbstractConverter<Mission, MissionVo> {
             MissionVo missVo = new MissionVo();
             missVo.setId(item.getId());
             missVo.setReference(item.getReference());
-            missVo.setEndingDate(DateUtil.toString(DateUtil.fromDate(item.getEndingDate())));
+
             missVo.setStartingDate(DateUtil.toString(DateUtil.fromDate(item.getStartingDate())));
             missVo.setType(item.getType());
             missVo.setEmployee(new EmployeeConverter().toVo(item.getEmployee()));

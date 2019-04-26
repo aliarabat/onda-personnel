@@ -18,7 +18,6 @@ public class MissionVo {
     private EmployeeVo employee;
     private String type;
     private String startingDate;
-    private String endingDate;
    
     public Long getId() {
         return id;
@@ -61,12 +60,6 @@ public class MissionVo {
         this.startingDate = startingDate;
     }
 
-    public String getEndingDate() {
-        return endingDate;
-    }
-
-    public void setEndingDate(String endingDate) {
-        this.endingDate = endingDate;
-    }
+   
 
 }

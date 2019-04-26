@@ -6,11 +6,11 @@
 package com.onda.personnel.rest;
 
 import com.onda.personnel.bean.Work;
-import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.service.WorkService;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author AMINE
  */
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/work")
 public class WorkRest {
 
@@ -36,6 +37,23 @@ public class WorkRest {
     public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(@PathVariable Integer matricule) {
         return workService.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(matricule);
     }
+    @GetMapping("/matricule/{matricule}/year/{year}/month/{month}")
+    public Work findByEmployeeMatriculeAndMonthAndYear(@PathVariable Integer matricule,@PathVariable int year,@PathVariable int month) {
+        return workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
+    }
+    @GetMapping("/year/{year}/month/{month}")
+    public List<Work> findByMonthAndYear(@PathVariable int year,@PathVariable  int month) {
+        return workService.findByMonthAndYear(year, month);
+    }
+    @GetMapping("/workDetailDate/{workDetailDate}")
+    public List<Work> findByWorkDetailWorkDetailDate(@PathVariable Date workDetailDate) {
+        return workService.findByWorkDetailWorkDetailDate(workDetailDate);
+    }
+    
+    
+    
+    
+    
 
     public WorkService getWorkService() {
         return workService;

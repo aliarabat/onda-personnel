@@ -97,6 +97,8 @@ public class Day implements Serializable {
    
  
     
+
+    
     /**
      *
      * @param dayDetails

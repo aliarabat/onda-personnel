@@ -8,9 +8,13 @@ package com.onda.personnel.service.impl;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
+import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.service.WorkService;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,17 +46,48 @@ public class WorkServiceImpl implements WorkService {
         return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, workDetailDate);
     }
 
+    @Override
+    public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule) {
+        return workDao.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
+    }
+
+    @Override
+    public Work findByEmployeeMatriculeAndMonthAndYear(Integer matricule, int year, int month) {
+        LocalDate localDate = LocalDate.of(year, month, 1);
+        Date theDate = DateUtil.toDate(localDate);
+        Work theWork = findByEmployeeMatriculeAndWorkDetailTestDate(matricule, theDate);
+        if (theWork == null) {
+            return null;
+        } else {
+            return theWork;
+        }
+
+    }
+
+    @Override
+    public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate) {
+        return workDao.findByWorkDetailWorkDetailDate(workDetailDate);
+    }
+
+    @Override
+    public List<Work> findByMonthAndYear(int year, int month) {
+        LocalDate localDate = LocalDate.of(year, month, 1);
+        Date theDate = DateUtil.toDate(localDate);
+        List<Work> listOfWorksMonthly = new ArrayList<>();
+        listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
+        if (listOfWorksMonthly.isEmpty() == true || listOfWorksMonthly == null) {
+            return null;
+        } else {
+            return listOfWorksMonthly;
+        }
+    }
+
     public WorkDao getWorkDao() {
         return workDao;
     }
 
     public void setWorkDao(WorkDao workDao) {
         this.workDao = workDao;
-    }
-
-    @Override
-    public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule) {
-        return workDao.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
     }
 
 }

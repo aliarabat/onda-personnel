@@ -5,9 +5,9 @@
  */
 package com.onda.personnel.dao;
 
-import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Mission;
-import com.sun.org.apache.bcel.internal.generic.LNEG;
+import java.util.Date;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MissionDao extends JpaRepository<Mission, Long>{
-   
-    public Employee findByEmployeeMatricule(Integer matricule);
+  public List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule,Date startingDate); 
     
 }

@@ -32,6 +32,7 @@ public class ReplacementConverter extends AbstractConverter<Replacement, Replace
             rep.setReplacedEmpolyee(employeeConverter.toItem(vo.getReplacedEmpolyee()));
             rep.setReplacementDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getReplacementDate())));
             rep.setReference(vo.getReference());
+            rep.setDetail(new DetailConverter().toItem(vo.getDetailVo()));
 
             return rep;
         }
@@ -48,6 +49,7 @@ public class ReplacementConverter extends AbstractConverter<Replacement, Replace
             repVo.setReplacedEmpolyee(employeeConverter.toVo(item.getReplacedEmpolyee()));
             repVo.setReplacementDate(DateUtil.toString(DateUtil.fromDate(item.getReplacementDate())));
             repVo.setReference(item.getReference());
+            repVo.setDetailVo(new DetailConverter().toVo(item.getDetail()));
             return repVo;
         }
     }
