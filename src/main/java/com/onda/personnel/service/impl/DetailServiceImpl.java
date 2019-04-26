@@ -38,8 +38,8 @@ public class DetailServiceImpl implements DetailService {
         } else {
             dd = new Detail();
 
-            LocalTime st = dayDetail.getStartingTime().plusHours(1);
-            LocalTime et = dayDetail.getEndingTime().plusHours(1);
+            LocalTime st = dayDetail.getStartingTime();
+            LocalTime et = dayDetail.getEndingTime();
             dd.setStartingTime(st);
             dd.setEndingTime(et);
             dd.setHe(PeriodUtil.getHoursBetween(dayDetail.getStartingTime().getHour(), dayDetail.getEndingTime().getHour(), false));

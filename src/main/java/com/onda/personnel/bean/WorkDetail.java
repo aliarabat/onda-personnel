@@ -38,7 +38,7 @@ public class WorkDetail implements Serializable {
     private Integer pan = 0;
     private Integer hn = 0;
     private Integer hjf = 0;
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Day> days = new ArrayList<>();
 
     public WorkDetail() {

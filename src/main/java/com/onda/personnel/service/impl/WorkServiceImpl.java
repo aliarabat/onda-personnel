@@ -8,9 +8,14 @@ package com.onda.personnel.service.impl;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
+import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.service.WorkService;
+
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,8 +56,22 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(Integer matricule) {
+    public Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule) {
         return workDao.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
+    }
+
+    @Override
+    public List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee) {
+        LocalDate ldStart=LocalDate.of(annee, 1, 1);
+        LocalDate ldEnd=LocalDate.of(annee, 12, 31);
+        return workDao.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, DateUtil.toDate(ldStart),DateUtil.toDate(ldEnd));
+    }
+
+    @Override
+    public List<Work> findAllByWorkDetailWorkDetailDateBetween(Integer annee) {
+        LocalDate ldStart=LocalDate.of(annee, 1, 1);
+        LocalDate ldEnd=LocalDate.of(annee, 12, 31);
+        return workDao.findByWorkDetailWorkDetailDateBetween(DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
     }
 
 }

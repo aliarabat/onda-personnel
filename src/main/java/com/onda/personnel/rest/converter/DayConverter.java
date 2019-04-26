@@ -6,9 +6,12 @@
 package com.onda.personnel.rest.converter;
 
 import com.onda.personnel.bean.Day;
+import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.rest.vo.DayVo;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 /**
  *
@@ -27,7 +30,7 @@ public class DayConverter extends AbstractConverter<Day, DayVo>  {
             d.setHe(NumberUtil.toInteger(vo.getHe()));
             d.setHn(NumberUtil.toInteger(vo.getHn()));
             d.setPan(NumberUtil.toInteger(vo.getPan()));
-            d.setVacation(new VacationConverter().toItem(vo.getVacation()));
+            d.setVacation(new VacationConverter().toItem(vo.getVacationVo()));
             d.setDayDetails(new DayDetailConverter().toItem(vo.getDayDetails()));
             return d;
         }
@@ -43,7 +46,7 @@ public class DayConverter extends AbstractConverter<Day, DayVo>  {
             dVo.setHe(NumberUtil.toString(item.getHe()));
             dVo.setHn(NumberUtil.toString(item.getHn()));
             dVo.setPan(NumberUtil.toString(item.getPan()));
-            dVo.setVacation(new VacationConverter().toVo(item.getVacation()));
+            dVo.setVacationVo(new VacationConverter().toVo(item.getVacation()));
             dVo.setDayDetails(new DayDetailConverter().toVo(item.getDayDetails()));
             return dVo;
         }

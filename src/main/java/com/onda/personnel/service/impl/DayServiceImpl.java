@@ -5,20 +5,18 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Day;
-import com.onda.personnel.bean.DayDetail;
-import com.onda.personnel.bean.Detail;
-import com.onda.personnel.bean.Employee;
+import com.onda.personnel.bean.*;
+import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.DayDao;
-import com.onda.personnel.service.DayDetailService;
-import com.onda.personnel.service.DayService;
-import com.onda.personnel.service.EmployeeService;
-import com.onda.personnel.service.WorkDetailSevice;
+import com.onda.personnel.service.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Service;
-import com.onda.personnel.service.DetailService;
 
 /**
  *
@@ -41,6 +39,11 @@ public class DayServiceImpl implements DayService {
     @Autowired
     private DayDetailService dayDetailService;
 
+    @Autowired
+    private WorkService workService;
+
+    public static Jsr310JpaConverters.LocalDateConverter localDateConverter=new Jsr310JpaConverters.LocalDateConverter();
+
     @Override
     public int createDay(Integer matricule, List<Day> days) {
         Employee emp = employeeService.findByMatricule(matricule);
@@ -48,23 +51,29 @@ public class DayServiceImpl implements DayService {
             return -1;
         } else if (days == null || days.isEmpty()) {
             return -2;
+        } else if (days.size()>7 || days.size()<6){
+            return -3;
         } else {
             List<Day> daysSaved = new ArrayList<>();
+            LocalDate ld=DateUtil.getFirstDayOfWeek();
             for (Day day : days) {
-                daysSaved.add(setDayInfos(day, day.getDayDetails()));
+                daysSaved.add(setDayInfos(day.getDayDetails(),DateUtil.toDate(ld)));
+                ld=ld.plusDays(1);
             }
-            //instanciation of workDetail found and newWorkDetail
             workDetailSevice.createWorkDetail(emp, daysSaved);
             return 1;
         }
     }
 
-    private Day setDayInfos(Day day, List<DayDetail> dayDetails) {
+    private Day setDayInfos(List<DayDetail> dayDetails, Date ld) {
         Integer pan = 0, hn = 0, he = 0;
+        Day day=new Day();
+        day.setDayDate(ld);
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
-            dayDetail.setDetail(dd);
-            DayDetail dayDetail1= dayDetailService.createDayDetail(dayDetail);
+            DayDetail dayDet=new DayDetail();
+            dayDet.setDetail(dd);
+            DayDetail dayDetail1= dayDetailService.createDayDetail(dayDet);
             day.getDayDetails().add(dayDetail1);
             pan += dd.getPan();
             hn += dd.getHn();

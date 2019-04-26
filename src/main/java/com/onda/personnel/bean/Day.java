@@ -32,13 +32,13 @@ public class Day implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Integer pan;
-    private Integer hn;
-    private Integer he;
+    private Integer pan = 0;
+    private Integer hn = 0;
+    private Integer he = 0;
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<DayDetail> dayDetails=new ArrayList<>();
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date dayDate;
     @OneToOne
     private Vacation vacation;
 
@@ -68,15 +68,6 @@ public class Day implements Serializable {
         return dayDetails;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    
     /**
      *
      * @param dayDetails
@@ -140,6 +131,14 @@ public class Day implements Serializable {
 
     public void setVacation(Vacation vacation) {
         this.vacation = vacation;
+    }
+
+    public Date getDayDate() {
+        return dayDate;
+    }
+
+    public void setDayDate(Date dayDate) {
+        this.dayDate = dayDate;
     }
 
     /**

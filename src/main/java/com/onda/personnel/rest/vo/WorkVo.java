@@ -12,8 +12,8 @@ package com.onda.personnel.rest.vo;
 public class WorkVo {
 
     private Long id;
-    private WorkDetailVo workDetail;
-    private EmployeeVo employee;
+    private WorkDetailVo workDetailVo;
+    private EmployeeVo employeeVo;
 
     public Long getId() {
         return id;
@@ -24,19 +24,19 @@ public class WorkVo {
     }
 
     public WorkDetailVo getWorkDetail() {
-        return workDetail;
+        return workDetailVo;
     }
 
     public void setWorkDetail(WorkDetailVo workDetail) {
-        this.workDetail = workDetail;
+        this.workDetailVo = workDetail;
     }
 
     public EmployeeVo getEmployee() {
-        return employee;
+        return employeeVo;
     }
 
-    public void setEmployee(EmployeeVo employee) {
-        this.employee = employee;
+    public void setEmployee(EmployeeVo employeeVo) {
+        this.employeeVo = employeeVo;
     }
 
 }

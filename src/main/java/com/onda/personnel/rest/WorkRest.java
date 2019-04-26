@@ -7,25 +7,30 @@ package com.onda.personnel.rest;
 
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.rest.converter.WorkConverter;
+import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
  * @author AMINE
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/personnel-api/personnels/work")
 public class WorkRest {
 
     @Autowired
     private WorkService workService;
+
+    @Autowired
+    private WorkConverter workConverter;
 
     @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
     public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule,@PathVariable String workDetailDate) {
@@ -34,7 +39,17 @@ public class WorkRest {
 
     @GetMapping("/matricule/{matricule}")
     public Work findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(@PathVariable Integer matricule) {
-        return workService.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(matricule);
+        return workService.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
+    }
+
+    @GetMapping("matricule/{matricule}/annee/{annee}/")
+    public List<WorkVo> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(@PathVariable  Integer matricule,@PathVariable Integer annee) {
+        return workConverter.toVo(workService.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, annee));
+    }
+
+    @GetMapping("/annee/{annee}")
+    public List<WorkVo> findAllByWorkDetailWorkDetailDateBetween(@PathVariable Integer annee) {
+        return workConverter.toVo(workService.findAllByWorkDetailWorkDetailDateBetween(annee));
     }
 
     public WorkService getWorkService() {
@@ -45,4 +60,11 @@ public class WorkRest {
         this.workService = workService;
     }
 
+    public WorkConverter getWorkConverter() {
+        return workConverter;
+    }
+
+    public void setWorkConverter(WorkConverter workConverter) {
+        this.workConverter = workConverter;
+    }
 }

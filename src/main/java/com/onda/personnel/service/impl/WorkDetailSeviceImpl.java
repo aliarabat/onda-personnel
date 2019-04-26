@@ -59,17 +59,19 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
 
     @Override
     public void createWorkDetail(Employee emp, List<Day> days) {
-        Work work = workService.findTopByEmployeeMatriculeOrderByWorkDetailTestDateDesc(emp.getMatricule());
+        Work work = workService.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(emp.getMatricule());
         //WorkDetail workDetail = findByWorkDetailDate(workDetailDate);
         WorkDetail workDetail;
         int workDetailListLength = DateUtil.fromDate(new Date()).lengthOfMonth();
-        log.info("the first value of workDetailListLength ==> " + workDetailListLength);
         if (work == null || work.getWorkDetail() == null) {
             work = new Work(emp);
-            workDetail = new WorkDetail(DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY)));
+            //Date firstMondayOfMonth=DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY));
+            Date firstDayOfMonth=DateUtil.getFirstDayOfMonth();
+            workDetail = new WorkDetail(firstDayOfMonth);
             workDetailListLength = workDetailListLength - DateUtil.getFirstMonday(DayOfWeek.MONDAY).getDayOfMonth() + 1;
         } else {
             workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
+            workDetailListLength=workDetailListLength-workDetail.getDays().get(0).getDayDate().getDay()+1;
         }
         LocalDate ld = DateUtil.fromDate(new Date(workDetail.getWorkDetailDate().getYear(),workDetail.getWorkDetailDate().getMonth(),1)).plusMonths(1);
         WorkDetail newWorkDetail = new WorkDetail(DateUtil.toDate(ld));

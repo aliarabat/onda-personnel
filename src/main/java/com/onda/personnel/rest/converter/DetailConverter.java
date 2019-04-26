@@ -30,6 +30,7 @@ public class DetailConverter extends AbstractConverter<Detail, DetailVo> {
             dayDetail.setPan(NumberUtil.toInteger(vo.getPan()));
             dayDetail.setMode(vo.getMode());
             dayDetail.setWording(vo.getWording());
+            dayDetail.setReference(vo.getReference());
             dayDetail.setStartingTime(DateUtil.fromString(vo.getStartingTime()));
             dayDetail.setEndingTime(DateUtil.fromString(vo.getEndingTime()));
             return dayDetail;
@@ -48,6 +49,7 @@ public class DetailConverter extends AbstractConverter<Detail, DetailVo> {
             dayDetailVo.setPan(NumberUtil.toString(item.getPan()));
             dayDetailVo.setMode(item.getMode());
             dayDetailVo.setWording(item.getWording());
+            dayDetailVo.setReference(item.getReference());
             dayDetailVo.setStartingTime(DateUtil.toString(item.getStartingTime()));
             dayDetailVo.setEndingTime(DateUtil.toString(item.getEndingTime()));
             return dayDetailVo;

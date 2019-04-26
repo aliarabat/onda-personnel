@@ -13,6 +13,7 @@ public class DetailVo {
 
     private Long id;
     private String wording;
+    private String reference;
     private String startingTime;
     private String endingTime;
     private String pan;
@@ -36,6 +37,14 @@ public class DetailVo {
 
     public void setWording(String wording) {
         this.wording = wording;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public String getStartingTime() {

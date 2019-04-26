@@ -5,12 +5,7 @@
  */
 package com.onda.personnel.common.util;
 
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,5 +75,17 @@ public class DateUtil {
         LocalDate d = LocalDate.now();
         LocalDate d2 = d.with(TemporalAdjusters.dayOfWeekInMonth(1, dayOfWeek));
         return d2;
+    }
+
+    public static LocalDate getFirstDayOfWeek(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        System.out.println(cal.getTime());
+        return DateUtil.fromDate(cal.getTime());
+    }
+
+    public static Date getFirstDayOfMonth(){
+        LocalDate localDate=LocalDate.of(Year.now().getValue(), YearMonth.now().getMonth(),1);
+        return toDate(localDate);
     }
 }

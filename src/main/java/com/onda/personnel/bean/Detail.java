@@ -32,10 +32,6 @@ public class Detail implements Serializable {
     private Integer hn;
     private Integer he;
     private String mode;
-    @OneToOne
-    private Replacement replacement;
-    @OneToOne
-    private Skip skip;
 
     /**
      *
@@ -190,22 +186,6 @@ public class Detail implements Serializable {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
-    }
-
-    public Replacement getReplacement() {
-        return replacement;
-    }
-
-    public void setReplacement(Replacement replacement) {
-        this.replacement = replacement;
-    }
-
-    public Skip getSkip() {
-        return skip;
-    }
-
-    public void setSkip(Skip skip) {
-        this.skip = skip;
     }
 
     /**
