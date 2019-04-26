@@ -10,6 +10,8 @@ import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.bean.Detail;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Mission;
+import com.onda.personnel.bean.Replacement;
+import com.onda.personnel.bean.Skip;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
@@ -21,10 +23,10 @@ import com.onda.personnel.service.DayDetailService;
 import com.onda.personnel.service.DetailService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.MissionService;
+import com.onda.personnel.service.ReplacementService;
+import com.onda.personnel.service.SkipService;
 import com.onda.personnel.service.WorkService;
 import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,10 @@ public class DayDetailServiceImpl implements DayDetailService {
     private WorkDao workDao;
     @Autowired
     private WorkService workService;
-
+    @Autowired
+    private SkipService skipService;
+    @Autowired
+    private ReplacementService replacementService;
     @Autowired
     private EmployeeService employeeService;
     @Autowired
@@ -62,7 +67,7 @@ public class DayDetailServiceImpl implements DayDetailService {
     }
 
     @Override
-    public int updateDayDetailMission(Integer matricule,  String wordingDetail, Mission mission) {
+    public int updateDayDetailMission(Integer matricule, String wordingDetail, Mission mission) {
         Employee employee = employeeService.findByMatricule(matricule);
         if (employee == null) {
             return -5;
@@ -76,76 +81,232 @@ public class DayDetailServiceImpl implements DayDetailService {
             if (theWork == null) {
                 return -4;
             } else {
-                WorkDetail workDetail = theWork.getWorkDetail();
+                WorkDetail workDetail = workDetailDao.getOne(theWork.getWorkDetail().getId());
+
                 List<Day> listDay = workDetail.getDays();
+
                 Day theDay = new Day();
                 for (Day day : listDay) {
                     if (day.getDayDate().compareTo(mission.getStartingDate()) == 0) {
-                        theDay = day;
+                        theDay = dayDao.getOne(day.getId());
                     }
                 }
-                List<DayDetail> listdayDetails = theDay.getDayDetails();
-                DayDetail thedayDetail = new DayDetail();
-                Detail detail = detailService.findByWording(wordingDetail);
-                for (DayDetail dayDetail : listdayDetails) {
-                    if (dayDetail.getDetail().getId()==detail.getId()) {
-                        thedayDetail = dayDetail;
-                        break;
-                    }
-                }
-                System.out.println("The day Detail:"+thedayDetail);
-                Mission checkMission= missionService.createMisssion(matricule,mission);
-                if (checkMission != null) {
-                    thedayDetail.setMission(checkMission);
-                    dayDetailDao.save(thedayDetail);
-                    List<DayDetail> modifyDayDetails = listdayDetails;
-                    modifyDayDetails.remove(thedayDetail);
-    Integer panDay=0;
-    Integer hnDay=0;
-    Integer heDay=0;
-    
-    
-    
-    for (DayDetail dayDetail : modifyDayDetails) {
-        panDay+=dayDetail.getDetail().getPan();
-        hnDay+=dayDetail.getDetail().getHn();
-        heDay+=dayDetail.getDetail().getHe();
-                    
-                }
-    theDay.setPan(panDay);
-    theDay.setHn(hnDay);
-    theDay.setHe(heDay);
-    
-        dayDao.save (theDay);
-    
-    Integer panMonth=0;
-    Integer hnMonth=0;
-    Integer heMonth=0;
-    
-    
-    for (Day day :listDay ) {
-        panMonth+=day.getPan();
-        hnMonth+=day.getHn();
-        heMonth+=day.getHe();
-                    
-                }
-    workDetail.setHjf(heMonth);
-    workDetail.setHn(hnMonth);
-    workDetail.setPan(panMonth);
-    
-
-
-    workDetailDao.save (workDetail);
-
-    workDao.save (theWork);
-
-
-return 1;
+                if(theDay==null){
+                    return -6;}
+                else{
+                if (theDay.getVacation() != null) {
+                    return -3;
                 } else {
-                    return -1;
+
+                    List<DayDetail> listdayDetails = theDay.getDayDetails();
+
+                    DayDetail thedayDetail = new DayDetail();
+                    Detail detail = detailService.findByWording(wordingDetail);
+
+                    for (DayDetail dayDetail : listdayDetails) {
+                        if(dayDetail.getDetail()!=null){
+                        if (dayDetail.getDetail().getWording().equals(detail.getWording())) {
+                            thedayDetail = dayDetailDao.getOne(dayDetail.getId());
+
+                        }
+
+                    }
+                    }
+
+                    if (thedayDetail.getReplacement() != null || thedayDetail.getSkip() != null || thedayDetail.getMission() != null) {
+                        return -2;
+                    } else {
+                        Mission checkMission = missionService.createMisssion(matricule, mission);
+                        if (checkMission != null) {
+                            thedayDetail.setMission(checkMission);
+                            dayDetailDao.save(thedayDetail);
+
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                }
+            }
+            }
+
+        }
+    }
+
+    @Override
+    public int updateDayDetailSkip(Integer matricule, String wordingDetail, Skip skip) {
+        Employee employee = employeeService.findByMatricule(matricule);
+        if (employee == null) {
+            return -5;
+        } else {
+            Date tmpDate = skip.getSkipDate();
+            LocalDate tmpLocalDate = DateUtil.fromDate(tmpDate);
+            LocalDate checkLocalDate = tmpLocalDate;
+            tmpLocalDate = LocalDate.of(checkLocalDate.getYear(), checkLocalDate.getMonth(), 1);
+            tmpDate = DateUtil.toDate(tmpLocalDate);
+            Work theWork = workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, tmpDate);
+            if (theWork == null) {
+                return -4;
+            } else {
+                WorkDetail workDetail = workDetailDao.getOne(theWork.getWorkDetail().getId());
+
+                List<Day> listDay = workDetail.getDays();
+
+                Day theDay = new Day();
+                for (Day day : listDay) {
+                    if (day.getDayDate().compareTo(skip.getSkipDate()) == 0) {
+                        theDay = dayDao.getOne(day.getId());
+                    }
+                }
+                if(theDay==null){
+                    return -6;
+                }
+                else{
+
+                if (theDay.getVacation() != null) {
+                    return -3;
+                } else {
+
+                    List<DayDetail> listdayDetails = theDay.getDayDetails();
+
+                    DayDetail thedayDetail = new DayDetail();
+                    Detail detail = detailService.findByWording(wordingDetail);
+
+                    for (DayDetail dayDetail : listdayDetails) {
+                        if(dayDetail.getDetail()!=null){
+
+                        if (dayDetail.getDetail().getWording().equals(detail.getWording())) {
+                            thedayDetail = dayDetailDao.getOne(dayDetail.getId());
+
+                        }
+                        }
+                    }
+
+                    if (thedayDetail.getReplacement() != null || thedayDetail.getSkip() != null || thedayDetail.getMission() != null) {
+                        return -2;
+                    } else {
+                        Skip checkSkip = skipService.createSkip(matricule, skip);
+                        if (checkSkip != null) {
+                            thedayDetail.setSkip(checkSkip);
+                            dayDetailDao.save(thedayDetail);
+
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                }
+            }
+            }
+
+        }
+    }
+
+    @Override
+    public int updateDayDetailReplacement(Integer matricule, Integer matricule1, String wordingDetail, Replacement replacement) {
+        Employee employee = employeeService.findByMatricule(matricule);
+        Employee employee1 = employeeService.findByMatricule(matricule1);
+        if (employee == null || employee1 == null) {
+            return -6;
+        } else {
+            Date tmpDate = replacement.getReplacementDate();
+            LocalDate tmpLocalDate = DateUtil.fromDate(tmpDate);
+            LocalDate checkLocalDate = tmpLocalDate;
+            tmpLocalDate = LocalDate.of(checkLocalDate.getYear(), checkLocalDate.getMonth(), 1);
+            tmpDate = DateUtil.toDate(tmpLocalDate);
+            Work theWork = workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, tmpDate);
+            Work theWork1 = workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule1, tmpDate);
+            if (theWork == null || theWork1 == null) {
+                return -5;
+            } else {
+                WorkDetail workDetail = workDetailDao.getOne(theWork.getWorkDetail().getId());
+                WorkDetail workDetail1 = workDetailDao.getOne(theWork1.getWorkDetail().getId());
+
+                List<Day> listDay = workDetail.getDays();
+                List<Day> listDay1 = workDetail1.getDays();
+
+                Day theDay = new Day();
+                Day theDay1 = new Day();
+                for (Day day : listDay) {
+                    if (day.getDayDate().compareTo(replacement.getReplacementDate()) == 0) {
+                        theDay = dayDao.getOne(day.getId());
+                    }
+
                 }
 
+                for (Day day : listDay1) {
+                    if (day.getDayDate().compareTo(replacement.getReplacementDate()) == 0) {
+                        theDay1 = dayDao.getOne(day.getId());
+                    }
+
+                }
+
+                if (theDay == null || theDay1 == null) {
+                    return -4;
+                } else {
+
+                    if (theDay.getVacation() != null || theDay1.getVacation() != null) {
+                        return -3;
+                    } else {
+
+                        List<DayDetail> listdayDetails = theDay.getDayDetails();
+                        List<DayDetail> listdayDetails1 = theDay1.getDayDetails();
+
+                        DayDetail thedayDetail = new DayDetail();
+                        DayDetail thedayDetail1 = new DayDetail();
+                        Detail detail = detailService.findByWording(wordingDetail);
+
+                        for (DayDetail dayDetail : listdayDetails) {
+                                                     if(dayDetail.getDetail()!=null){
+                            if (dayDetail.getDetail().getWording().equals(detail.getWording())) {
+                                thedayDetail = dayDetailDao.getOne(dayDetail.getId());
+
+                            }
+
+                        }
+                        }
+                        int i = 0;
+
+                        for (DayDetail dayDetail : listdayDetails1) {
+                        if(dayDetail.getDetail()!=null){
+                            if (dayDetail.getDetail().getWording().equals(detail.getWording())) {
+
+                                i = 0;
+                                break;
+                            } else {
+
+                                i = 1;
+//                                
+                            }
+
+                        }
+                        }
+                        if (i == 0) {
+                            return -2;
+                        } else {
+
+                            if (thedayDetail.getReplacement() != null || thedayDetail.getSkip() != null || thedayDetail.getMission() != null) {
+                                return -1;
+                            } else {
+                                Replacement checkReplacement = replacementService.createReplacement(matricule, matricule1, detail.getWording(), replacement);
+                                if (checkReplacement != null) {
+                                    thedayDetail.setReplacement(checkReplacement);
+                                    thedayDetail1.setReplacement(replacement);
+                                    thedayDetail1.setDetail(null);
+                                    dayDetailDao.save(thedayDetail1);
+                                    listdayDetails1.add(thedayDetail1);
+                                    dayDetailDao.save(thedayDetail);
+
+                                    return 1;
+                                } else {
+                                    return 0;
+                                }
+                            }
+                        }
+                    }
+                }
             }
+
         }
     }
 
@@ -211,6 +372,14 @@ return 1;
 
     public void setWorkDao(WorkDao workDao) {
         this.workDao = workDao;
+    }
+
+    public SkipService getSkipService() {
+        return skipService;
+    }
+
+    public void setSkipService(SkipService skipService) {
+        this.skipService = skipService;
     }
 
 }

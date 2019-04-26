@@ -9,16 +9,22 @@ import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.bean.Detail;
 import com.onda.personnel.bean.Employee;
+import com.onda.personnel.bean.Work;
+import com.onda.personnel.bean.WorkDetail;
+import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.service.DayDetailService;
 import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.EmployeeService;
-import com.onda.personnel.service.WorkDetailSevice;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.onda.personnel.service.DetailService;
+import com.onda.personnel.service.WorkDetailService;
+import com.onda.personnel.service.WorkService;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -34,10 +40,12 @@ public class DayServiceImpl implements DayService {
     private EmployeeService employeeService;
 
     @Autowired
-    private WorkDetailSevice workDetailSevice;
+    private WorkDetailService workDetailService;
+    @Autowired
+    private WorkService workService;
     @Autowired
     private DetailService detailService;
-    
+
     @Autowired
     private DayDetailService dayDetailService;
 
@@ -54,7 +62,7 @@ public class DayServiceImpl implements DayService {
                 daysSaved.add(setDayInfos(day, day.getDayDetails()));
             }
             //instanciation of workDetail found and newWorkDetail
-            workDetailSevice.createWorkDetail(emp, daysSaved);
+            workDetailService.createWorkDetail(emp, daysSaved);
             return 1;
         }
     }
@@ -64,7 +72,7 @@ public class DayServiceImpl implements DayService {
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
             dayDetail.setDetail(dd);
-            DayDetail dayDetail1= dayDetailService.createDayDetail(dayDetail);
+            DayDetail dayDetail1 = dayDetailService.createDayDetail(dayDetail);
             day.getDayDetails().add(dayDetail1);
             pan += dd.getPan();
             hn += dd.getHn();
@@ -75,6 +83,50 @@ public class DayServiceImpl implements DayService {
         day.setPan(pan);
         dayDao.save(day);
         return day;
+    }
+
+    @Override
+    public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month) {
+        Work work = workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
+        if (work == null) {
+            return null;
+        } else {
+            return work.getWorkDetail().getDays();
+        }
+    }
+
+    @Override
+    public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate) {
+        LocalDate localDate = DateUtil.fromDate(dayDate);
+        LocalDate checklocalDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
+        Date tmpDate = DateUtil.toDate(checklocalDate);
+        Work work = workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, tmpDate);
+        if (work == null) {
+            return null;
+        } else {
+            WorkDetail workDetail = work.getWorkDetail();
+            List<Day> listOfDays = workDetail.getDays();
+            Day theDay = new Day();
+            for (Day day : listOfDays) {
+                if (day.getDayDate().compareTo(dayDate) == 0) {
+                    theDay = dayDao.getOne(day.getId());
+                }
+            }
+            if(theDay==null){
+                return null;
+            }
+            else{
+                return theDay;
+            }
+
+        }
+
+    }
+    
+    @Override
+    public List<Day> findByDayDate(Date dayDate) {
+        return dayDao.findByDayDate(dayDate);
+
     }
 
     public EmployeeService getEmployeeService() {
@@ -93,12 +145,20 @@ public class DayServiceImpl implements DayService {
         this.dayDao = dayDao;
     }
 
-    public WorkDetailSevice getWorkDetailSevice() {
-        return workDetailSevice;
+    public WorkDetailService getWorkDetailService() {
+        return workDetailService;
     }
 
-    public void setWorkDetailSevice(WorkDetailSevice workDetailSevice) {
-        this.workDetailSevice = workDetailSevice;
+    public void setWorkDetailService(WorkDetailService workDetailService) {
+        this.workDetailService = workDetailService;
+    }
+
+    public WorkService getWorkService() {
+        return workService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
     }
 
     public DetailService getDetailService() {
@@ -117,6 +177,6 @@ public class DayServiceImpl implements DayService {
         this.dayDetailService = dayDetailService;
     }
 
-  
+    
 
 }

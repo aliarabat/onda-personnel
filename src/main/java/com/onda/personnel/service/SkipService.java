@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface SkipService {
           public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule,Date skipDate); 
-          public int createSkip(Skip skip);
+          public Skip createSkip(Integer matricule,Skip skip);
 }

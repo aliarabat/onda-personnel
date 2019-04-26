@@ -9,14 +9,13 @@ import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.WorkDetail;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author AMINE
  */
-public interface WorkDetailSevice {
+public interface WorkDetailService {
 
     public WorkDetail findByWorkDetailDate(LocalDate localDate);
 

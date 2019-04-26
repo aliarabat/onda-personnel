@@ -5,11 +5,14 @@
  */
 package com.onda.personnel.service.impl;
 
+import com.onda.personnel.bean.Detail;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Replacement;
 import com.onda.personnel.dao.ReplacementDao;
+import com.onda.personnel.service.DetailService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.ReplacementService;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,32 +29,35 @@ public class ReplacementServiceImpl implements ReplacementService{
     ReplacementDao replacementDao;
     @Autowired
         EmployeeService employeeService;
+    @Autowired
+    DetailService detailService;
     @Override
     public List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule, Date replacementDate) {
 return replacementDao.findByOriginalEmployeeMatriculeAndReplacementDate(matricule, replacementDate);
     }
 
     @Override
-    public int createReplacement(Replacement replacement) {
-        Employee employee=employeeService.findByMatricule(replacement.getOriginalEmployee().getMatricule());
-                Employee employee2=employeeService.findByMatricule(replacement.getReplacedEmpolyee().getMatricule());
+    public Replacement createReplacement(Integer matricule,Integer matricule1, String wording,Replacement replacement) {
+        Employee employee=employeeService.findByMatricule(matricule);
+        Detail detail=detailService.findByWording(wording);
+                Employee employee2=employeeService.findByMatricule(matricule1);
         if(employee==null || employee2==null){
-            return -5;
+            return null;
         }
-        
-        
-List<Replacement> checkListReplacement=findByOriginalEmployeeMatriculeAndReplacementDate(replacement.getOriginalEmployee().getMatricule(),replacement.getReplacementDate());
-if(checkListReplacement.contains(replacement)){
-    return -1;
-}
-else {
+        else{
+
+    if(detail!=null){
     replacement.setOriginalEmployee(employee);
     replacement.setReplacedEmpolyee(employee2);
+    replacement.setDetail(detail);
     replacementDao.save(replacement);
-    return 1;
+    return replacement;
 }
-    }
+    else return null;
+}
 
+    
+   }
     public EmployeeService getEmployeeService() {
         return employeeService;
     }
@@ -67,6 +73,16 @@ else {
     public void setReplacementDao(ReplacementDao replacementDao) {
         this.replacementDao = replacementDao;
     }
+
+    public DetailService getDetailService() {
+        return detailService;
+    }
+
+    public void setDetailService(DetailService detailService) {
+        this.detailService = detailService;
+    }
+    
+    
     
     
     

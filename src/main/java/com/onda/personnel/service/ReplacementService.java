@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface ReplacementService {
               public List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule,Date replacementDate); 
-              public int createReplacement(Replacement replacement);
+              public Replacement createReplacement(Integer matricule,Integer matricule1,String wording,Replacement replacement);
 }

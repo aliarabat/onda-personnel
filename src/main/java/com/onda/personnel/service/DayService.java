@@ -16,4 +16,7 @@ import java.util.List;
 public interface DayService {
 
     public int createDay(Integer matricule,List<Day> days);
+    public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule,int year,int month);
+    public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule,Date dayDate);
+        public List<Day> findByDayDate(Date dayDate);
 }

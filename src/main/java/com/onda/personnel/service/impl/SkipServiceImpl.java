@@ -10,6 +10,7 @@ import com.onda.personnel.bean.Skip;
 import com.onda.personnel.dao.SkipDao;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.SkipService;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,23 +32,19 @@ return skipDao.findByEmployeeMatriculeAndSkipDate(matricule, skipDate);
     }
 
     @Override
-    public int createSkip(Skip skip) {
-        Employee employee=employeeService.findByMatricule(skip.getEmployee().getMatricule());
+    public Skip createSkip(Integer matricule,Skip skip) {
+        Employee employee=employeeService.findByMatricule(matricule);
         if(employee==null){
-            return -5;
+            return null;
         }
         else{
-List<Skip> checkListReplacement=findByEmployeeMatriculeAndSkipDate(skip.getEmployee().getMatricule(),skip.getSkipDate());
-if(checkListReplacement.contains(skip)){
-    return -1;
-}
-else {
+             
     skip.setEmployee(employee);
    skipDao.save(skip);
-    return 1;
+    return skip;
 }
         }
-    }
+    
     
 
     public EmployeeService getEmployeeService() {

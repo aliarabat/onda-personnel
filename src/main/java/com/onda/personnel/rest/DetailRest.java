@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.onda.personnel.service.DetailService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  *
  * @author AMINE
  */
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/Detail")
 public class DetailRest {
 

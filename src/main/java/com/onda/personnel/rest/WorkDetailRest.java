@@ -6,33 +6,25 @@
 package com.onda.personnel.rest;
 
 import com.onda.personnel.bean.WorkDetail;
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.rest.converter.AbstractConverter;
 import com.onda.personnel.rest.vo.WorkDetailVo;
-import com.onda.personnel.service.WorkDetailSevice;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.onda.personnel.service.WorkDetailService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  *
  * @author AMINE
  */
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/workDetail")
 public class WorkDetailRest {
     @Autowired
-    private WorkDetailSevice workDetailSevice;
+    private WorkDetailService workDetailSevice;
 
     @Autowired
     @Qualifier("workDetailConverter")
@@ -43,11 +35,11 @@ public class WorkDetailRest {
         return workDetailSevice.findByWorkDetailDate(DateUtil.fromStringToLocalDate(workDetailDate).plusDays(1));
     }
 */
-    public WorkDetailSevice getWorkDetailSevice() {
+    public WorkDetailService getWorkDetailSevice() {
         return workDetailSevice;
     }
 
-    public void setWorkDetailSevice(WorkDetailSevice workDetailSevice) {
+    public void setWorkDetailSevice(WorkDetailService workDetailSevice) {
         this.workDetailSevice = workDetailSevice;
     }
 

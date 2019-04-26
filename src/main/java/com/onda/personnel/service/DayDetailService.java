@@ -8,6 +8,8 @@ package com.onda.personnel.service;
 import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.bean.Detail;
 import com.onda.personnel.bean.Mission;
+import com.onda.personnel.bean.Replacement;
+import com.onda.personnel.bean.Skip;
 import java.util.Date;
 
 /**
@@ -18,7 +20,8 @@ public interface DayDetailService {
     
     public DayDetail createDayDetail ( DayDetail dayDetail);
         public int updateDayDetailMission(Integer matricule, String wordingDetail,Mission mission);
-        //public int updateDayDetailMission(Integer matricule, Date dateMission, String wordingDetail,Mission mission);
+        public int updateDayDetailSkip(Integer matricule,  String wordingDetail,Skip skip);
+        public int updateDayDetailReplacement(Integer matricule,Integer matricule1,  String wordingDetail,Replacement replacement);
 
 
 }

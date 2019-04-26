@@ -15,6 +15,17 @@ public class ReplacementVo {
     private EmployeeVo originalEmployee;
     private EmployeeVo replacedEmpolyee;
     private String replacementDate;
+    private DetailVo detailVo;
+
+    public DetailVo getDetailVo() {
+        return detailVo;
+    }
+
+    public void setDetailVo(DetailVo detailVo) {
+        this.detailVo = detailVo;
+    }
+    
+    
 
     public Long getId() {
         return id;

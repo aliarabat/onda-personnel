@@ -10,6 +10,7 @@ import com.onda.personnel.bean.Mission;
 import com.onda.personnel.dao.MissionDao;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.MissionService;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,44 +21,33 @@ import org.springframework.stereotype.Service;
  * @author AMINE
  */
 @Service
-public class MissionServiceImpl implements MissionService{
+public class MissionServiceImpl implements MissionService {
+
     @Autowired
     MissionDao missionDao;
-        @Autowired
-        EmployeeService employeeService;
-    @Override
-    public Mission createMisssion(Integer matricule,Mission mission) {
-        
-        Employee employee=employeeService.findByMatricule(matricule);
-        if(employee==null){
-            return null;
-        }
-        else{
-        
+    @Autowired
+    EmployeeService employeeService;
 
-//        if(findByEmployeeMatriculeAndStartingDate(mission.getEmployee().getMatricule(),mission.getStartingDate())==null || findByEmployeeMatriculeAndStartingDate(mission.getEmployee().getMatricule(),mission.getStartingDate()).isEmpty()==true){
-//             mission.setEmployee(employee);
-//    missionDao.save(mission);
-//    return 2;
-//        }
-//        else{
-//                    List<Mission> checkListMissions=findByEmployeeMatriculeAndStartingDate(mission.getEmployee().getMatricule(),mission.getStartingDate());
-//if(checkListMissions.contains(mission)){
-//    return -1;
-//}
-//else {
-    mission.setEmployee(employee);
-    missionDao.save(mission);
-    return mission;
-//}
-    }
+    @Override
+    public Mission createMisssion(Integer matricule, Mission mission) {
+
+        Employee employee = employeeService.findByMatricule(matricule);
+        if (employee == null) {
+            return null;
+        } 
+        else{
+                
+                    mission.setEmployee(employee);
+                    missionDao.save(mission);
+                    return mission;
+                
+            }
         }
-    //}
+    
     @Override
     public List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule, Date startingDate) {
-return missionDao.findByEmployeeMatriculeAndStartingDate(matricule, startingDate);
+        return missionDao.findByEmployeeMatriculeAndStartingDate(matricule, startingDate);
     }
-
 
     public MissionDao getMissionDao() {
         return missionDao;
@@ -74,9 +64,5 @@ return missionDao.findByEmployeeMatriculeAndStartingDate(matricule, startingDate
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-    
-    
-    
 
-        
 }
