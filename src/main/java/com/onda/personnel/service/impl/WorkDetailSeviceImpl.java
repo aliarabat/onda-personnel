@@ -102,8 +102,10 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
 
     private void setOtherInfos(WorkDetail workDetail, Day day) {
         workDetail.setPan(workDetail.getPan() + day.getPan());
-//        workDetail.setHn(workDetail.getHn() + day.getHn());
-//        workDetail.setHjf(workDetail.getHjf() + day.getHe());
+        workDetail.getHn().setHour(workDetail.getHn().getHour()+day.getHn().getHour());
+        workDetail.getHn().setMinute(workDetail.getHn().getMinute()+day.getHn().getMinute());
+        workDetail.getHjf().setHour(workDetail.getHjf().getHour()+day.getHe().getHour());
+        workDetail.getHjf().setMinute(workDetail.getHjf().getMinute()+day.getHe().getMinute());
         workDetail.getDays().add(day);
     }
 

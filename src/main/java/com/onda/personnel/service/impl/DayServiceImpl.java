@@ -50,11 +50,12 @@ public class DayServiceImpl implements DayService {
             return -1;
         } else if (days == null || days.isEmpty()) {
             return -2;
-        } else if (days.size() > 7 || days.size() < 6) {
+        } /*else if (days.size() > 7 || days.size() < 6) {
             return -3;
-        } else {
+        } */else {
             List<Day> daysSaved = new ArrayList<>();
             LocalDate ld = DateUtil.getFirstDayOfWeek();
+            System.out.println("haa size nta3 days ==> "+days.size());
             for (Day day : days) {
                 daysSaved.add(setDayInfos(day.getDayDetails(), DateUtil.toDate(ld)));
                 ld = ld.plusDays(1);
@@ -65,11 +66,13 @@ public class DayServiceImpl implements DayService {
     }
 
     private Day setDayInfos(List<DayDetail> dayDetails, Date ld) {
+        System.out.println("Rah dkhelt");
         Day day = new Day();
         Timing hn = new Timing(0, 0);
         Timing he = new Timing(0, 0);
         int pan = 0;
         day.setDayDate(ld);
+        System.out.println("hha size nta3 la liste ==> "+dayDetails.size());
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
             dayDetail.setDetail(dd);
@@ -78,8 +81,8 @@ public class DayServiceImpl implements DayService {
             pan += dd.getPan();
             hn.setHour(hn.getHour() + dd.getHn().getHour());
             hn.setMinute(hn.getMinute() + dd.getHn().getMinute());
-            he.setHour(hn.getHour() + dd.getHn().getHour());
-            he.setMinute(hn.getMinute() + dd.getHn().getMinute());
+            he.setHour(he.getHour() + dd.getHe().getHour());
+            he.setMinute(he.getMinute() + dd.getHe().getMinute());
         }
         day.setHn(hn);
         day.setHe(he);

@@ -8,6 +8,8 @@ package com.onda.personnel.rest;
 import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.Vacation;
 import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.rest.converter.DayConverter;
+import com.onda.personnel.rest.vo.DayVo;
 import com.onda.personnel.service.DayService;
 
 import java.time.LocalDate;
@@ -34,9 +36,12 @@ public class DayRest {
     @Autowired
     private DayService dayService;
 
+    @Autowired
+    private DayConverter dayConverter;
+
     @PostMapping("/matricule/{matricule}")
-    public int createDay(@PathVariable Integer matricule, @RequestBody List<Day> days) {
-        return dayService.createDay(matricule, days);
+    public int createDay(@PathVariable Integer matricule, @RequestBody List<DayVo> days) {
+        return dayService.createDay(matricule, dayConverter.toItem(days));
     }
 
     @PostMapping("/vacation/")

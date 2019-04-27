@@ -22,8 +22,8 @@ public class Timing implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int hour;
-    private int minute;
+    private int hour = 0;
+    private int minute = 0;
 
  public Timing(int hour, int minute) {
         this.hour = hour;
