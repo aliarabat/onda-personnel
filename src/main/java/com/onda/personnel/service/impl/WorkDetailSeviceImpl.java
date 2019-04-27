@@ -12,7 +12,6 @@ import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.WorkDetailDao;
 import com.onda.personnel.service.EmployeeService;
-import com.onda.personnel.service.WorkDetailSevice;
 import com.onda.personnel.service.WorkService;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -22,13 +21,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.onda.personnel.service.WorkDetailService;
 
 /**
  *
  * @author AMINE
  */
 @Service
-public class WorkDetailSeviceImpl implements WorkDetailSevice {
+public class WorkDetailSeviceImpl implements WorkDetailService {
 
     @Autowired
     private WorkService workService;
@@ -102,8 +102,8 @@ public class WorkDetailSeviceImpl implements WorkDetailSevice {
 
     private void setOtherInfos(WorkDetail workDetail, Day day) {
         workDetail.setPan(workDetail.getPan() + day.getPan());
-        workDetail.setHn(workDetail.getHn() + day.getHn());
-        workDetail.setHjf(workDetail.getHjf() + day.getHe());
+//        workDetail.setHn(workDetail.getHn() + day.getHn());
+//        workDetail.setHjf(workDetail.getHjf() + day.getHe());
         workDetail.getDays().add(day);
     }
 

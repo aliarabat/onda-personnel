@@ -6,7 +6,6 @@
 package com.onda.personnel.rest.vo;
 
 /**
- *
  * @author AMINE
  */
 public class WorkVo {
@@ -23,20 +22,19 @@ public class WorkVo {
         this.id = id;
     }
 
-    public WorkDetailVo getWorkDetail() {
+    public WorkDetailVo getWorkDetailVo() {
         return workDetailVo;
     }
 
-    public void setWorkDetail(WorkDetailVo workDetail) {
-        this.workDetailVo = workDetail;
+    public void setWorkDetailVo(WorkDetailVo workDetailVo) {
+        this.workDetailVo = workDetailVo;
     }
 
-    public EmployeeVo getEmployee() {
+    public EmployeeVo getEmployeeVo() {
         return employeeVo;
     }
 
-    public void setEmployee(EmployeeVo employeeVo) {
+    public void setEmployeeVo(EmployeeVo employeeVo) {
         this.employeeVo = employeeVo;
     }
-
 }

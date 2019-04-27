@@ -15,7 +15,7 @@ public class DayDetailVo {
     private DetailVo detailVo;
     private ReplacementVo replacementVo;
     private SkipVo skipVo;
-    private MissionVo mission;
+    private MissionVo missionVo;
 
     public Long getId() {
         return id;
@@ -49,11 +49,11 @@ public class DayDetailVo {
         this.skipVo = skipVo;
     }
 
-    public MissionVo getMission() {
-        return mission;
+    public MissionVo getMissionVo() {
+        return missionVo;
     }
 
-    public void setMission(MissionVo mission) {
-        this.mission = mission;
+    public void setMissionVo(MissionVo missionVo) {
+        this.missionVo = missionVo;
     }
 }

@@ -15,10 +15,9 @@ public class MissionVo {
 
     private Long id;
     private String reference;
-    private EmployeeVo employee;
+    private EmployeeVo employeeVo;
     private String type;
     private String startingDate;
-    private String endingDate;
    
     public Long getId() {
         return id;
@@ -29,11 +28,11 @@ public class MissionVo {
     }
 
     public EmployeeVo getEmployee() {
-        return employee;
+        return employeeVo;
     }
 
-    public void setEmployee(EmployeeVo employee) {
-        this.employee = employee;
+    public void setEmployee(EmployeeVo employeeVo) {
+        this.employeeVo = employeeVo;
     }
 
     public String getReference() {
@@ -61,12 +60,6 @@ public class MissionVo {
         this.startingDate = startingDate;
     }
 
-    public String getEndingDate() {
-        return endingDate;
-    }
-
-    public void setEndingDate(String endingDate) {
-        this.endingDate = endingDate;
-    }
+   
 
 }

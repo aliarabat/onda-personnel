@@ -9,24 +9,23 @@ import java.util.Date;
 import javax.persistence.Temporal;
 
 /**
- *
  * @author AMINE
  */
 public class VacationVo {
 
     private Long id;
-    private EmployeeVo employee;
+    private EmployeeVo employeeVo;
     private String reference;
     private String startingDate;
     private String endingDate;
     private String type;
 
     public EmployeeVo getEmployee() {
-        return employee;
+        return employeeVo;
     }
 
-    public void setEmployee(EmployeeVo employee) {
-        this.employee = employee;
+    public void setEmployee(EmployeeVo employeeVo) {
+        this.employeeVo = employeeVo;
     }
 
     public Long getId() {

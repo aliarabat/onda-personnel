@@ -5,11 +5,12 @@
  */
 package com.onda.personnel.rest.vo;
 
+import com.onda.personnel.bean.Timing;
+
 import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author AMINE
  */
 public class WorkDetailVo {
@@ -17,10 +18,10 @@ public class WorkDetailVo {
     private Long id;
     private String workDetailDate;
     private String pan;
-    private String hn;
-    private String hjf;
-    private List<DayVo> days;
-    
+    private TimingVo hn;
+    private TimingVo hjf;
+    private List<DayVo> daysVo;
+
     public Long getId() {
         return id;
     }
@@ -37,36 +38,19 @@ public class WorkDetailVo {
         this.workDetailDate = workDetailDate;
     }
 
-    public String getPan() {
-        return pan;
-    }
+    public String getPan() { return pan; }
 
-    public void setPan(String pan) {
-        this.pan = pan;
-    }
+    public void setPan(String pan) { this.pan = pan; }
 
-    public String getHn() {
-        return hn;
-    }
+    public TimingVo getHn() { return hn; }
 
-    public void setHn(String hn) {
-        this.hn = hn;
-    }
+    public void setHn(TimingVo hn) { this.hn = hn; }
 
-    public String getHjf() {
-        return hjf;
-    }
+    public TimingVo getHjf() { return hjf; }
 
-    public void setHjf(String hjf) {
-        this.hjf = hjf;
-    }
+    public void setHjf(TimingVo hjf) { this.hjf = hjf; }
 
-    public List<DayVo> getDays() {
-        return days;
-    }
+    public List<DayVo> getDaysVo() { return daysVo; }
 
-    public void setDays(List<DayVo> days) {
-        this.days = days;
-    }
-
+    public void setDaysVo(List<DayVo> daysVo) { this.daysVo = daysVo; }
 }

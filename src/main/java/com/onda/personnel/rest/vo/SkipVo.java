@@ -13,7 +13,7 @@ public class SkipVo {
 
     private Long id;
     private String reference;
-    private EmployeeVo employee;
+    private EmployeeVo employeeVo;
     private String type;
     private String skipDate;
 
@@ -41,12 +41,12 @@ public class SkipVo {
         this.reference = reference;
     }
 
-    public EmployeeVo getEmployee() {
-        return employee;
+    public EmployeeVo getEmployeeVo() {
+        return employeeVo;
     }
 
-    public void setEmployee(EmployeeVo employee) {
-        this.employee = employee;
+    public void setEmployeeVo(EmployeeVo employeeVo) {
+        this.employeeVo = employeeVo;
     }
 
     public String getType() {

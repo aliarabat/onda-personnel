@@ -32,12 +32,14 @@ public class Day implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Integer pan = 0;
-    private Integer hn = 0;
-    private Integer he = 0;
+    private Integer pan;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Timing hn;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Timing he;
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<DayDetail> dayDetails=new ArrayList<>();
-    @Temporal(TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dayDate;
     @OneToOne
     private Vacation vacation;
@@ -68,6 +70,35 @@ public class Day implements Serializable {
         return dayDetails;
     }
 
+    public Date getDayDate() {
+        return dayDate;
+    }
+
+    public void setDayDate(Date dayDate) {
+        this.dayDate = dayDate;
+    }
+
+    public Timing getHn() {
+        return hn;
+    }
+
+    public void setHn(Timing hn) {
+        this.hn = hn;
+    }
+
+    public Timing getHe() {
+        return he;
+    }
+
+    public void setHe(Timing he) {
+        this.he = he;
+    }
+
+   
+ 
+    
+
+    
     /**
      *
      * @param dayDetails
@@ -93,37 +124,8 @@ public class Day implements Serializable {
         this.pan = pan;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Integer getHn() {
-        return hn;
-    }
 
-    /**
-     *
-     * @param hn
-     */
-    public void setHn(Integer hn) {
-        this.hn = hn;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getHe() {
-        return he;
-    }
-
-    /**
-     *
-     * @param he
-     */
-    public void setHe(Integer he) {
-        this.he = he;
-    }
+    
 
     public Vacation getVacation() {
         return vacation;
@@ -131,14 +133,6 @@ public class Day implements Serializable {
 
     public void setVacation(Vacation vacation) {
         this.vacation = vacation;
-    }
-
-    public Date getDayDate() {
-        return dayDate;
-    }
-
-    public void setDayDate(Date dayDate) {
-        this.dayDate = dayDate;
     }
 
     /**

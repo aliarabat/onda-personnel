@@ -7,6 +7,7 @@ package com.onda.personnel.service.impl;
 
 import com.onda.personnel.bean.*;
 import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.common.util.betweenDate;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.service.*;
 
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DayServiceImpl implements DayService {
-
     @Autowired
     private DayDao dayDao;
 
@@ -32,17 +31,17 @@ public class DayServiceImpl implements DayService {
     private EmployeeService employeeService;
 
     @Autowired
-    private WorkDetailSevice workDetailSevice;
+    private WorkDetailService workDetailService;
+    @Autowired
+    private WorkService workService;
     @Autowired
     private DetailService detailService;
-    
+
     @Autowired
     private DayDetailService dayDetailService;
 
     @Autowired
-    private WorkService workService;
-
-    public static Jsr310JpaConverters.LocalDateConverter localDateConverter=new Jsr310JpaConverters.LocalDateConverter();
+    private VacationService vacationService;
 
     @Override
     public int createDay(Integer matricule, List<Day> days) {
@@ -51,39 +50,119 @@ public class DayServiceImpl implements DayService {
             return -1;
         } else if (days == null || days.isEmpty()) {
             return -2;
-        } else if (days.size()>7 || days.size()<6){
+        } else if (days.size() > 7 || days.size() < 6) {
             return -3;
         } else {
             List<Day> daysSaved = new ArrayList<>();
-            LocalDate ld=DateUtil.getFirstDayOfWeek();
+            LocalDate ld = DateUtil.getFirstDayOfWeek();
             for (Day day : days) {
-                daysSaved.add(setDayInfos(day.getDayDetails(),DateUtil.toDate(ld)));
-                ld=ld.plusDays(1);
+                daysSaved.add(setDayInfos(day.getDayDetails(), DateUtil.toDate(ld)));
+                ld = ld.plusDays(1);
             }
-            workDetailSevice.createWorkDetail(emp, daysSaved);
+            workDetailService.createWorkDetail(emp, daysSaved);
             return 1;
         }
     }
 
     private Day setDayInfos(List<DayDetail> dayDetails, Date ld) {
-        Integer pan = 0, hn = 0, he = 0;
-        Day day=new Day();
+        Day day = new Day();
+        Timing hn = new Timing(0, 0);
+        Timing he = new Timing(0, 0);
+        int pan = 0;
         day.setDayDate(ld);
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
-            DayDetail dayDet=new DayDetail();
-            dayDet.setDetail(dd);
-            DayDetail dayDetail1= dayDetailService.createDayDetail(dayDet);
+            dayDetail.setDetail(dd);
+            DayDetail dayDetail1 = dayDetailService.createDayDetail(dayDetail);
             day.getDayDetails().add(dayDetail1);
             pan += dd.getPan();
-            hn += dd.getHn();
-            he += dd.getHe();
+            hn.setHour(hn.getHour() + dd.getHn().getHour());
+            hn.setMinute(hn.getMinute() + dd.getHn().getMinute());
+            he.setHour(hn.getHour() + dd.getHn().getHour());
+            he.setMinute(hn.getMinute() + dd.getHn().getMinute());
         }
         day.setHn(hn);
         day.setHe(he);
         day.setPan(pan);
         dayDao.save(day);
         return day;
+    }
+
+    @Override
+    public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month) {
+        Work work = new Work()/*workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month)*/;
+        if (work == null) {
+            return null;
+        } else {
+            return work.getWorkDetail().getDays();
+        }
+    }
+
+    @Override
+    public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate) {
+        LocalDate localDate = DateUtil.fromDate(dayDate);
+        LocalDate checklocalDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
+        Date tmpDate = DateUtil.toDate(checklocalDate);
+        Work work = workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, tmpDate);
+        if (work == null) {
+            return null;
+        } else {
+            WorkDetail workDetail = work.getWorkDetail();
+            List<Day> listOfDays = workDetail.getDays();
+            Day theDay = new Day();
+            for (Day day : listOfDays) {
+                if (day.getDayDate().compareTo(dayDate) == 0) {
+                    theDay = dayDao.getOne(day.getId());
+                }
+            }
+            if (theDay == null) {
+                return null;
+            } else {
+                return theDay;
+            }
+
+        }
+
+    }
+
+    @Override
+    public int createVacation(Vacation vacation) {
+        int res = 0;
+        Employee emp = employeeService.findByMatricule(vacation.getEmployee().getMatricule());
+        LocalDate ldS = DateUtil.fromDate(vacation.getStartingDate());
+        LocalDate ldE = DateUtil.fromDate(vacation.getEndingDate());
+        System.out.println(ldE);
+        System.out.println(ldS);
+        System.out.println(vacation.getStartingDate());
+        if (emp == null) {
+            return res = -1;
+        } else if (vacation.getType().equals("C.M") || vacation.getType().equals("C.AT") || vacation.getType().equals("C.EXCEP")) {
+            List<LocalDate> daysVacation = betweenDate.between(ldS, ldE);
+            for (LocalDate ld : daysVacation) {
+                Day day = dayDao.findByDayDate(DateUtil.toDate(ld));
+                vacation.setEmployee(emp);
+                day.setVacation(vacation);
+                vacationService.saveVacation(vacation);
+            }
+            return res = 1;
+
+        } else if (vacation.getType().equals("C.R")) {
+            List<LocalDate> daysVacationWithoutSunday = betweenDate.withoutSunday(ldS, ldE);
+            for (LocalDate ld : daysVacationWithoutSunday) {
+                System.out.println(ld);
+                Day day = dayDao.findByDayDate(DateUtil.toDate(ld));
+                vacation.setEmployee(emp);
+                day.setVacation(vacation);
+                vacationService.saveVacation(vacation);
+            }
+            return res = 2;
+        }
+        return res;
+    }
+
+    @Override
+    public Day findByDayDate(Date dayDate) {
+        return dayDao.findByDayDate(dayDate);
     }
 
     public EmployeeService getEmployeeService() {
@@ -102,12 +181,20 @@ public class DayServiceImpl implements DayService {
         this.dayDao = dayDao;
     }
 
-    public WorkDetailSevice getWorkDetailSevice() {
-        return workDetailSevice;
+    public WorkDetailService getWorkDetailService() {
+        return workDetailService;
     }
 
-    public void setWorkDetailSevice(WorkDetailSevice workDetailSevice) {
-        this.workDetailSevice = workDetailSevice;
+    public void setWorkDetailService(WorkDetailService workDetailService) {
+        this.workDetailService = workDetailService;
+    }
+
+    public WorkService getWorkService() {
+        return workService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
     }
 
     public DetailService getDetailService() {
@@ -125,7 +212,4 @@ public class DayServiceImpl implements DayService {
     public void setDayDetailService(DayDetailService dayDetailService) {
         this.dayDetailService = dayDetailService;
     }
-
-  
-
 }

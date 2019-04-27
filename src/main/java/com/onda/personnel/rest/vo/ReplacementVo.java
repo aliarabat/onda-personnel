@@ -6,15 +6,25 @@
 package com.onda.personnel.rest.vo;
 
 /**
- *
  * @author AMINE
  */
 public class ReplacementVo {
-      private Long id;
+
+    private Long id;
     private String reference;
     private EmployeeVo originalEmployee;
     private EmployeeVo replacedEmpolyee;
     private String replacementDate;
+    private DetailVo detailVo;
+
+    public DetailVo getDetailVo() {
+        return detailVo;
+    }
+
+    public void setDetailVo(DetailVo detailVo) {
+        this.detailVo = detailVo;
+    }
+
 
     public Long getId() {
         return id;
@@ -48,7 +58,7 @@ public class ReplacementVo {
         this.replacedEmpolyee = replacedEmpolyee;
     }
 
-    
+
     public String getReplacementDate() {
         return replacementDate;
     }
@@ -56,5 +66,5 @@ public class ReplacementVo {
     public void setReplacementDate(String replacementDate) {
         this.replacementDate = replacementDate;
     }
-    
+
 }

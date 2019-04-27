@@ -18,9 +18,9 @@ public class DayVo {
 
     private Long id;
     private String pan;
-    private String hn;
-    private String he;
-    private List<DayDetailVo> dayDetails;
+    private TimingVo hn;
+    private TimingVo he;
+    private List<DayDetailVo> dayDetailsVo;
     private String dayDate;
     private VacationVo vacationVo;
 
@@ -49,12 +49,12 @@ public class DayVo {
         this.dayDate = dayDate;
     }
 
-    public List<DayDetailVo> getDayDetails() {
-        return dayDetails;
+    public List<DayDetailVo> getDayDetailsVo() {
+        return dayDetailsVo;
     }
 
-    public void setDayDetails(List<DayDetailVo> dayDetails) {
-        this.dayDetails = dayDetails;
+    public void setDayDetailsVo(List<DayDetailVo> dayDetailsVo) {
+        this.dayDetailsVo = dayDetailsVo;
     }
 
     public String getPan() {
@@ -65,20 +65,19 @@ public class DayVo {
         this.pan = pan;
     }
 
-    public String getHn() {
+    public TimingVo getHn() {
         return hn;
     }
 
-    public void setHn(String hn) {
+    public void setHn(TimingVo hn) {
         this.hn = hn;
     }
 
-    public String getHe() {
+    public TimingVo getHe() {
         return he;
     }
 
-    public void setHe(String he) {
+    public void setHe(TimingVo he) {
         this.he = he;
     }
-
 }

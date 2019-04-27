@@ -17,13 +17,11 @@ import java.util.List;
  */
 public interface WorkService {
 
-    public void saveWork(Work work);
+    void saveWork(Work work);
 
-    public void createWork(Employee emp, WorkDetail workDetail);
+    Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate);
 
-    public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate);
-    
-    public Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule);
+    Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule);
 
     List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee);
 

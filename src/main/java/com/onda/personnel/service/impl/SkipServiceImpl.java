@@ -6,10 +6,10 @@
 package com.onda.personnel.service.impl;
 
 import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.Mission;
-import com.onda.personnel.dao.MissionDao;
+import com.onda.personnel.bean.Skip;
+import com.onda.personnel.dao.SkipDao;
 import com.onda.personnel.service.EmployeeService;
-import com.onda.personnel.service.MissionService;
+import com.onda.personnel.service.SkipService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,41 +19,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author AMINE
+ * @author JaafarDiyaou
  */
 @Service
-public class MissionServiceImpl implements MissionService {
-
+public class SkipServiceImpl implements SkipService {
     @Autowired
-    MissionDao missionDao;
+    SkipDao skipDao;
     @Autowired
     EmployeeService employeeService;
 
     @Override
-    public Mission createMisssion(Integer matricule, Mission mission) {
+    public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate) {
+        return skipDao.findByEmployeeMatriculeAndSkipDate(matricule, skipDate);
+    }
 
+    @Override
+    public Skip createSkip(Integer matricule, Skip skip) {
         Employee employee = employeeService.findByMatricule(matricule);
         if (employee == null) {
             return null;
         } else {
-            mission.setEmployee(employee);
-            missionDao.save(mission);
-            return mission;
+            skip.setEmployee(employee);
+            return skipDao.save(skip);
         }
     }
 
-    @Override
-    public List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule, Date startingDate) {
-        return missionDao.findByEmployeeMatriculeAndStartingDate(matricule, startingDate);
-    }
-
-    public MissionDao getMissionDao() {
-        return missionDao;
-    }
-
-    public void setMissionDao(MissionDao missionDao) {
-        this.missionDao = missionDao;
-    }
 
     public EmployeeService getEmployeeService() {
         return employeeService;
@@ -62,5 +52,15 @@ public class MissionServiceImpl implements MissionService {
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
+
+
+    public SkipDao getSkipDao() {
+        return skipDao;
+    }
+
+    public void setSkipDao(SkipDao skipDao) {
+        this.skipDao = skipDao;
+    }
+
 
 }

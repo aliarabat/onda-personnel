@@ -6,12 +6,13 @@
 package com.onda.personnel.rest.converter;
 
 import com.onda.personnel.bean.Day;
+import com.onda.personnel.bean.Timing;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.NumberUtil;
+import com.onda.personnel.common.util.StringUtil;
 import com.onda.personnel.rest.vo.DayVo;
+import com.onda.personnel.rest.vo.TimingVo;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 /**
  *
@@ -27,11 +28,12 @@ public class DayConverter extends AbstractConverter<Day, DayVo>  {
         } else {
             Day d = new Day();
             d.setId(vo.getId());
-            d.setHe(NumberUtil.toInteger(vo.getHe()));
-            d.setHn(NumberUtil.toInteger(vo.getHn()));
+            d.setHe(new TimingConverter().toItem(vo.getHe()));
+            d.setHn(new TimingConverter().toItem(vo.getHn()));
             d.setPan(NumberUtil.toInteger(vo.getPan()));
             d.setVacation(new VacationConverter().toItem(vo.getVacationVo()));
-            d.setDayDetails(new DayDetailConverter().toItem(vo.getDayDetails()));
+            d.setDayDetails(new DayDetailConverter().toItem(vo.getDayDetailsVo()));
+            d.setDayDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getDayDate())));
             return d;
         }
     }
@@ -43,11 +45,12 @@ public class DayConverter extends AbstractConverter<Day, DayVo>  {
         } else {
             DayVo dVo = new DayVo();
             dVo.setId(item.getId());
-            dVo.setHe(NumberUtil.toString(item.getHe()));
-            dVo.setHn(NumberUtil.toString(item.getHn()));
+            dVo.setHe(new TimingConverter().toVo(item.getHe()));
+            dVo.setHn(new TimingConverter().toVo(item.getHn()));
             dVo.setPan(NumberUtil.toString(item.getPan()));
             dVo.setVacationVo(new VacationConverter().toVo(item.getVacation()));
-            dVo.setDayDetails(new DayDetailConverter().toVo(item.getDayDetails()));
+            dVo.setDayDetailsVo(new DayDetailConverter().toVo(item.getDayDetails()));
+            dVo.setDayDate(DateUtil.toString(DateUtil.fromDate(item.getDayDate())));
             return dVo;
         }
     }

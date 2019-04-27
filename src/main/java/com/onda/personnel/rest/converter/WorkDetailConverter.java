@@ -8,6 +8,7 @@ package com.onda.personnel.rest.converter;
 import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.NumberUtil;
+import com.onda.personnel.common.util.StringUtil;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import java.util.Date;
 import org.springframework.stereotype.Component;
@@ -26,10 +27,10 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
         } else {
             WorkDetail workDetail = new WorkDetail();
             workDetail.setId(vo.getId());
-            workDetail.setHjf(NumberUtil.toInteger(vo.getHjf()));
-            workDetail.setHn(NumberUtil.toInteger(vo.getHn()));
+            workDetail.setHjf(new TimingConverter().toItem(vo.getHjf()));
+            workDetail.setHn(new TimingConverter().toItem(vo.getHn()));
             workDetail.setPan(NumberUtil.toInteger(vo.getPan()));
-            workDetail.setDays(new DayConverter().toItem(vo.getDays()));
+            workDetail.setDays(new DayConverter().toItem(vo.getDaysVo()));
             workDetail.setWorkDetailDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getWorkDetailDate())));
             return workDetail;
         }
@@ -42,10 +43,10 @@ public class WorkDetailConverter extends AbstractConverter<WorkDetail, WorkDetai
         } else {
             WorkDetailVo workDetailVo = new WorkDetailVo();
             workDetailVo.setId(item.getId());
-            workDetailVo.setHjf(NumberUtil.toString(item.getHjf()));
-            workDetailVo.setHn(NumberUtil.toString(item.getHn()));
+            workDetailVo.setHjf(new TimingConverter().toVo(item.getHjf()));
+            workDetailVo.setHn(new TimingConverter().toVo(item.getHn()));
             workDetailVo.setPan(NumberUtil.toString(item.getPan()));
-            workDetailVo.setDays(new DayConverter().toVo(item.getDays()));
+            workDetailVo.setDaysVo(new DayConverter().toVo(item.getDays()));
             workDetailVo.setWorkDetailDate(DateUtil.toString(DateUtil.fromDate(item.getWorkDetailDate())));
             return workDetailVo;
         }

@@ -8,6 +8,7 @@ package com.onda.personnel.rest.converter;
 import com.onda.personnel.bean.Detail;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.NumberUtil;
+import com.onda.personnel.common.util.StringUtil;
 import com.onda.personnel.rest.vo.DetailVo;
 import org.springframework.stereotype.Component;
 
@@ -25,14 +26,14 @@ public class DetailConverter extends AbstractConverter<Detail, DetailVo> {
         } else {
             Detail dayDetail = new Detail();
             dayDetail.setId(vo.getId());
-            dayDetail.setHe(NumberUtil.toInteger(vo.getHe()));
-            dayDetail.setHn(NumberUtil.toInteger(vo.getHn()));
+            dayDetail.setHe(new TimingConverter().toItem(vo.getHeVo()));
+            dayDetail.setHn(new TimingConverter().toItem(vo.getHnVo()));
             dayDetail.setPan(NumberUtil.toInteger(vo.getPan()));
             dayDetail.setMode(vo.getMode());
             dayDetail.setWording(vo.getWording());
             dayDetail.setReference(vo.getReference());
-            dayDetail.setStartingTime(DateUtil.fromString(vo.getStartingTime()));
-            dayDetail.setEndingTime(DateUtil.fromString(vo.getEndingTime()));
+            dayDetail.setStartingTime(new TimingConverter().toItem(vo.getStartingTimeVo()));
+            dayDetail.setEndingTime(new TimingConverter().toItem(vo.getEndingTimeVo()));
             return dayDetail;
         }
     }
@@ -44,14 +45,14 @@ public class DetailConverter extends AbstractConverter<Detail, DetailVo> {
         } else {
             DetailVo dayDetailVo = new DetailVo();
             dayDetailVo.setId(item.getId());
-            dayDetailVo.setHe(NumberUtil.toString(item.getHe()));
-            dayDetailVo.setHn(NumberUtil.toString(item.getHn()));
+            dayDetailVo.setHeVo(new TimingConverter().toVo(item.getHe()));
+            dayDetailVo.setHnVo(new TimingConverter().toVo(item.getHn()));
             dayDetailVo.setPan(NumberUtil.toString(item.getPan()));
             dayDetailVo.setMode(item.getMode());
             dayDetailVo.setWording(item.getWording());
             dayDetailVo.setReference(item.getReference());
-            dayDetailVo.setStartingTime(DateUtil.toString(item.getStartingTime()));
-            dayDetailVo.setEndingTime(DateUtil.toString(item.getEndingTime()));
+            dayDetailVo.setStartingTimeVo(new TimingConverter().toVo(item.getStartingTime()));
+            dayDetailVo.setEndingTimeVo(new TimingConverter().toVo(item.getEndingTime()));
             return dayDetailVo;
         }
     }

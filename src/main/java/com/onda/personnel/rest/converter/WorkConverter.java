@@ -23,8 +23,8 @@ public class WorkConverter extends AbstractConverter<Work, WorkVo> {
         } else {
             Work work = new Work();
             work.setId(vo.getId());
-            work.setEmployee(new EmployeeConverter().toItem(vo.getEmployee()));
-            work.setWorkDetail(new WorkDetailConverter().toItem(vo.getWorkDetail()));
+            work.setEmployee(new EmployeeConverter().toItem(vo.getEmployeeVo()));
+            work.setWorkDetail(new WorkDetailConverter().toItem(vo.getWorkDetailVo()));
             return work;
         }
     }
@@ -36,11 +36,11 @@ public class WorkConverter extends AbstractConverter<Work, WorkVo> {
         } else {
             WorkVo workVo = new WorkVo();
             workVo.setId(item.getId());
-            workVo.setEmployee(new EmployeeConverter().toVo(item.getEmployee()));
-            workVo.setWorkDetail(new WorkDetailConverter().toVo(item.getWorkDetail()));
+            workVo.setEmployeeVo(new EmployeeConverter().toVo(item.getEmployee()));
+            workVo.setWorkDetailVo(new WorkDetailConverter().toVo(item.getWorkDetail()));
             return workVo;
         }
     }
 
-    
+
 }

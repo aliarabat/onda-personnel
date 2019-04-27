@@ -35,14 +35,6 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public void createWork(Employee emp, WorkDetail workDetail) {
-        Work work = new Work();
-        work.setEmployee(emp);
-        work.setWorkDetail(workDetail);
-        saveWork(work);
-    }
-
-    @Override
     public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate) {
         return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, workDetailDate);
     }

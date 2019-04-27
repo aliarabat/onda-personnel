@@ -10,6 +10,7 @@ import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- *
  * @author AMINE
  */
 @RestController
@@ -33,7 +33,7 @@ public class WorkRest {
     private WorkConverter workConverter;
 
     @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
-    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule,@PathVariable String workDetailDate) {
+    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule, @PathVariable String workDetailDate) {
         return workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, new Date(workDetailDate));
     }
 
@@ -43,7 +43,7 @@ public class WorkRest {
     }
 
     @GetMapping("matricule/{matricule}/annee/{annee}/")
-    public List<WorkVo> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(@PathVariable  Integer matricule,@PathVariable Integer annee) {
+    public List<WorkVo> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(@PathVariable Integer matricule, @PathVariable Integer annee) {
         return workConverter.toVo(workService.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, annee));
     }
 

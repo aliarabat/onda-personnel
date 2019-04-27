@@ -29,7 +29,7 @@ public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
         } else {
             Skip skip = new Skip();
             skip.setId(vo.getId());
-            skip.setEmployee(employeeConverter.toItem(vo.getEmployee()));
+            skip.setEmployee(employeeConverter.toItem(vo.getEmployeeVo()));
             skip.setReference(vo.getReference());
             skip.setType(vo.getType());
             skip.setSkipDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getSkipDate())));
@@ -45,7 +45,7 @@ public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
         } else {
             SkipVo skipVo = new SkipVo();
             skipVo.setId(item.getId());
-            skipVo.setEmployee(employeeConverter.toVo(item.getEmployee()));
+            skipVo.setEmployeeVo(employeeConverter.toVo(item.getEmployee()));
             skipVo.setType(item.getType());
             skipVo.setReference(item.getReference());
             skipVo.setSkipDate(DateUtil.toString(DateUtil.fromDate(item.getSkipDate())));

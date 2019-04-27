@@ -24,9 +24,9 @@ public class Work implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
     private WorkDetail workDetail;
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
     private Employee employee;
 
     public Work(Employee employee) {

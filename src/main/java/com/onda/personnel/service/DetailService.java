@@ -6,6 +6,8 @@
 package com.onda.personnel.service;
 
 import com.onda.personnel.bean.Detail;
+import com.onda.personnel.bean.Timing;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -16,13 +18,16 @@ public interface DetailService {
 
     public Detail findByWording(String wording);
 
-    public int createDetail(Detail dayDetail);
+    public int createDetail(List<Detail> details);
 
-    public int updateDayDetail(String wording, Detail dayDetail);
+    public int updateDetail(Detail detail);
 
-    public int deleteDayDeail(String wording);
+    public int deleteDetail(String wording);
 
     public List<Detail> findAll();
 
     public List<Detail> findByMode(String mode);
+
+    public  Timing getHoursBetween(int startingHour, int startingMinute, int endingHour, int endingMinute, boolean isNight); 
+
 }

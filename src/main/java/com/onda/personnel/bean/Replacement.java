@@ -7,12 +7,10 @@ package com.onda.personnel.bean;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -34,6 +32,8 @@ public class Replacement implements Serializable {
     private Employee replacedEmpolyee;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date replacementDate;
+    @OneToOne
+    private Detail detail;
 
     /**
      *
@@ -114,6 +114,17 @@ public class Replacement implements Serializable {
     public void setReplacementDate(Date replacementDate) {
         this.replacementDate = replacementDate;
     }
+
+    public Detail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Detail detail) {
+        this.detail = detail;
+    }
+    
+    
+    
 
     /**
      *

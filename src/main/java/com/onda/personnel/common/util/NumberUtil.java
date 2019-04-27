@@ -37,6 +37,13 @@ public class NumberUtil {
         }
     }
 
+     public static int toInt(String value) {
+        if (value == null || value.isEmpty()) {
+            return 0;
+        } else {
+            return Integer.parseInt(value);
+        }
+    }
     public static Long toLong(String value) {
         if (value == null || value.isEmpty()) {
             return 0L;

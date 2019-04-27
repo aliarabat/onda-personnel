@@ -7,13 +7,15 @@ package com.onda.personnel.service;
 
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Mission;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author AMINE
  */
 public interface MissionService {
-        public Employee findByEmployeeMatricule(Integer matricule);
-        public int createMisssion (Mission mission);
 
+        public Mission createMisssion (Integer matricule,Mission mission);
+  public List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule,Date startingDate); 
 }

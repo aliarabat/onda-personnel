@@ -6,6 +6,8 @@
 package com.onda.personnel.dao;
 
 import com.onda.personnel.bean.Day;
+import java.util.Date;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Repository;
  * @author AMINE
  */
 @Repository
-public interface DayDao extends JpaRepository<Day, Long>{
-    
+public interface DayDao extends JpaRepository<Day, Long> {
+
+     public Day findByDayDate(Date dayDate);
+
 }
