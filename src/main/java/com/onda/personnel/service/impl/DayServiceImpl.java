@@ -53,20 +53,13 @@ public class DayServiceImpl implements DayService {
         } /*else if (days.size() > 7 || days.size() < 6) {
             return -3;
         } */else {
-            List<Day> daysSaved = new ArrayList<>();
-            LocalDate ld = DateUtil.getFirstDayOfWeek();
-            System.out.println("haa size nta3 days ==> "+days.size());
-            for (Day day : days) {
-                daysSaved.add(setDayInfos(day.getDayDetails(), DateUtil.toDate(ld)));
-                ld = ld.plusDays(1);
-            }
-            workDetailService.createWorkDetail(emp, daysSaved);
+            workDetailService.createWorkDetail(emp, days);
             return 1;
         }
     }
 
-    private Day setDayInfos(List<DayDetail> dayDetails, Date ld) {
-        System.out.println("Rah dkhelt");
+    @Override
+    public Day setDayInfos(List<DayDetail> dayDetails, Date ld) {
         Day day = new Day();
         Timing hn = new Timing(0, 0);
         Timing he = new Timing(0, 0);

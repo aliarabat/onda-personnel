@@ -47,9 +47,6 @@ public class EmployeeRest {
 
     @PostMapping("/")
     public int createEmployee(@RequestBody List<EmployeeVo> employeeVos) {
-        for (EmployeeVo employeeVo : employeeVos) {
-            System.out.println(employeeVo.getFirstName());
-        }
         List<Employee> employees = employeeConverter.toItem(employeeVos);
         return employeeService.createEmployee(employees);
     }

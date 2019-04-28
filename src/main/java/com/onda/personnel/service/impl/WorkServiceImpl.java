@@ -13,6 +13,7 @@ import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.service.WorkService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
  * @author AMINE
  */
 @Service
@@ -54,16 +54,35 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee) {
-        LocalDate ldStart=LocalDate.of(annee, 1, 1);
-        LocalDate ldEnd=LocalDate.of(annee, 12, 31);
-        return workDao.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, DateUtil.toDate(ldStart),DateUtil.toDate(ldEnd));
+        LocalDate ldStart = LocalDate.of(annee, 1, 1);
+        LocalDate ldEnd = LocalDate.of(annee, 12, 31);
+        return workDao.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
     }
 
     @Override
     public List<Work> findAllByWorkDetailWorkDetailDateBetween(Integer annee) {
-        LocalDate ldStart=LocalDate.of(annee, 1, 1);
-        LocalDate ldEnd=LocalDate.of(annee, 12, 31);
+        LocalDate ldStart = LocalDate.of(annee, 1, 1);
+        LocalDate ldEnd = LocalDate.of(annee, 12, 31);
         return workDao.findByWorkDetailWorkDetailDateBetween(DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
+    }
+
+    @Override
+    public List<String> findFromDateToDate(Integer matricule) {
+        Work work = findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
+        List<String> dateList = new ArrayList<>(2);
+        LocalDate fromDate;
+        LocalDate toDate;
+        if (work == null) {
+            fromDate = DateUtil.getFirstDayOfWeek();
+            toDate = fromDate.plusDays(6);
+        } else {
+            int size = work.getWorkDetail().getDays().size();
+            fromDate = DateUtil.fromDate(work.getWorkDetail().getDays().get(size - 1).getDayDate()).plusDays(1);
+            toDate = fromDate.plusDays(6);
+        }
+        dateList.add(0, fromDate.toString());
+        dateList.add(1, toDate.toString());
+        return dateList;
     }
 
 }

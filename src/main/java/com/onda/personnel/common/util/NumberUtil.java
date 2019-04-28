@@ -51,6 +51,13 @@ public class NumberUtil {
             return Long.parseLong(value);
         }
     }
-    
+
+    public static String fromIntToString(Integer value) {
+        if (value == null || value.toString().equals("")) {
+            return CHAINE_VIDE;
+        } else {
+            return String.valueOf(value);
+        }
+    }
  
 }

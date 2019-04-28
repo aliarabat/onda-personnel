@@ -10,10 +10,8 @@ import com.onda.personnel.rest.converter.AbstractConverter;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.onda.personnel.service.WorkDetailService;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  * @author AMINE
@@ -35,6 +33,12 @@ public class WorkDetailRest {
             return workDetailSevice.findByWorkDetailDate(DateUtil.fromStringToLocalDate(workDetailDate).plusDays(1));
         }
     */
+
+    @PutMapping("/")
+    public WorkDetailVo updateWorkDetail(@RequestBody WorkDetailVo workDetailVo) {
+        return workDetailConverter.toVo(workDetailSevice.updateWorkDetail(workDetailConverter.toItem(workDetailVo)));
+    }
+
     public WorkDetailService getWorkDetailSevice() {
         return workDetailSevice;
     }

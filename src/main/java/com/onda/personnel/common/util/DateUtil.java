@@ -88,4 +88,8 @@ public class DateUtil {
         LocalDate localDate=LocalDate.of(Year.now().getValue(), YearMonth.now().getMonth(),1);
         return toDate(localDate);
     }
+
+    public static int lenghtOfMonth(Date date){
+        return fromDate(date).lengthOfMonth();
+    }
 }

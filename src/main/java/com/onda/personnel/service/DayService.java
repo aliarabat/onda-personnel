@@ -6,6 +6,7 @@
 package com.onda.personnel.service;
 
 import com.onda.personnel.bean.Day;
+import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.bean.Vacation;
 import java.time.LocalDate;
 import java.util.Date;
@@ -27,4 +28,5 @@ public interface DayService {
 
     public int createVacation(Vacation vacation);
 
+    Day setDayInfos(List<DayDetail> dayDetails, Date toDate);
 }
