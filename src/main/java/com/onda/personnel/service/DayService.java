@@ -24,7 +24,7 @@ public interface DayService {
 
     public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate);
 
-    public Day findByDayDate(Date dayDate);
+    public List<Day> findByDayDate(Date dayDate);
 
     public int createVacation(Vacation vacation);
 

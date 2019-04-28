@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DayServiceImpl implements DayService {
+
     @Autowired
     private DayDao dayDao;
 
@@ -86,7 +87,7 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month) {
-        Work work = new Work()/*workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month)*/;
+        Work work = workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
         if (work == null) {
             return null;
         } else {
@@ -135,7 +136,8 @@ public class DayServiceImpl implements DayService {
         } else if (vacation.getType().equals("C.M") || vacation.getType().equals("C.AT") || vacation.getType().equals("C.EXCEP")) {
             List<LocalDate> daysVacation = betweenDate.between(ldS, ldE);
             for (LocalDate ld : daysVacation) {
-                Day day = dayDao.findByDayDate(DateUtil.toDate(ld));
+
+                Day day = findByEmployeeMatriculeAndDateOfTheDay(emp.getMatricule(), DateUtil.toDate(ld));
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);
@@ -146,7 +148,7 @@ public class DayServiceImpl implements DayService {
             List<LocalDate> daysVacationWithoutSunday = betweenDate.withoutSunday(ldS, ldE);
             for (LocalDate ld : daysVacationWithoutSunday) {
                 System.out.println(ld);
-                Day day = dayDao.findByDayDate(DateUtil.toDate(ld));
+                Day day = findByEmployeeMatriculeAndDateOfTheDay(emp.getMatricule(), DateUtil.toDate(ld));
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);
@@ -157,7 +159,7 @@ public class DayServiceImpl implements DayService {
     }
 
     @Override
-    public Day findByDayDate(Date dayDate) {
+    public List<Day> findByDayDate(Date dayDate) {
         return dayDao.findByDayDate(dayDate);
     }
 

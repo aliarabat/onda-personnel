@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ *
  * @author AMINE
  */
 @Service
@@ -83,6 +84,37 @@ public class WorkServiceImpl implements WorkService {
         dateList.add(0, fromDate.toString());
         dateList.add(1, toDate.toString());
         return dateList;
+    }
+
+    @Override
+    public Work findByEmployeeMatriculeAndMonthAndYear(Integer matricule, int year, int month) {
+        LocalDate localDate = LocalDate.of(year, month, 1);
+        Date theDate = DateUtil.toDate(localDate);
+        Work theWork = findByEmployeeMatriculeAndWorkDetailTestDate(matricule, theDate);
+        if (theWork == null) {
+            return null;
+        } else {
+            return theWork;
+        }
+    }
+
+    @Override
+    public List<Work> findByMonthAndYear(int year, int month) {
+        LocalDate localDate = LocalDate.of(year, month, 1);
+        Date theDate = DateUtil.toDate(localDate);
+        List<Work> listOfWorksMonthly = new ArrayList<>();
+        listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
+        if (listOfWorksMonthly.isEmpty() == true || listOfWorksMonthly == null) {
+            return null;
+        } else {
+            return listOfWorksMonthly;
+        }
+    }
+
+    @Override
+    public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate) {
+        return workDao.findByWorkDetailWorkDetailDate(workDetailDate);
+
     }
 
 }

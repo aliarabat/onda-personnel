@@ -8,8 +8,6 @@ package com.onda.personnel.service;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
-
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +26,12 @@ public interface WorkService {
     List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee);
 
     List<Work> findAllByWorkDetailWorkDetailDateBetween(Integer annee);
+
+    public Work findByEmployeeMatriculeAndMonthAndYear(Integer matricule, int year, int month);
+
+    public List<Work> findByMonthAndYear(int year, int month);
+
+    public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate);
 
     List<String> findFromDateToDate(Integer matricule);
 }

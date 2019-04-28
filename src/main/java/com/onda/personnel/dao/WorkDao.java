@@ -18,10 +18,10 @@ import org.springframework.stereotype.Repository;
  * @author AMINE
  */
 @Repository
-public interface WorkDao extends JpaRepository<Work, Long>{
-    
+public interface WorkDao extends JpaRepository<Work, Long> {
+
     Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date workDetailDate);
-    
+
     Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule);
 
     List<Work> findAllByEmployeeMatricule(Integer matricule);
@@ -29,6 +29,8 @@ public interface WorkDao extends JpaRepository<Work, Long>{
     List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Date date1, Date date2);
 
     List<Work> findByWorkDetailWorkDetailDateBetween(Date date1, Date date2);
+
+    public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate);
 
     //List<WorkDetail> findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date t);
 }

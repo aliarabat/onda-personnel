@@ -18,6 +18,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DayDao extends JpaRepository<Day, Long> {
 
-     public Day findByDayDate(Date dayDate);
+     public List<Day> findByDayDate(Date dayDate);
 
 }

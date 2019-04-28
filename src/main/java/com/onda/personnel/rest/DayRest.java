@@ -61,7 +61,7 @@ public class DayRest {
     }
 
     @GetMapping("/dayDate/{dayDate}")
-    public Day findByDayDate(@PathVariable String dayDate) {
+    public List<Day> findByDayDate(@PathVariable String dayDate) {
         return dayService.findByDayDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(dayDate)));
     }
 

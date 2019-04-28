@@ -51,6 +51,21 @@ public class WorkRest {
     public List<WorkVo> findAllByWorkDetailWorkDetailDateBetween(@PathVariable Integer annee) {
         return workConverter.toVo(workService.findAllByWorkDetailWorkDetailDateBetween(annee));
     }
+    
+    
+    @GetMapping("/matricule/{matricule}/year/{year}/month/{month}")
+    public Work findByEmployeeMatriculeAndMonthAndYear(@PathVariable Integer matricule,@PathVariable int year,@PathVariable int month) {
+        return workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
+    }
+    @GetMapping("/year/{year}/month/{month}")
+    public List<Work> findByMonthAndYear(@PathVariable int year,@PathVariable  int month) {
+        return workService.findByMonthAndYear(year, month);
+    }
+    
+    @GetMapping("/workDetailDate/{workDetailDate}")
+    public List<Work> findByWorkDetailWorkDetailDate(@PathVariable Date workDetailDate) {
+        return workService.findByWorkDetailWorkDetailDate(workDetailDate);
+    }
 
     @GetMapping("/ckeckdates/matricule/{matricule}")
     public List<String> findFromDateToDate(@PathVariable Integer matricule) {
