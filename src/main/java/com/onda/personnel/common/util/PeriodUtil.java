@@ -58,4 +58,16 @@ public class PeriodUtil {
         }
         return false;
     }
+    
+//     public static void main(String[] args) {
+//        Timing t = getHoursBetween(17, 0, 20, 00, false) ;
+//        Timing t2 = getHoursBetween(17, 0, 20, 00, true) ;
+//        System.out.println(t);
+//        System.out.println(t2);
+//
+//      
+//  }
 }
+    
+ 
+
