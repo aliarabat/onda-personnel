@@ -81,7 +81,7 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         } else {
             workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
             int size=workDetail.getDays().size();
-            Day dayMin=Collections.min(workDetail.getDays(), new DayComparator());
+            Day dayMin=Collections.min(workDetail.getDays(),  new DayComparator());
             log.info("hahowa day minnnn =====> "+dayMin.getDayDate());
             log.info("hahowa size nta3 days tl workDertail ==> "+workDetail.getDays().size());
             workDetailListLength= DateUtil.lenghtOfMonth(workDetail.getWorkDetailDate())-dayMin.getDayDate().getDate()+1;

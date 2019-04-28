@@ -15,8 +15,10 @@ import org.springframework.stereotype.Repository;
  * @author AMINE
  */
 @Repository
-public interface EmployeeDao extends JpaRepository<Employee, Long>{
+public interface EmployeeDao extends JpaRepository<Employee, Long> {
+
     public Employee findByMatricule(Integer matricule);
-    public List<Employee> findAll();
-    
+
+    public List<Employee> findByIsExist(boolean isExist);
+
 }

@@ -21,6 +21,7 @@ public interface EmployeeService {
     int editEmployee(Employee newEmployee);
 
     int deleteEmployee(Integer matricule);
+    
+    public List<Employee> findByIsExist(boolean isExist);
 
-    List<Employee> findAll();
 }
