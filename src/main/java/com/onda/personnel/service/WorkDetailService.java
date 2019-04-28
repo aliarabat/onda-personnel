@@ -8,6 +8,8 @@ package com.onda.personnel.service;
 import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.WorkDetail;
+import com.onda.personnel.rest.vo.WorkDetailVo;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,5 +24,6 @@ public interface WorkDetailService {
     public void saveWorkDetail(WorkDetail workDetail);
 
     public void createWorkDetail(Employee emp, List<Day> days);
-    // public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate);
+
+    WorkDetail updateWorkDetail(WorkDetail workDetail);
 }

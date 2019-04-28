@@ -14,13 +14,14 @@ import java.util.List;
  */
 public interface EmployeeService {
 
-    public Employee findByMatricule(Integer matricule);
+    Employee findByMatricule(Integer matricule);
 
-    public int createEmployee(List<Employee> employees);
+    int createEmployee(List<Employee> employees);
 
-    public int editEmployee(Employee newEmployee);
+    int editEmployee(Employee newEmployee);
 
-    public int deleteEmployee(Integer matricule);
+    int deleteEmployee(Integer matricule);
+    
+    public List<Employee> findByIsExist(boolean isExist);
 
-    public List<Employee> findAll();
 }

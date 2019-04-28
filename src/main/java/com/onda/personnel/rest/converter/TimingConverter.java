@@ -41,8 +41,8 @@ public class TimingConverter extends AbstractConverter<Timing, TimingVo>{
         } else {
             TimingVo timingVo = new TimingVo();
             timingVo.setId(item.getId());
-            timingVo.setHour(StringUtil.format(item.getHour()));
-            timingVo.setMinute(StringUtil.format(item.getMinute()));
+            timingVo.setHour(NumberUtil.fromIntToString(item.getHour()));
+            timingVo.setMinute(NumberUtil.fromIntToString(item.getMinute()));
             
             return timingVo;
         }

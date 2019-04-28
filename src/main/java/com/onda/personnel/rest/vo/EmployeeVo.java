@@ -67,11 +67,13 @@ public class EmployeeVo {
         this.type = type;
     }
 
-    public boolean isExist() {
+    public boolean isIsExist() {
         return isExist;
     }
 
-    public void setExist(boolean exist) {
-        isExist = exist;
+    public void setIsExist(boolean isExist) {
+        this.isExist = isExist;
     }
+
+  
 }

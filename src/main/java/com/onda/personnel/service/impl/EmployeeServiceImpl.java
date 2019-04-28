@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         for (Employee cheEmployee : employees) {
             Employee checkEmployee2 = findByMatricule(cheEmployee.getMatricule());
             if (checkEmployee2 == null) {
-                cheEmployee.setExist(true);
+                cheEmployee.setIsExist(true);
                 employeeDao.save(cheEmployee);
             }
         }
@@ -50,9 +50,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             checkEmployee.setFirstName(newEmployee.getFirstName());
             checkEmployee.setLastName(newEmployee.getLastName());
             checkEmployee.setMatricule(newEmployee.getMatricule());
-            checkEmployee.setExist(newEmployee.isExist());
             checkEmployee.setFonction(newEmployee.getFonction());
             checkEmployee.setType(newEmployee.getType());
+            checkEmployee.setIsExist(true);
             employeeDao.save(checkEmployee);
             return 1;
         }
@@ -65,14 +65,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             return -1;
 
         } else {
-            checkEmployee.setExist(false);
+            checkEmployee.setIsExist(false);
+            employeeDao.save(checkEmployee);
             return 1;
         }
     }
 
     @Override
-    public List<Employee> findAll() {
-        return employeeDao.findAll();
+    public List<Employee> findByIsExist(boolean isExist){
+        return employeeDao.findByIsExist(isExist);
     }
 
     public EmployeeDao getEmployeeDao() {
@@ -83,5 +84,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeDao = employeeDao;
     }
 
+    
+ 
 
 }

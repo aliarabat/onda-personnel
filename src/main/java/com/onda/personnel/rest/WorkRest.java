@@ -67,6 +67,11 @@ public class WorkRest {
         return workConverter.toVo(workService.findByWorkDetailWorkDetailDate(workDetailDate));
     }
 
+    @GetMapping("/ckeckdates/matricule/{matricule}")
+    public List<String> findFromDateToDate(@PathVariable Integer matricule) {
+        return workService.findFromDateToDate(matricule);
+    }
+
     public WorkService getWorkService() {
         return workService;
     }

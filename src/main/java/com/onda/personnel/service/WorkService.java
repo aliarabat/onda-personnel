@@ -32,4 +32,6 @@ public interface WorkService {
     public List<Work> findByMonthAndYear(int year, int month);
 
     public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate);
+
+    List<String> findFromDateToDate(Integer matricule);
 }

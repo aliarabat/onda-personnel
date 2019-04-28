@@ -10,11 +10,16 @@ import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.common.util.DayComparator;
 import com.onda.personnel.dao.WorkDetailDao;
+import com.onda.personnel.rest.vo.WorkDetailVo;
+import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.WorkService;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -36,6 +41,8 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
     private WorkDetailDao workDetailDao;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private DayService dayService;
 
     private static final Logger log = LoggerFactory.getLogger(WorkDetailSeviceImpl.class);
 
@@ -62,26 +69,36 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         Work work = workService.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(emp.getMatricule());
         //WorkDetail workDetail = findByWorkDetailDate(workDetailDate);
         WorkDetail workDetail;
-        int workDetailListLength = DateUtil.fromDate(new Date()).lengthOfMonth();
+        LocalDate dayDate;
+        int workDetailListLength = DateUtil.lenghtOfMonth(new Date());
         if (work == null || work.getWorkDetail() == null) {
             work = new Work(emp);
             //Date firstMondayOfMonth=DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY));
             Date firstDayOfMonth=DateUtil.getFirstDayOfMonth();
             workDetail = new WorkDetail(firstDayOfMonth);
             workDetailListLength = workDetailListLength - DateUtil.getFirstMonday(DayOfWeek.MONDAY).getDayOfMonth() + 1;
+            dayDate = DateUtil.getFirstDayOfWeek();
         } else {
             workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
-            workDetailListLength=workDetailListLength-workDetail.getDays().get(0).getDayDate().getDay()+1;
+            int size=workDetail.getDays().size();
+            Day dayMin=Collections.min(workDetail.getDays(),  new DayComparator());
+            log.info("hahowa day minnnn =====> "+dayMin.getDayDate());
+            log.info("hahowa size nta3 days tl workDertail ==> "+workDetail.getDays().size());
+            workDetailListLength= DateUtil.lenghtOfMonth(workDetail.getWorkDetailDate())-dayMin.getDayDate().getDate()+1;
+            System.out.println("hhha workDetailListLength ==> "+workDetailListLength);
+            dayDate= DateUtil.fromDate(workDetail.getDays().get(size-1).getDayDate()).plusDays(1);
         }
-        LocalDate ld = DateUtil.fromDate(new Date(workDetail.getWorkDetailDate().getYear(),workDetail.getWorkDetailDate().getMonth(),1)).plusMonths(1);
+
+        LocalDate ld = DateUtil.fromDate(workDetail.getWorkDetailDate()).plusMonths(1);
         WorkDetail newWorkDetail = new WorkDetail(DateUtil.toDate(ld));
         try {
             for (Day day : days) {
                 if (workDetailListLength > workDetail.getDays().size()) {
-                    setOtherInfos(workDetail, day);
+                    setOtherInfos(workDetail, dayService.setDayInfos(day.getDayDetails(), DateUtil.toDate(dayDate)));
                 } else {
-                    setOtherInfos(newWorkDetail, day);
+                    setOtherInfos(newWorkDetail, dayService.setDayInfos(day.getDayDetails(), DateUtil.toDate(dayDate)));
                 }
+                dayDate=dayDate.plusDays(1);
             }
         } catch (NullPointerException e) {
             log.error("null in for-loop block " + e.getMessage());
@@ -97,6 +114,22 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
             Work newWork = new Work(emp, newWorkDetail);
             workService.saveWork(work);
             workService.saveWork(newWork);
+        }
+    }
+
+    @Override
+    public WorkDetail updateWorkDetail(WorkDetail workDetail) {
+        WorkDetail wd=workDetailDao.getOne(workDetail.getId());
+        if (wd==null){
+            return null;
+        }else{
+            wd.getHjf().setHour(workDetail.getHjf().getHour());
+            wd.getHjf().setMinute(workDetail.getHjf().getMinute());
+            wd.getHn().setHour(workDetail.getHn().getHour());
+            wd.getHn().setMinute(workDetail.getHn().getMinute());
+            wd.setPan(workDetail.getPan());
+            saveWorkDetail(wd);
+            return wd;
         }
     }
 
@@ -132,4 +165,8 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
     public void setWorkService(WorkService workService) {
         this.workService = workService;
     }
+
+    public DayService getDayService() { return dayService; }
+
+    public void setDayService(DayService dayService) { this.dayService = dayService; }
 }

@@ -68,6 +68,25 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    public List<String> findFromDateToDate(Integer matricule) {
+        Work work = findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
+        List<String> dateList = new ArrayList<>(2);
+        LocalDate fromDate;
+        LocalDate toDate;
+        if (work == null) {
+            fromDate = DateUtil.getFirstDayOfWeek();
+            toDate = fromDate.plusDays(6);
+        } else {
+            int size = work.getWorkDetail().getDays().size();
+            fromDate = DateUtil.fromDate(work.getWorkDetail().getDays().get(size - 1).getDayDate()).plusDays(1);
+            toDate = fromDate.plusDays(6);
+        }
+        dateList.add(0, fromDate.toString());
+        dateList.add(1, toDate.toString());
+        return dateList;
+    }
+
+    @Override
     public Work findByEmployeeMatriculeAndMonthAndYear(Integer matricule, int year, int month) {
         LocalDate localDate = LocalDate.of(year, month, 1);
         Date theDate = DateUtil.toDate(localDate);

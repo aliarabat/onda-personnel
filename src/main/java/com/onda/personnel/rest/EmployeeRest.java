@@ -47,18 +47,13 @@ public class EmployeeRest {
 
     @PostMapping("/")
     public int createEmployee(@RequestBody List<EmployeeVo> employeeVos) {
-        for (EmployeeVo employeeVo : employeeVos) {
-            System.out.println(employeeVo.getFirstName());
-        }
         List<Employee> employees = employeeConverter.toItem(employeeVos);
         return employeeService.createEmployee(employees);
     }
-
-    @GetMapping("/")
-    public List<EmployeeVo> findAll() {
-        return employeeConverter.toVo(employeeService.findAll());
+    @GetMapping("/allExist/isExist/{isExist}")
+    public List<Employee> findByIsExist(@PathVariable boolean isExist) {
+        return employeeService.findByIsExist(isExist);
     }
-
 
     @PutMapping("/")
     public int editEmployee(@RequestBody EmployeeVo newEmployeeVo) {

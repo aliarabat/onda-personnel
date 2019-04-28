@@ -37,10 +37,10 @@ public class WorkDetail implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date workDetailDate;
     private Integer pan = 0;
-    @OneToOne
-    private Timing hn;
-    @OneToOne
-    private Timing hjf;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Timing hn =new Timing(0,0);
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Timing hjf =new Timing(0,0);
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Day> days = new ArrayList<>();
 

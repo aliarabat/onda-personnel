@@ -41,6 +41,7 @@ public class DayRest {
 
     @PostMapping("/matricule/{matricule}")
     public int createDay(@PathVariable Integer matricule, @RequestBody List<DayVo> days) {
+        days.forEach(day-> System.out.println(day.toString()));
         return dayService.createDay(matricule, dayConverter.toItem(days));
     }
 

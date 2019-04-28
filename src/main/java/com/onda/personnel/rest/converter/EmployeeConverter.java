@@ -29,7 +29,7 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
             emp.setLastName(vo.getLastName());
             emp.setFonction(vo.getFonction());
             emp.setType(vo.getType());
-            emp.setExist(vo.isExist());
+            emp.setIsExist(vo.isIsExist());
             return emp;
         }
     }
@@ -46,7 +46,7 @@ public class EmployeeConverter extends AbstractConverter<Employee, EmployeeVo> {
             empVo.setLastName(item.getLastName());
             empVo.setFonction(item.getFonction());
             empVo.setType(item.getType());
-            empVo.setExist(item.isExist());
+            empVo.setIsExist(item.isIsExist());
             return empVo;
         }
     }
