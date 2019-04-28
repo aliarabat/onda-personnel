@@ -54,17 +54,17 @@ public class WorkRest {
     
     
     @GetMapping("/matricule/{matricule}/year/{year}/month/{month}")
-    public Work findByEmployeeMatriculeAndMonthAndYear(@PathVariable Integer matricule,@PathVariable int year,@PathVariable int month) {
-        return workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
+    public WorkVo findByEmployeeMatriculeAndMonthAndYear(@PathVariable Integer matricule,@PathVariable int year,@PathVariable int month) {
+        return workConverter.toVo(workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month));
     }
     @GetMapping("/year/{year}/month/{month}")
-    public List<Work> findByMonthAndYear(@PathVariable int year,@PathVariable  int month) {
-        return workService.findByMonthAndYear(year, month);
+    public List<WorkVo> findByMonthAndYear(@PathVariable int year,@PathVariable  int month) {
+        return workConverter.toVo(workService.findByMonthAndYear(year, month));
     }
     
     @GetMapping("/workDetailDate/{workDetailDate}")
-    public List<Work> findByWorkDetailWorkDetailDate(@PathVariable Date workDetailDate) {
-        return workService.findByWorkDetailWorkDetailDate(workDetailDate);
+    public List<WorkVo> findByWorkDetailWorkDetailDate(@PathVariable Date workDetailDate) {
+        return workConverter.toVo(workService.findByWorkDetailWorkDetailDate(workDetailDate));
     }
 
     public WorkService getWorkService() {
