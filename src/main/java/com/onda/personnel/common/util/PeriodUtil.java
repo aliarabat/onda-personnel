@@ -34,7 +34,7 @@ public class PeriodUtil {
 
         if (startingMinute < endingMinute) {
             sumMinute = endingMinute - startingHour;
-        } else {
+        } else if (startingMinute > endingMinute){
             sumMinute = (60 - startingMinute) + endingMinute;
         }
 
@@ -49,15 +49,7 @@ public class PeriodUtil {
         }
         return new Timing(sumHour, sumMinute);
     }
-//    
-//  public static void main(String[] args) {
-//        Timing t = getHoursBetween(17, 0, 20, 00, false) ;
-//        Timing t2 = getHoursBetween(17, 0, 20, 00, true) ;
-//        System.out.println(t);
-//        System.out.println(t2);
-//
-//      
-//  }
+
     public static boolean isIn(int var, int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == var) {
