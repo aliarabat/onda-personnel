@@ -51,7 +51,7 @@ public class DetailRest {
         return detailService.createDetail(detailConverter.toItem(detailsVo));
     }
 
-    @PutMapping("/wording/{wording}")
+    @PutMapping("/")
     public int updateDetail(@RequestBody DetailVo dayDetailVo) {
         return detailService.updateDetail(detailConverter.toItem(dayDetailVo));
     }
