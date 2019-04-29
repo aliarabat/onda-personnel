@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/employee")
 public class EmployeeRest {
 

@@ -60,7 +60,12 @@ public class DateUtil {
     }
 
     public static String toString(LocalDate localDate) {
-        return localDate.toString();
+        if (localDate == null) {
+            return null;
+        } else {
+return localDate.toString();
+        }
+        
     }
 
     public static LocalDate fromStringToLocalDate(String date) {

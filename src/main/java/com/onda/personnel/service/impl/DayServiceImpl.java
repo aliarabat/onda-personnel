@@ -12,6 +12,7 @@ import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.service.*;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -209,5 +210,22 @@ public class DayServiceImpl implements DayService {
 
     public void setDayDetailService(DayDetailService dayDetailService) {
         this.dayDetailService = dayDetailService;
+    }
+
+    @Override
+    public List<Day> findByDateOfTheWork(Date dateOfTheDay) {
+        LocalDate localDate=DateUtil.fromDate(dateOfTheDay);
+        LocalDate checkLocalDate=LocalDate.of(localDate.getYear(),localDate.getMonth(),1);
+        Date tmpDate=DateUtil.toDate(checkLocalDate);
+     List<Day> listDay=new ArrayList<>();
+        for (Work work : workService.findByWorkDetailWorkDetailDate(tmpDate)) {
+     List<Day> daysOfWork=work.getWorkDetail().getDays();
+            for (Day day : daysOfWork) {
+                if(day.getDayDate().compareTo(dateOfTheDay)==0){
+                listDay.add(day);
+                }
+            }
+        }
+        return listDay;
     }
 }

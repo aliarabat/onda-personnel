@@ -13,6 +13,7 @@ import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.service.WorkService;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -115,6 +116,14 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate) {
         return workDao.findByWorkDetailWorkDetailDate(workDetailDate);
 
+    }
+
+    @Override
+    public List<Work> findWorksByDate(Date workDate) {
+        LocalDate checklocalDate = DateUtil.fromDate(workDate);
+        LocalDate localDate = LocalDate.of(checklocalDate.getYear(), checklocalDate.getMonth(), 1);
+        Date theDate = DateUtil.toDate(localDate);
+        return findByWorkDetailWorkDetailDate(theDate);
     }
 
 }

@@ -8,6 +8,7 @@ package com.onda.personnel.service;
 import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.bean.Vacation;
+import com.onda.personnel.bean.Work;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,8 @@ public interface DayService {
     public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate);
 
     public List<Day> findByDayDate(Date dayDate);
+
+        public List<Day> findByDateOfTheWork(Date dateOfTheDay);
 
     public int createVacation(Vacation vacation);
 

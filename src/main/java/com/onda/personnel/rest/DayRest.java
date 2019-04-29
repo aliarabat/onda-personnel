@@ -7,12 +7,14 @@ package com.onda.personnel.rest;
 
 import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.Vacation;
+import com.onda.personnel.bean.Work;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.rest.converter.DayConverter;
+import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.DayVo;
+import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.DayService;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class DayRest {
 
     @PostMapping("/matricule/{matricule}")
     public int createDay(@PathVariable Integer matricule, @RequestBody List<DayVo> days) {
-        days.forEach(day-> System.out.println(day.toString()));
+        days.forEach(day -> System.out.println(day.toString()));
         return dayService.createDay(matricule, dayConverter.toItem(days));
     }
 
@@ -51,18 +53,25 @@ public class DayRest {
     }
 
     @GetMapping("/matricule/{matricule}/year/{year}/month/{month}")
-    public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(@PathVariable Integer matricule, @PathVariable int year, @PathVariable int month) {
-        return dayService.findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(matricule, year, month);
+    public List<DayVo> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(@PathVariable Integer matricule, @PathVariable int year, @PathVariable int month) {
+        return new DayConverter().toVo(dayService.findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(matricule, year, month));
     }
 
     @GetMapping("/matricule/{matricule}/dayDate/{dayDate}")
-    public Day findByEmployeeMatriculeAndDateOfTheDay(@PathVariable Integer matricule, @PathVariable String dayDate) {
-        return dayService.findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(DateUtil.fromStringToLocalDate(dayDate)));
+    public DayVo findByEmployeeMatriculeAndDateOfTheDay(@PathVariable Integer matricule, @PathVariable String dayDate) {
+        Date thedate = DateUtil.toDate(DateUtil.fromStringToLocalDate(dayDate));
+        return new DayConverter().toVo(dayService.findByEmployeeMatriculeAndDateOfTheDay(matricule, thedate));
+    }
+
+    @GetMapping("/dateOfTheDay/{dateOfTheDay}")
+    public List<DayVo> findByDateOfTheWork(@PathVariable String dateOfTheDay) {
+        return new DayConverter().toVo(dayService.findByDateOfTheWork(DateUtil.toDate(DateUtil.fromStringToLocalDate(dateOfTheDay))));
     }
 
     @GetMapping("/dayDate/{dayDate}")
-    public List<Day> findByDayDate(@PathVariable String dayDate) {
-        return dayService.findByDayDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(dayDate)));
+    public List<DayVo> findByDayDate(@PathVariable String dayDate) {
+        Date thedate = DateUtil.toDate(DateUtil.fromStringToLocalDate(dayDate));
+        return new DayConverter().toVo(dayService.findByDayDate(thedate));
     }
 
     public DayService getDayService() {

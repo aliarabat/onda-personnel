@@ -21,6 +21,8 @@ public interface WorkService {
 
     Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate);
 
+    List<Work> findWorksByDate( Date workDate);
+
     Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule);
 
     List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee);

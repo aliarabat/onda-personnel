@@ -11,7 +11,6 @@ import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/work")
 public class WorkRest {
 
@@ -33,8 +32,8 @@ public class WorkRest {
     private WorkConverter workConverter;
 
     @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
-    public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule, @PathVariable String workDetailDate) {
-        return workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, new Date(workDetailDate));
+    public WorkVo findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule, @PathVariable String workDetailDate) {
+        return new WorkConverter().toVo(workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule,DateUtil.toDate(DateUtil.fromStringToLocalDate(workDetailDate)) ))  ;
     }
 
     @GetMapping("/matricule/{matricule}")
@@ -44,27 +43,32 @@ public class WorkRest {
 
     @GetMapping("matricule/{matricule}/annee/{annee}/")
     public List<WorkVo> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(@PathVariable Integer matricule, @PathVariable Integer annee) {
-        return workConverter.toVo(workService.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, annee));
+        return new WorkConverter().toVo(workService.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, annee));
     }
 
     @GetMapping("/annee/{annee}")
     public List<WorkVo> findAllByWorkDetailWorkDetailDateBetween(@PathVariable Integer annee) {
-        return workConverter.toVo(workService.findAllByWorkDetailWorkDetailDateBetween(annee));
+        return new WorkConverter().toVo(workService.findAllByWorkDetailWorkDetailDateBetween(annee));
     }
-    
-    
+
+    @GetMapping("/workDate/{workDate}")
+    public List<WorkVo> findWorksByDate(@PathVariable String workDate) {
+        return new WorkConverter().toVo(workService.findWorksByDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(workDate))));
+    }
+
     @GetMapping("/matricule/{matricule}/year/{year}/month/{month}")
-    public WorkVo findByEmployeeMatriculeAndMonthAndYear(@PathVariable Integer matricule,@PathVariable int year,@PathVariable int month) {
-        return workConverter.toVo(workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month));
+    public WorkVo findByEmployeeMatriculeAndMonthAndYear(@PathVariable Integer matricule, @PathVariable int year, @PathVariable int month) {
+        return new WorkConverter().toVo(workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month));
     }
+
     @GetMapping("/year/{year}/month/{month}")
-    public List<WorkVo> findByMonthAndYear(@PathVariable int year,@PathVariable  int month) {
-        return workConverter.toVo(workService.findByMonthAndYear(year, month));
+    public List<WorkVo> findByMonthAndYear(@PathVariable int year, @PathVariable int month) {
+        return new WorkConverter().toVo(workService.findByMonthAndYear(year, month));
     }
-    
+
     @GetMapping("/workDetailDate/{workDetailDate}")
-    public List<WorkVo> findByWorkDetailWorkDetailDate(@PathVariable Date workDetailDate) {
-        return workConverter.toVo(workService.findByWorkDetailWorkDetailDate(workDetailDate));
+    public List<WorkVo> findByWorkDetailWorkDetailDate(@PathVariable String workDetailDate) {
+        return new WorkConverter().toVo(workService.findByWorkDetailWorkDetailDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(workDetailDate))));
     }
 
     @GetMapping("/ckeckdates/matricule/{matricule}")
