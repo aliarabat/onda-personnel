@@ -11,17 +11,20 @@ import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.DayComparator;
+import com.onda.personnel.common.util.PeriodUtil;
 import com.onda.personnel.dao.WorkDetailDao;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.WorkService;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,6 @@ import org.springframework.stereotype.Service;
 import com.onda.personnel.service.WorkDetailService;
 
 /**
- *
  * @author AMINE
  */
 @Service
@@ -74,36 +76,44 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         if (work == null || work.getWorkDetail() == null) {
             work = new Work(emp);
             //Date firstMondayOfMonth=DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY));
-            Date firstDayOfMonth=DateUtil.getFirstDayOfMonth();
+            Date firstDayOfMonth = DateUtil.getFirstDayOfMonth();
             workDetail = new WorkDetail(firstDayOfMonth);
-            workDetailListLength = workDetailListLength - DateUtil.getFirstMonday(DayOfWeek.MONDAY).getDayOfMonth() + 1;
+            workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfWeek().getDayOfMonth()+1;
+            System.out.println("hha howa firstMonday ==> "+DateUtil.getFirstDayOfWeek().getDayOfMonth());
             dayDate = DateUtil.getFirstDayOfWeek();
         } else {
             workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
-            int size=workDetail.getDays().size();
-            Day dayMin=Collections.min(workDetail.getDays(),  new DayComparator());
-            log.info("hahowa day minnnn =====> "+dayMin.getDayDate());
-            log.info("hahowa size nta3 days tl workDertail ==> "+workDetail.getDays().size());
-            workDetailListLength= DateUtil.lenghtOfMonth(workDetail.getWorkDetailDate())-dayMin.getDayDate().getDate()+1;
-            System.out.println("hhha workDetailListLength ==> "+workDetailListLength);
-            dayDate= DateUtil.fromDate(workDetail.getDays().get(size-1).getDayDate()).plusDays(1);
+            int size = workDetail.getDays().size();
+            Day dayMin = Collections.min(workDetail.getDays(), new DayComparator());
+            log.info("hahowa day minnnn =====> " + dayMin.getDayDate());
+            log.info("hahowa size nta3 days tl workDertail ==> " + workDetail.getDays().size());
+            workDetailListLength = DateUtil.lenghtOfMonth(workDetail.getWorkDetailDate()) - dayMin.getDayDate().getDate() + 1;
+            System.out.println("hhha workDetailListLength ==> " + workDetailListLength);
+            dayDate = DateUtil.fromDate(workDetail.getDays().get(size - 1).getDayDate()).plusDays(1);
         }
 
         LocalDate ld = DateUtil.fromDate(workDetail.getWorkDetailDate()).plusMonths(1);
         WorkDetail newWorkDetail = new WorkDetail(DateUtil.toDate(ld));
+        int i=0;
+        int j=0;
         try {
             for (Day day : days) {
+                log.info("size of days  "+workDetail.getDays());
+                log.info("workDetaillenght  ==>  "+workDetailListLength);
                 if (workDetailListLength > workDetail.getDays().size()) {
+                    i++;
                     setOtherInfos(workDetail, dayService.setDayInfos(day.getDayDetails(), DateUtil.toDate(dayDate)));
                 } else {
+                    j++;
                     setOtherInfos(newWorkDetail, dayService.setDayInfos(day.getDayDetails(), DateUtil.toDate(dayDate)));
                 }
-                dayDate=dayDate.plusDays(1);
+                dayDate = dayDate.plusDays(1);
             }
         } catch (NullPointerException e) {
             log.error("null in for-loop block " + e.getMessage());
         }
 
+        log.info("hahowa i => "+i+"    et j ==> "+j);
         if (newWorkDetail.getDays() == null || newWorkDetail.getDays().isEmpty()) {
             saveWorkDetail(workDetail);
             work.setWorkDetail(workDetail);
@@ -111,6 +121,9 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         } else {
             saveWorkDetail(workDetail);
             saveWorkDetail(newWorkDetail);
+            if (work.getWorkDetail()==null){
+                work.setWorkDetail(workDetail);
+            }
             Work newWork = new Work(emp, newWorkDetail);
             workService.saveWork(work);
             workService.saveWork(newWork);
@@ -119,10 +132,10 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
 
     @Override
     public WorkDetail updateWorkDetail(WorkDetail workDetail) {
-        WorkDetail wd=workDetailDao.getOne(workDetail.getId());
-        if (wd==null){
+        WorkDetail wd = workDetailDao.getOne(workDetail.getId());
+        if (wd == null) {
             return null;
-        }else{
+        } else {
             wd.getHjf().setHour(workDetail.getHjf().getHour());
             wd.getHjf().setMinute(workDetail.getHjf().getMinute());
             wd.getHn().setHour(workDetail.getHn().getHour());
@@ -134,11 +147,18 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
     }
 
     private void setOtherInfos(WorkDetail workDetail, Day day) {
+        int hoursHjfWorked = 0, minutesHjfWorked = 0, hoursHnWorked = 0, minutesHnWorked = 0;
+        hoursHjfWorked = hoursHjfWorked+workDetail.getHjf().getHour() + day.getHe().getHour();
+        minutesHjfWorked = minutesHjfWorked+workDetail.getHjf().getMinute() + day.getHe().getMinute();
+        hoursHnWorked = hoursHnWorked+ workDetail.getHn().getHour() + day.getHn().getHour();
+        minutesHnWorked = minutesHnWorked+workDetail.getHn().getMinute() + day.getHn().getMinute();
+        PeriodUtil.minutesToHour(hoursHnWorked, minutesHnWorked, hoursHjfWorked, minutesHjfWorked);
         workDetail.setPan(workDetail.getPan() + day.getPan());
-        workDetail.getHn().setHour(workDetail.getHn().getHour()+day.getHn().getHour());
-        workDetail.getHn().setMinute(workDetail.getHn().getMinute()+day.getHn().getMinute());
-        workDetail.getHjf().setHour(workDetail.getHjf().getHour()+day.getHe().getHour());
-        workDetail.getHjf().setMinute(workDetail.getHjf().getMinute()+day.getHe().getMinute());
+        workDetail.getHn().setHour(hoursHnWorked);
+        workDetail.getHn().setMinute(minutesHnWorked);
+        workDetail.getHjf().setHour(hoursHjfWorked);
+        workDetail.getHjf().setMinute(minutesHjfWorked);
+        log.info("hahowa  l hn ==> "+workDetail.getHjf().toString());
         workDetail.getDays().add(day);
     }
 
@@ -166,7 +186,11 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         this.workService = workService;
     }
 
-    public DayService getDayService() { return dayService; }
+    public DayService getDayService() {
+        return dayService;
+    }
 
-    public void setDayService(DayService dayService) { this.dayService = dayService; }
+    public void setDayService(DayService dayService) {
+        this.dayService = dayService;
+    }
 }
