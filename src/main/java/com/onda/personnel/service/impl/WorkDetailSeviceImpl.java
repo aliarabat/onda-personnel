@@ -169,4 +169,25 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
     public DayService getDayService() { return dayService; }
 
     public void setDayService(DayService dayService) { this.dayService = dayService; }
+
+    @Override
+    public WorkDetail findByEmployeeMatriculeAndWorkDetailDate(Integer matricule, int year,int month) {
+Employee employee=employeeService.findByMatricule(matricule);
+if(employee==null){
+    return null;
+}
+else{
+
+        LocalDate localDate = LocalDate.of(year,month, 1);
+        Date theDate = DateUtil.toDate(localDate);
+        Work work=workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, theDate);
+        if(work==null){
+            return null;
+        }
+        else{
+            WorkDetail workDetail=work.getWorkDetail();
+            return workDetail;
+        }
+}
+    }
 }

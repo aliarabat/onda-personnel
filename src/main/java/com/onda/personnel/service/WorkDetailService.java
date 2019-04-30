@@ -11,6 +11,7 @@ import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ import java.util.List;
 public interface WorkDetailService {
 
     public WorkDetail findByWorkDetailDate(LocalDate localDate);
+
+    public WorkDetail findByEmployeeMatriculeAndWorkDetailDate(Integer matricule, int year,int month);
 
     public void saveWorkDetail(WorkDetail workDetail);
 

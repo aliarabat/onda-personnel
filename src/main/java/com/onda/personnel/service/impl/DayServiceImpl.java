@@ -88,12 +88,18 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month) {
-        Work work = workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
-        if (work == null) {
+        Employee employee=employeeService.findByMatricule(matricule);
+        if(employee==null){
+            return null;
+        }
+        else{
+        WorkDetail workDetail =workDetailService.findByEmployeeMatriculeAndWorkDetailDate(matricule, year,month);
+        if (workDetail == null) {
             return null;
         } else {
-            return work.getWorkDetail().getDays();
+            return workDetail.getDays();
         }
+    }
     }
 
     @Override

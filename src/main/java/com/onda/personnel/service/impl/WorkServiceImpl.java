@@ -5,6 +5,7 @@
  */
 package com.onda.personnel.service.impl;
 
+import com.onda.personnel.bean.Day;
 import com.onda.personnel.bean.Employee;
 import com.onda.personnel.bean.Work;
 import com.onda.personnel.bean.WorkDetail;
@@ -95,6 +96,8 @@ public class WorkServiceImpl implements WorkService {
         if (theWork == null) {
             return null;
         } else {
+            List<Day> listDays=theWork.getWorkDetail().getDays();
+            System.out.println("listOf DAYS"+listDays);
             return theWork;
         }
     }
