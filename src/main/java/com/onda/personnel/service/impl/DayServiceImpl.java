@@ -72,8 +72,7 @@ public class DayServiceImpl implements DayService {
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
             dayDetail.setDetail(dd);
-            DayDetail dayDetail1 = dayDetailService.createDayDetail(dayDetail);
-            day.getDayDetails().add(dayDetail1);
+            day.getDayDetails().add(dayDetailService.createDayDetail(dayDetail));
             pan += dd.getPan();
             hoursHnWorked += dd.getHn().getHour();
             minutesHnWorked += dd.getHn().getMinute();

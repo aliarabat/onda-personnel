@@ -71,7 +71,7 @@ public class PeriodUtil {
     public static void minutesToHour(int hoursHnWorked, int minutesHnWorked, int hoursHeWorked, int minutesHeWorked){
         if (minutesHnWorked >= 60) {
             hoursHnWorked++;
-            minutesHnWorked = minutesHnWorked- 60;
+            minutesHnWorked -= 60;
         }
         if (minutesHeWorked >= 60) {
             hoursHeWorked++;

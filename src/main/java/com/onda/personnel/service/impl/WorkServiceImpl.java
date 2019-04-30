@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
  * @author AMINE
  */
 @Service
@@ -77,12 +76,12 @@ public class WorkServiceImpl implements WorkService {
         LocalDate toDate;
         if (work == null) {
             fromDate = DateUtil.getFirstDayOfWeek();
-            toDate = fromDate.plusDays(6);
+            //toDate = fromDate.plusDays(6);
         } else {
             int size = work.getWorkDetail().getDays().size();
             fromDate = DateUtil.fromDate(work.getWorkDetail().getDays().get(size - 1).getDayDate()).plusDays(1);
-            toDate = fromDate.plusDays(6);
         }
+        toDate = fromDate.plusDays(6);
         dateList.add(0, fromDate.toString());
         dateList.add(1, toDate.toString());
         return dateList;
