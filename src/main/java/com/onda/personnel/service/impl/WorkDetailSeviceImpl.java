@@ -147,12 +147,18 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
     }
 
     private void setOtherInfos(WorkDetail workDetail, Day day) {
-        int hoursHjfWorked = 0, minutesHjfWorked = 0, hoursHnWorked = 0, minutesHnWorked = 0;
-        hoursHjfWorked = hoursHjfWorked+workDetail.getHjf().getHour() + day.getHe().getHour();
-        minutesHjfWorked = minutesHjfWorked+workDetail.getHjf().getMinute() + day.getHe().getMinute();
-        hoursHnWorked = hoursHnWorked+ workDetail.getHn().getHour() + day.getHn().getHour();
-        minutesHnWorked = minutesHnWorked+workDetail.getHn().getMinute() + day.getHn().getMinute();
-        PeriodUtil.minutesToHour(hoursHnWorked, minutesHnWorked, hoursHjfWorked, minutesHjfWorked);
+        int hoursHjfWorked = workDetail.getHjf().getHour() + day.getHe().getHour();
+        int minutesHjfWorked = workDetail.getHjf().getMinute() + day.getHe().getMinute();
+        int hoursHnWorked = workDetail.getHn().getHour() + day.getHn().getHour();
+        int minutesHnWorked = workDetail.getHn().getMinute() + day.getHn().getMinute();
+        if (minutesHnWorked >= 60) {
+            hoursHnWorked++;
+            minutesHnWorked -= 60;
+        }
+        if (minutesHjfWorked >= 60) {
+            hoursHjfWorked++;
+            minutesHjfWorked -= 60;
+        }
         workDetail.setPan(workDetail.getPan() + day.getPan());
         workDetail.getHn().setHour(hoursHnWorked);
         workDetail.getHn().setMinute(minutesHnWorked);
