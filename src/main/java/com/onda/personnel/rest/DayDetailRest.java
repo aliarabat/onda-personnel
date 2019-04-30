@@ -8,6 +8,12 @@ package com.onda.personnel.rest;
 import com.onda.personnel.bean.Mission;
 import com.onda.personnel.bean.Replacement;
 import com.onda.personnel.bean.Skip;
+import com.onda.personnel.rest.converter.MissionConverter;
+import com.onda.personnel.rest.converter.ReplacementConverter;
+import com.onda.personnel.rest.converter.SkipConverter;
+import com.onda.personnel.rest.vo.MissionVo;
+import com.onda.personnel.rest.vo.ReplacementVo;
+import com.onda.personnel.rest.vo.SkipVo;
 import com.onda.personnel.service.DayDetailService;
 
 import java.util.Date;
@@ -32,18 +38,18 @@ public class DayDetailRest {
     DayDetailService dayDetailService;
 
     @PutMapping("/mission/matricule/{matricule}/wordingDetail/{wordingDetail}")
-    public int updateDayDetailMission(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody Mission mission) {
-        return dayDetailService.updateDayDetailMission(matricule, wordingDetail, mission);
+    public int updateDayDetailMission(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody MissionVo missionVo) {
+        return dayDetailService.updateDayDetailMission(matricule, wordingDetail, new MissionConverter().toItem(missionVo));
     }
 
     @PutMapping("/skip/matricule/{matricule}/wordingDetail/{wordingDetail}")
-    public int updateDayDetailSkip(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody Skip skip) {
-        return dayDetailService.updateDayDetailSkip(matricule, wordingDetail, skip);
+    public int updateDayDetailSkip(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody SkipVo skipVo) {
+        return dayDetailService.updateDayDetailSkip(matricule, wordingDetail, new SkipConverter().toItem(skipVo));
     }
 
     @PutMapping("/replacement/matricule/{matricule}/matricule1/{matricule1}/wordingDetail/{wordingDetail}")
-    public int updateDayDetailReplacement(@PathVariable Integer matricule, @PathVariable Integer matricule1, @PathVariable String wordingDetail, @RequestBody Replacement replacement) {
-        return dayDetailService.updateDayDetailReplacement(matricule, matricule1, wordingDetail, replacement);
+    public int updateDayDetailReplacement(@PathVariable Integer matricule, @PathVariable Integer matricule1, @PathVariable String wordingDetail, @RequestBody ReplacementVo replacementVo) {
+        return dayDetailService.updateDayDetailReplacement(matricule, matricule1, wordingDetail, new ReplacementConverter().toItem(replacementVo));
     }
 
 

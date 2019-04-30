@@ -7,6 +7,7 @@ package com.onda.personnel.service.impl;
 
 import com.onda.personnel.bean.*;
 import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.common.util.PeriodUtil;
 import com.onda.personnel.common.util.betweenDate;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.service.*;
@@ -16,11 +17,11 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
  * @author AMINE
  */
 @Service
@@ -52,9 +53,9 @@ public class DayServiceImpl implements DayService {
             return -1;
         } else if (days == null || days.isEmpty()) {
             return -2;
-        } /*else if (days.size() > 7 || days.size() < 6) {
+        } else if (days.size() > 7 || days.size() < 6) {
             return -3;
-        } */else {
+        } else {
             workDetailService.createWorkDetail(emp, days);
             return 1;
         }
@@ -63,24 +64,25 @@ public class DayServiceImpl implements DayService {
     @Override
     public Day setDayInfos(List<DayDetail> dayDetails, Date ld) {
         Day day = new Day();
-        Timing hn = new Timing(0, 0);
-        Timing he = new Timing(0, 0);
-        int pan = 0;
+        /*Timing hn = new Timing(0, 0);
+        Timing he = new Timing(0, 0);*/
+        int pan = 0, minutesHnWorked = 0, minutesHeWorked = 0, hoursHnWorked = 0, hoursHeWorked = 0;
         day.setDayDate(ld);
-        System.out.println("hha size nta3 la liste ==> "+dayDetails.size());
+        System.out.println("hha size nta3 la liste ==> " + dayDetails.size());
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
             dayDetail.setDetail(dd);
             DayDetail dayDetail1 = dayDetailService.createDayDetail(dayDetail);
             day.getDayDetails().add(dayDetail1);
             pan += dd.getPan();
-            hn.setHour(hn.getHour() + dd.getHn().getHour());
-            hn.setMinute(hn.getMinute() + dd.getHn().getMinute());
-            he.setHour(he.getHour() + dd.getHe().getHour());
-            he.setMinute(he.getMinute() + dd.getHe().getMinute());
+            hoursHnWorked += dd.getHn().getHour();
+            minutesHnWorked += dd.getHn().getMinute();
+            hoursHeWorked += dd.getHe().getHour();
+            minutesHeWorked += dd.getHe().getMinute();
+            PeriodUtil.minutesToHour(hoursHnWorked, minutesHnWorked, hoursHeWorked, minutesHeWorked);
         }
-        day.setHn(hn);
-        day.setHe(he);
+        day.setHn(new Timing(hoursHnWorked, minutesHnWorked));
+        day.setHe(new Timing(hoursHeWorked, minutesHeWorked));
         day.setPan(pan);
         dayDao.save(day);
         return day;
@@ -220,15 +222,15 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public List<Day> findByDateOfTheWork(Date dateOfTheDay) {
-        LocalDate localDate=DateUtil.fromDate(dateOfTheDay);
-        LocalDate checkLocalDate=LocalDate.of(localDate.getYear(),localDate.getMonth(),1);
-        Date tmpDate=DateUtil.toDate(checkLocalDate);
-     List<Day> listDay=new ArrayList<>();
+        LocalDate localDate = DateUtil.fromDate(dateOfTheDay);
+        LocalDate checkLocalDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
+        Date tmpDate = DateUtil.toDate(checkLocalDate);
+        List<Day> listDay = new ArrayList<>();
         for (Work work : workService.findByWorkDetailWorkDetailDate(tmpDate)) {
-     List<Day> daysOfWork=work.getWorkDetail().getDays();
+            List<Day> daysOfWork = work.getWorkDetail().getDays();
             for (Day day : daysOfWork) {
-                if(day.getDayDate().compareTo(dateOfTheDay)==0){
-                listDay.add(day);
+                if (day.getDayDate().compareTo(dateOfTheDay) == 0) {
+                    listDay.add(day);
                 }
             }
         }
