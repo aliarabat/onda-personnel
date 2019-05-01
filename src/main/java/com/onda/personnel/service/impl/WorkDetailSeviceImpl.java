@@ -69,42 +69,31 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
     @Override
     public void createWorkDetail(Employee emp, List<Day> days) {
         Work work = workService.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(emp.getMatricule());
-        //WorkDetail workDetail = findByWorkDetailDate(workDetailDate);
         WorkDetail workDetail;
         LocalDate dayDate;
-        int workDetailListLength = DateUtil.lenghtOfMonth(new Date());
+        int workDetailListLength = DateUtil.lenghtOfMonth(DateUtil.getFirstDayOfWeek());
         if (work == null || work.getWorkDetail() == null) {
             work = new Work(emp);
             //Date firstMondayOfMonth=DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY));
             Date firstDayOfMonth = DateUtil.getFirstDayOfMonth();
             workDetail = new WorkDetail(firstDayOfMonth);
             workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfWeek().getDayOfMonth()+1;
-            System.out.println("hha howa firstMonday ==> "+DateUtil.getFirstDayOfWeek().getDayOfMonth());
             dayDate = DateUtil.getFirstDayOfWeek();
         } else {
             workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
             int size = workDetail.getDays().size();
             Day dayMin = Collections.min(workDetail.getDays(), new DayComparator());
-            log.info("hahowa day minnnn =====> " + dayMin.getDayDate());
-            log.info("hahowa size nta3 days tl workDertail ==> " + workDetail.getDays().size());
-            workDetailListLength = DateUtil.lenghtOfMonth(workDetail.getWorkDetailDate()) - dayMin.getDayDate().getDate() + 1;
-            System.out.println("hhha workDetailListLength ==> " + workDetailListLength);
+            workDetailListLength = DateUtil.fromDate(workDetail.getWorkDetailDate()).lengthOfMonth() - dayMin.getDayDate().getDate() + 1;
             dayDate = DateUtil.fromDate(workDetail.getDays().get(size - 1).getDayDate()).plusDays(1);
         }
 
         LocalDate ld = DateUtil.fromDate(workDetail.getWorkDetailDate()).plusMonths(1);
         WorkDetail newWorkDetail = new WorkDetail(DateUtil.toDate(ld));
-        int i=0;
-        int j=0;
         try {
             for (Day day : days) {
-                log.info("size of days  "+workDetail.getDays());
-                log.info("workDetaillenght  ==>  "+workDetailListLength);
                 if (workDetailListLength > workDetail.getDays().size()) {
-                    i++;
                     setOtherInfos(workDetail, dayService.setDayInfos(day.getDayDetails(), DateUtil.toDate(dayDate)));
                 } else {
-                    j++;
                     setOtherInfos(newWorkDetail, dayService.setDayInfos(day.getDayDetails(), DateUtil.toDate(dayDate)));
                 }
                 dayDate = dayDate.plusDays(1);
@@ -112,8 +101,6 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         } catch (NullPointerException e) {
             log.error("null in for-loop block " + e.getMessage());
         }
-
-        log.info("hahowa i => "+i+"    et j ==> "+j);
         if (newWorkDetail.getDays() == null || newWorkDetail.getDays().isEmpty()) {
             saveWorkDetail(workDetail);
             work.setWorkDetail(workDetail);
@@ -121,7 +108,7 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         } else {
             saveWorkDetail(workDetail);
             saveWorkDetail(newWorkDetail);
-            if (work.getWorkDetail()==null){
+            if (work.getWorkDetail() == null) {
                 work.setWorkDetail(workDetail);
             }
             Work newWork = new Work(emp, newWorkDetail);
@@ -164,7 +151,6 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         workDetail.getHn().setMinute(minutesHnWorked);
         workDetail.getHjf().setHour(hoursHjfWorked);
         workDetail.getHjf().setMinute(minutesHjfWorked);
-        log.info("hahowa  l hn ==> "+workDetail.getHjf().toString());
         workDetail.getDays().add(day);
     }
 

@@ -102,9 +102,8 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> findByMonthAndYear(int year, int month) {
         LocalDate localDate = LocalDate.of(year, month, 1);
         Date theDate = DateUtil.toDate(localDate);
-        List<Work> listOfWorksMonthly = new ArrayList<>();
-        listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
-        if (listOfWorksMonthly.isEmpty() == true || listOfWorksMonthly == null) {
+        List<Work> listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
+        if (listOfWorksMonthly.isEmpty() || listOfWorksMonthly == null) {
             return null;
         } else {
             return listOfWorksMonthly;
