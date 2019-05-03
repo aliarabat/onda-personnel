@@ -5,8 +5,10 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.bean.Employee;
 import java.util.List;
+
+import com.onda.personnel.model.Employee;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -23,5 +25,7 @@ public interface EmployeeService {
     int deleteEmployee(Integer matricule);
     
     public List<Employee> findByIsExist(boolean isExist);
+    
+    void print(HttpServletResponse response,Integer matricule);
 
 }

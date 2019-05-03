@@ -3,37 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.onda.personnel.bean;
+package com.onda.personnel.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 /**
  *
  * @author Xrio
  */
 @Entity
-public class Replacement implements Serializable {
+public class Detail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String reference;
-    @OneToOne
-    private Employee originalEmployee;
-    @OneToOne
-    private Employee replacedEmpolyee;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date replacementDate;
-    @OneToOne
-    private Detail detail;
+    private String wording;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing startingTime;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing endingTime;
+    private Integer pan;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing hn;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing he;
+    private String mode;
+
 
     /**
      *
@@ -67,64 +71,63 @@ public class Replacement implements Serializable {
         this.reference = reference;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Employee getOriginalEmployee() {
-        return originalEmployee;
+    public String getWording() {
+        return wording;
     }
 
-    /**
-     *
-     * @param originalEmployee
-     */
-    public void setOriginalEmployee(Employee originalEmployee) {
-        this.originalEmployee = originalEmployee;
+    public void setWording(String wording) {
+        this.wording = wording;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Employee getReplacedEmpolyee() {
-        return replacedEmpolyee;
+    public Timing getStartingTime() {
+        return startingTime;
     }
 
-    /**
-     *
-     * @param replacedEmpolyee
-     */
-    public void setReplacedEmpolyee(Employee replacedEmpolyee) {
-        this.replacedEmpolyee = replacedEmpolyee;
+    public void setStartingTime(Timing startingTime) {
+        this.startingTime = startingTime;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Date getReplacementDate() {
-        return replacementDate;
+    public Timing getEndingTime() {
+        return endingTime;
     }
 
-    /**
-     *
-     * @param replacementDate
-     */
-    public void setReplacementDate(Date replacementDate) {
-        this.replacementDate = replacementDate;
+    public void setEndingTime(Timing endingTime) {
+        this.endingTime = endingTime;
     }
 
-    public Detail getDetail() {
-        return detail;
+    public int getPan() {
+        return pan;
     }
 
-    public void setDetail(Detail detail) {
-        this.detail = detail;
+    public void setPan(int pan) {
+        this.pan = pan;
     }
-    
-    
-    
+
+    public Timing getHn() {
+        return hn;
+    }
+
+    public void setHn(Timing hn) {
+        this.hn = hn;
+    }
+
+    public Timing getHe() {
+        return he;
+    }
+
+    public void setHe(Timing he) {
+        this.he = he;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+
 
     /**
      *
@@ -137,6 +140,7 @@ public class Replacement implements Serializable {
         return hash;
     }
 
+
     /**
      *
      * @param object
@@ -145,10 +149,10 @@ public class Replacement implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Replacement)) {
+        if (!(object instanceof Detail)) {
             return false;
         }
-        Replacement other = (Replacement) object;
+        Detail other = (Detail) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -161,7 +165,7 @@ public class Replacement implements Serializable {
      */
     @Override
     public String toString() {
-        return "onda.personnel.horaire.model.Replacement[ id=" + id + " ]";
+        return "javaapplication1.DayDetail[ id=" + id + " ]";
     }
 
 }

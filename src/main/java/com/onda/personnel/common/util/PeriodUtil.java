@@ -5,11 +5,12 @@
  */
 package com.onda.personnel.common.util;
 
-import com.onda.personnel.bean.Timing;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.onda.personnel.model.Timing;
 
 /**
  *

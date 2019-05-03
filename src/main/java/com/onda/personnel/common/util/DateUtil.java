@@ -90,11 +90,11 @@ return localDate.toString();
     }
 
     public static Date getFirstDayOfMonth(){
-        LocalDate localDate=LocalDate.of(Year.now().getValue(), YearMonth.now().getMonth(),1);
+        LocalDate localDate=LocalDate.of(getFirstDayOfWeek().getYear(), getFirstDayOfWeek().getMonth(),1);
         return toDate(localDate);
     }
 
-    public static int lenghtOfMonth(Date date){
-        return fromDate(date).lengthOfMonth();
+    public static int lenghtOfMonth(LocalDate date){
+        return date.lengthOfMonth();
     }
 }

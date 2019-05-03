@@ -5,7 +5,7 @@
  */
 package com.onda.personnel.common.util;
 
-import com.onda.personnel.bean.Timing;
+import com.onda.personnel.model.Timing;
 
 /**
  *

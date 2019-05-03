@@ -5,13 +5,14 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.bean.Work;
+
 import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
 
-import java.util.Date;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

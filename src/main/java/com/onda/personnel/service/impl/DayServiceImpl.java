@@ -5,11 +5,18 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.*;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.PeriodUtil;
 import com.onda.personnel.common.util.betweenDate;
 import com.onda.personnel.dao.DayDao;
+import com.onda.personnel.model.Day;
+import com.onda.personnel.model.DayDetail;
+import com.onda.personnel.model.Detail;
+import com.onda.personnel.model.Employee;
+import com.onda.personnel.model.Timing;
+import com.onda.personnel.model.Vacation;
+import com.onda.personnel.model.Work;
+import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.service.*;
 
 import java.time.LocalDate;
@@ -152,7 +159,6 @@ public class DayServiceImpl implements DayService {
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);
-
             }
             return res = 1;
 
@@ -164,7 +170,6 @@ public class DayServiceImpl implements DayService {
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);
-
             }
             return res = 2;
         }
@@ -240,4 +245,5 @@ public class DayServiceImpl implements DayService {
         }
         return listDay;
     }
+
 }

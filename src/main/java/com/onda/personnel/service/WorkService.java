@@ -5,9 +5,7 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.Work;
-import com.onda.personnel.bean.WorkDetail;
+import com.onda.personnel.model.Work;
 import java.util.Date;
 import java.util.List;
 

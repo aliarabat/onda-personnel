@@ -5,7 +5,8 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.bean.WorkDetail;
+
+import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.rest.converter.AbstractConverter;
 import com.onda.personnel.rest.converter.WorkDetailConverter;
 import com.onda.personnel.rest.vo.WorkDetailVo;

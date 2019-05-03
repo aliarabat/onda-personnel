@@ -5,13 +5,14 @@
  */
 package com.onda.personnel.dao;
 
-import com.onda.personnel.bean.Work;
 import java.util.Date;
 import java.util.List;
 
-import com.onda.personnel.bean.WorkDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.onda.personnel.model.Work;
+import com.onda.personnel.model.WorkDetail;
 
 /**
  *

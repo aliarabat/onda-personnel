@@ -5,9 +5,9 @@
  */
 package com.onda.personnel.rest.converter;
 
-import com.onda.personnel.bean.Mission;
-import com.onda.personnel.bean.Vacation;
 import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.model.Mission;
+import com.onda.personnel.model.Vacation;
 import com.onda.personnel.rest.vo.MissionVo;
 import com.onda.personnel.rest.vo.VacationVo;
 import org.springframework.stereotype.Component;

@@ -5,10 +5,7 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.bean.DayDetail;
-import com.onda.personnel.bean.Mission;
-import com.onda.personnel.bean.Replacement;
-import com.onda.personnel.bean.Skip;
+
 import com.onda.personnel.rest.converter.DayDetailConverter;
 import com.onda.personnel.rest.converter.MissionConverter;
 import com.onda.personnel.rest.converter.ReplacementConverter;
@@ -19,7 +16,6 @@ import com.onda.personnel.rest.vo.ReplacementVo;
 import com.onda.personnel.rest.vo.SkipVo;
 import com.onda.personnel.service.DayDetailService;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

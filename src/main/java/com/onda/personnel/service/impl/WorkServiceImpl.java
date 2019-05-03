@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,12 +6,11 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Day;
-import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.Work;
-import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.WorkDao;
+import com.onda.personnel.model.Employee;
+import com.onda.personnel.model.Work;
+import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.service.WorkService;
 
 import java.time.LocalDate;
@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -95,8 +97,6 @@ public class WorkServiceImpl implements WorkService {
         if (theWork == null) {
             return null;
         } else {
-            List<Day> listDays = theWork.getWorkDetail().getDays();
-            System.out.println("listOf DAYS" + listDays);
             return theWork;
         }
     }
@@ -105,9 +105,8 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> findByMonthAndYear(int year, int month) {
         LocalDate localDate = LocalDate.of(year, month, 1);
         Date theDate = DateUtil.toDate(localDate);
-        List<Work> listOfWorksMonthly = new ArrayList<>();
-        listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
-        if (listOfWorksMonthly.isEmpty() == true || listOfWorksMonthly == null) {
+        List<Work> listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
+        if (listOfWorksMonthly.isEmpty() || listOfWorksMonthly == null) {
             return null;
         } else {
             return listOfWorksMonthly;
@@ -128,9 +127,11 @@ public class WorkServiceImpl implements WorkService {
         return findByWorkDetailWorkDetailDate(theDate);
     }
 
+
     @Override
     public List<Work> findAll() {
         return workDao.findAll();
     }
-
+    
+    
 }

@@ -5,10 +5,11 @@
  */
 package com.onda.personnel.dao;
 
-import com.onda.personnel.bean.Employee;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.onda.personnel.model.Employee;
 
 /**
  *
