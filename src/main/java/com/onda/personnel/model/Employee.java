@@ -3,35 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.onda.personnel.bean;
+package com.onda.personnel.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 /**
  *
  * @author Xrio
  */
 @Entity
-public class Mission implements Serializable {
+public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String reference;
-    @OneToOne
-    private Employee employee;
+    private Integer matricule;
+    private String firstName;
+    private String lastName;
+    private String fonction;
     private String type;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date startingDate;
-    
+    private boolean isExist;
 
     /**
      *
@@ -53,32 +49,64 @@ public class Mission implements Serializable {
      *
      * @return
      */
-    public String getReference() {
-        return reference;
+    public Integer getMatricule() {
+        return matricule;
     }
 
     /**
      *
-     * @param reference
+     * @param matricule
      */
-    public void setReference(String reference) {
-        this.reference = reference;
+    public void setMatricule(Integer matricule) {
+        this.matricule = matricule;
     }
 
     /**
      *
      * @return
      */
-    public Employee getEmployee() {
-        return employee;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
      *
-     * @param employee
+     * @param firstName
      */
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     *
+     * @param lastName
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getFonction() {
+        return fonction;
+    }
+
+    /**
+     *
+     * @param fonction
+     */
+    public void setFonction(String fonction) {
+        this.fonction = fonction;
     }
 
     /**
@@ -97,38 +125,22 @@ public class Mission implements Serializable {
         this.type = type;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Date getStartingDate() {
-        return startingDate;
+    public boolean isIsExist() {
+        return isExist;
     }
 
-    /**
-     *
-     * @param startingDate
-     */
-    public void setStartingDate(Date startingDate) {
-        this.startingDate = startingDate;
+    public void setIsExist(boolean isExist) {
+        this.isExist = isExist;
     }
 
-    /**
-     *
-     * @return
-     */
-    
 
-    /**
-     *
-     * @param endingDate
-     */
-    
 
     /**
      *
      * @return
      */
+
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -144,10 +156,10 @@ public class Mission implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Mission)) {
+        if (!(object instanceof Employee)) {
             return false;
         }
-        Mission other = (Mission) object;
+        Employee other = (Employee) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -160,7 +172,7 @@ public class Mission implements Serializable {
      */
     @Override
     public String toString() {
-        return "onda.personnel.horaire.model.Mission[ id=" + id + " ]";
+        return "javaapplication1.Employee[ id=" + id + " ]";
     }
 
 }

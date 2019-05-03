@@ -5,10 +5,10 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Detail;
-import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.Replacement;
 import com.onda.personnel.dao.ReplacementDao;
+import com.onda.personnel.model.Detail;
+import com.onda.personnel.model.Employee;
+import com.onda.personnel.model.Replacement;
 import com.onda.personnel.service.DetailService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.ReplacementService;

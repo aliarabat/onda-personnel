@@ -5,14 +5,14 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Detail;
-import com.onda.personnel.bean.Timing;
 import com.onda.personnel.common.util.PeriodUtil;
 import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.onda.personnel.dao.DetailDao;
+import com.onda.personnel.model.Detail;
+import com.onda.personnel.model.Timing;
 import com.onda.personnel.service.DetailService;
 import java.util.Date;
 

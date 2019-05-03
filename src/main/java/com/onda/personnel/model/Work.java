@@ -3,119 +3,69 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.onda.personnel.bean;
+package com.onda.personnel.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 /**
  *
  * @author Xrio
  */
 @Entity
-public class Skip implements Serializable {
+public class Work implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String reference;
+    @OneToOne
+    private WorkDetail workDetail;
     @OneToOne
     private Employee employee;
-    private String type;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date skipDate;
 
-    /**
-     *
-     * @return
-     */
+    public Work(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Work(Employee emp, WorkDetail workDetail) {
+        this.employee=emp;
+        this.workDetail=workDetail;
+    }
+
+    public Work() {
+
+    }
+
     public Long getId() {
         return id;
     }
 
-    /**
-     *
-     * @param id
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getReference() {
-        return reference;
+    public WorkDetail getWorkDetail() {
+        return workDetail;
     }
 
-    /**
-     *
-     * @param reference
-     */
-    public void setReference(String reference) {
-        this.reference = reference;
+    public void setWorkDetail(WorkDetail workDetail) {
+        this.workDetail = workDetail;
     }
 
-    /**
-     *
-     * @return
-     */
     public Employee getEmployee() {
         return employee;
     }
 
-    /**
-     *
-     * @param employee
-     */
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     *
-     * @param type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Date getSkipDate() {
-        return skipDate;
-    }
-
-    /**
-     *
-     * @param skipDate
-     */
-    public void setSkipDate(Date skipDate) {
-        this.skipDate = skipDate;
-    }
-
-    /**
-     *
-     * @return
-     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -123,31 +73,22 @@ public class Skip implements Serializable {
         return hash;
     }
 
-    /**
-     *
-     * @param object
-     * @return
-     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Skip)) {
+        if (!(object instanceof Work)) {
             return false;
         }
-        Skip other = (Skip) object;
+        Work other = (Work) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String toString() {
-        return "onda.personnel.horaire.model.Skip[ id=" + id + " ]";
+        return "javaapplication1.Work[ id=" + id + " ]";
     }
 
 }

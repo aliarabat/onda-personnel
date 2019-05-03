@@ -5,10 +5,11 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.bean.Detail;
-import com.onda.personnel.bean.Timing;
 import java.time.LocalTime;
 import java.util.List;
+
+import com.onda.personnel.model.Detail;
+import com.onda.personnel.model.Timing;
 
 /**
  *

@@ -5,8 +5,8 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Vacation;
 import com.onda.personnel.dao.VacationDao;
+import com.onda.personnel.model.Vacation;
 import com.onda.personnel.service.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

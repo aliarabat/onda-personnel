@@ -5,8 +5,8 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.bean.Detail;
-import com.onda.personnel.bean.Timing;
+import com.onda.personnel.model.Detail;
+import com.onda.personnel.model.Timing;
 import com.onda.personnel.rest.converter.DetailConverter;
 import com.onda.personnel.rest.converter.TimingConverter;
 import com.onda.personnel.rest.vo.DetailVo;

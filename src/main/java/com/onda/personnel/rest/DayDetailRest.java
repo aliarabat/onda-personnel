@@ -5,9 +5,9 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.bean.Mission;
-import com.onda.personnel.bean.Replacement;
-import com.onda.personnel.bean.Skip;
+import com.onda.personnel.model.Mission;
+import com.onda.personnel.model.Replacement;
+import com.onda.personnel.model.Skip;
 import com.onda.personnel.service.DayDetailService;
 
 import java.util.Date;

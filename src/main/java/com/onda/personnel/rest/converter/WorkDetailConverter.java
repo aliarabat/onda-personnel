@@ -5,10 +5,10 @@
  */
 package com.onda.personnel.rest.converter;
 
-import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.NumberUtil;
 import com.onda.personnel.common.util.StringUtil;
+import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import java.util.Date;
 import org.springframework.stereotype.Component;

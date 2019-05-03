@@ -1,8 +1,8 @@
 package com.onda.personnel.common.util;
 
-import com.onda.personnel.bean.Day;
-
 import java.util.Comparator;
+
+import com.onda.personnel.model.Day;
 
 public class DayComparator implements Comparator<Day> {
     @Override

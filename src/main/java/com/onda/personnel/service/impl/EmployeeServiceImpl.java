@@ -5,12 +5,22 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Employee;
+import com.onda.personnel.common.util.JasperUtil;
 import com.onda.personnel.dao.EmployeeDao;
+import com.onda.personnel.model.Employee;
 import com.onda.personnel.service.EmployeeService;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findByIsExist(boolean isExist){
+    public List<Employee> findByIsExist(boolean isExist) {
         return employeeDao.findByIsExist(isExist);
     }
 
@@ -84,7 +94,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeDao = employeeDao;
     }
 
-    
- 
+    @Override
+    public void print(HttpServletResponse response, Integer matricule) {
+        JasperPrint jasperPrint = null;
+        List<Employee> list=new ArrayList();
+        Employee employee = findByMatricule(matricule);
+        list.add(employee);
+        response.setContentType("application/x-download");
+        response.setHeader("Content-Disposition", String.format("attachement; filename=\"empployee"+employee.getMatricule()+".pdf\""));
+        OutputStream out = null;
+        try {
+            out = response.getOutputStream();
+            jasperPrint = new JasperUtil().generatePdf(list, null, true);
+            JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+        } catch (IOException ex) {
+            Logger.getLogger(EmployeeServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(EmployeeServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
 }

@@ -5,12 +5,13 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.bean.DayDetail;
-import com.onda.personnel.bean.Detail;
-import com.onda.personnel.bean.Mission;
-import com.onda.personnel.bean.Replacement;
-import com.onda.personnel.bean.Skip;
 import java.util.Date;
+
+import com.onda.personnel.model.DayDetail;
+import com.onda.personnel.model.Detail;
+import com.onda.personnel.model.Mission;
+import com.onda.personnel.model.Replacement;
+import com.onda.personnel.model.Skip;
 
 /**
  *

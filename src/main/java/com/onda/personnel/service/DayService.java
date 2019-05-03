@@ -5,13 +5,14 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.bean.Day;
-import com.onda.personnel.bean.DayDetail;
-import com.onda.personnel.bean.Vacation;
-import com.onda.personnel.bean.Work;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+import com.onda.personnel.model.Day;
+import com.onda.personnel.model.DayDetail;
+import com.onda.personnel.model.Vacation;
+import com.onda.personnel.model.Work;
 
 /**
  *
@@ -27,7 +28,7 @@ public interface DayService {
 
     public List<Day> findByDayDate(Date dayDate);
 
-        public List<Day> findByDateOfTheWork(Date dateOfTheDay);
+    public List<Day> findByDateOfTheWork(Date dateOfTheDay);
 
     public int createVacation(Vacation vacation);
 

@@ -5,10 +5,10 @@
  */
 package com.onda.personnel.rest.vo;
 
-import com.onda.personnel.bean.Timing;
-
 import java.util.Date;
 import java.util.List;
+
+import com.onda.personnel.model.Timing;
 
 /**
  * @author AMINE

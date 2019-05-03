@@ -5,9 +5,10 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.bean.Skip;
 import java.util.Date;
 import java.util.List;
+
+import com.onda.personnel.model.Skip;
 
 /**
  *

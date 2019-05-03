@@ -44,7 +44,7 @@
             <version>5.6.1</version>
             <type>jar</type>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
             <version>2.0.1</version>
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
-            <version>6.0.0</version>
+            <version>6.4.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -75,7 +75,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
     <build>

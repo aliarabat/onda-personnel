@@ -5,14 +5,14 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Day;
-import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.Work;
-import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.common.util.DayComparator;
 import com.onda.personnel.common.util.PeriodUtil;
 import com.onda.personnel.dao.WorkDetailDao;
+import com.onda.personnel.model.Day;
+import com.onda.personnel.model.Employee;
+import com.onda.personnel.model.Work;
+import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.EmployeeService;

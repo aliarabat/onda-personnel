@@ -5,20 +5,20 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Day;
-import com.onda.personnel.bean.DayDetail;
-import com.onda.personnel.bean.Detail;
-import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.Mission;
-import com.onda.personnel.bean.Replacement;
-import com.onda.personnel.bean.Skip;
-import com.onda.personnel.bean.Work;
-import com.onda.personnel.bean.WorkDetail;
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.dao.DayDetailDao;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.dao.WorkDetailDao;
+import com.onda.personnel.model.Day;
+import com.onda.personnel.model.DayDetail;
+import com.onda.personnel.model.Detail;
+import com.onda.personnel.model.Employee;
+import com.onda.personnel.model.Mission;
+import com.onda.personnel.model.Replacement;
+import com.onda.personnel.model.Skip;
+import com.onda.personnel.model.Work;
+import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.service.DayDetailService;
 import com.onda.personnel.service.DetailService;
 import com.onda.personnel.service.EmployeeService;

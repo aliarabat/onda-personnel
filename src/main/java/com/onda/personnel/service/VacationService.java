@@ -5,7 +5,7 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.bean.Vacation;
+import com.onda.personnel.model.Vacation;
 
 /**
  *

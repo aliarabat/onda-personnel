@@ -5,9 +5,9 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.bean.Employee;
-import com.onda.personnel.bean.Mission;
 import com.onda.personnel.dao.MissionDao;
+import com.onda.personnel.model.Employee;
+import com.onda.personnel.model.Mission;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.MissionService;
 
