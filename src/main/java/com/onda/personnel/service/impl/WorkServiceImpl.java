@@ -95,8 +95,8 @@ public class WorkServiceImpl implements WorkService {
         if (theWork == null) {
             return null;
         } else {
-            List<Day> listDays=theWork.getWorkDetail().getDays();
-            System.out.println("listOf DAYS"+listDays);
+            List<Day> listDays = theWork.getWorkDetail().getDays();
+            System.out.println("listOf DAYS" + listDays);
             return theWork;
         }
     }
@@ -126,6 +126,11 @@ public class WorkServiceImpl implements WorkService {
         LocalDate localDate = LocalDate.of(checklocalDate.getYear(), checklocalDate.getMonth(), 1);
         Date theDate = DateUtil.toDate(localDate);
         return findByWorkDetailWorkDetailDate(theDate);
+    }
+
+    @Override
+    public List<Work> findAll() {
+        return workDao.findAll();
     }
 
 }

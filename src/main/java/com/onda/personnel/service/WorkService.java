@@ -36,4 +36,6 @@ public interface WorkService {
     public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate);
 
     List<String> findFromDateToDate(Integer matricule);
+    
+    List<Work> findAll();
 }

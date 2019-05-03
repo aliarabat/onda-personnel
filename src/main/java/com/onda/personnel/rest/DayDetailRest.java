@@ -5,21 +5,26 @@
  */
 package com.onda.personnel.rest;
 
+import com.onda.personnel.bean.DayDetail;
 import com.onda.personnel.bean.Mission;
 import com.onda.personnel.bean.Replacement;
 import com.onda.personnel.bean.Skip;
+import com.onda.personnel.rest.converter.DayDetailConverter;
 import com.onda.personnel.rest.converter.MissionConverter;
 import com.onda.personnel.rest.converter.ReplacementConverter;
 import com.onda.personnel.rest.converter.SkipConverter;
+import com.onda.personnel.rest.vo.DayDetailVo;
 import com.onda.personnel.rest.vo.MissionVo;
 import com.onda.personnel.rest.vo.ReplacementVo;
 import com.onda.personnel.rest.vo.SkipVo;
 import com.onda.personnel.service.DayDetailService;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,9 +57,15 @@ public class DayDetailRest {
         return dayDetailService.updateDayDetailReplacement(matricule, matricule1, wordingDetail, new ReplacementConverter().toItem(replacementVo));
     }
 
-
-    //@PutMapping("/matricule/{matricule}/dateMission/{dateMission}/wordingDetail/{wordingDetail}")
-
+    @GetMapping("/")
+    public List<DayDetailVo> findAll() {
+        return new DayDetailConverter().toVo(dayDetailService.findAll()) ;
+    }
+    @GetMapping("/Mission/")
+    public List<DayDetailVo> findByMissionIsNotNull() {
+        return new DayDetailConverter().toVo(dayDetailService.findByMissionIsNotNull());
+    }
+    
 
     public DayDetailService getDayDetailService() {
         return dayDetailService;
@@ -63,6 +74,5 @@ public class DayDetailRest {
     public void setDayDetailService(DayDetailService dayDetailService) {
         this.dayDetailService = dayDetailService;
     }
-
 
 }

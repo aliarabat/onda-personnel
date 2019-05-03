@@ -382,4 +382,14 @@ public class DayDetailServiceImpl implements DayDetailService {
         this.skipService = skipService;
     }
 
+    @Override
+    public List<DayDetail> findAll() {
+        return dayDetailDao.findAll();
+    }
+
+    @Override
+    public List<DayDetail> findByMissionIsNotNull() {
+        return dayDetailDao.findByMissionIsNotNull();
+    }
+
 }

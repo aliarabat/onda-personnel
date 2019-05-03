@@ -89,18 +89,17 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month) {
-        Employee employee=employeeService.findByMatricule(matricule);
-        if(employee==null){
-            return null;
-        }
-        else{
-        WorkDetail workDetail =workDetailService.findByEmployeeMatriculeAndWorkDetailDate(matricule, year,month);
-        if (workDetail == null) {
+        Employee employee = employeeService.findByMatricule(matricule);
+        if (employee == null) {
             return null;
         } else {
-            return workDetail.getDays();
+            WorkDetail workDetail = workDetailService.findByEmployeeMatriculeAndWorkDetailDate(matricule, year, month);
+            if (workDetail == null) {
+                return null;
+            } else {
+                return workDetail.getDays();
+            }
         }
-    }
     }
 
     @Override
@@ -123,7 +122,11 @@ public class DayServiceImpl implements DayService {
             if (theDay == null) {
                 return null;
             } else {
-                return theDay;
+                if (theDay.getDayDetails().isEmpty()) {
+                    return null;
+                } else {
+                    return theDay;
+                }
             }
 
         }
@@ -149,6 +152,7 @@ public class DayServiceImpl implements DayService {
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);
+
             }
             return res = 1;
 
@@ -160,6 +164,7 @@ public class DayServiceImpl implements DayService {
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);
+
             }
             return res = 2;
         }

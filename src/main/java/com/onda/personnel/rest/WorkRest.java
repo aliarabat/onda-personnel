@@ -33,7 +33,7 @@ public class WorkRest {
 
     @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
     public WorkVo findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule, @PathVariable String workDetailDate) {
-        return new WorkConverter().toVo(workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule,DateUtil.toDate(DateUtil.fromStringToLocalDate(workDetailDate)) ))  ;
+        return new WorkConverter().toVo(workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, DateUtil.toDate(DateUtil.fromStringToLocalDate(workDetailDate))));
     }
 
     @GetMapping("/matricule/{matricule}")
@@ -74,6 +74,11 @@ public class WorkRest {
     @GetMapping("/ckeckdates/matricule/{matricule}")
     public List<String> findFromDateToDate(@PathVariable Integer matricule) {
         return workService.findFromDateToDate(matricule);
+    }
+
+    @GetMapping("/")
+    public List<WorkVo> findAll() {
+        return new WorkConverter().toVo(workService.findAll());
     }
 
     public WorkService getWorkService() {
