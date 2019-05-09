@@ -27,4 +27,6 @@ public interface DayDetailDao extends JpaRepository<DayDetail, Long> {
 
     public List<DayDetail> findBySkipIsNotNull();
 
+    public List<DayDetail> findBySkipId(Long id);
+
 }

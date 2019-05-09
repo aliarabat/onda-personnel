@@ -7,6 +7,7 @@ package com.onda.personnel.model;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +39,8 @@ public class DayDetail implements Serializable {
      *
      * @return
      */
+    
+    
     public Long getId() {
         return id;
     }

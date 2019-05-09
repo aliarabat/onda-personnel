@@ -20,13 +20,14 @@ public class VacationVo {
     private String endingDate;
     private String type;
 
-    public EmployeeVo getEmployee() {
+    public EmployeeVo getEmployeeVo() {
         return employeeVo;
     }
 
-    public void setEmployee(EmployeeVo employeeVo) {
+    public void setEmployeeVo(EmployeeVo employeeVo) {
         this.employeeVo = employeeVo;
     }
+
 
     public Long getId() {
         return id;

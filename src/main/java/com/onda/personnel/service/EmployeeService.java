@@ -27,5 +27,7 @@ public interface EmployeeService {
     public List<Employee> findByIsExist(boolean isExist);
     
     void print(HttpServletResponse response,Integer matricule);
+    
+    public Employee getEmployeeById(Long id);
 
 }

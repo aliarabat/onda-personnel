@@ -12,14 +12,15 @@ import com.onda.personnel.model.Day;
 import com.onda.personnel.model.DayDetail;
 import com.onda.personnel.model.Detail;
 import com.onda.personnel.model.Employee;
-import com.onda.personnel.model.Replacement;
 import com.onda.personnel.model.Skip;
+import com.onda.personnel.service.DayDetailService;
+
 import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.DetailService;
+
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.SkipService;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,12 +32,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SkipServiceImpl implements SkipService {
+
     @Autowired
     SkipDao skipDao;
     @Autowired
     EmployeeService employeeService;
-    
-    
     @Autowired
     DetailService detailService;
 
@@ -47,6 +47,8 @@ public class SkipServiceImpl implements SkipService {
 
     @Autowired
     DayDao dayDao;
+    @Autowired
+    DayDetailService dayDetailService;
 
     @Override
     public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate) {
@@ -54,76 +56,44 @@ public class SkipServiceImpl implements SkipService {
     }
 
     @Override
-    public Skip createSkip(Integer matricule,String wording, Skip skip) {
+    public Skip createSkip(Integer matricule, String wording, Skip skip) {
         Employee employee = employeeService.findByMatricule(matricule);
         if (employee == null) {
             return null;
         } else {
-            Detail detail=detailService.findByWording(wording);
-            if(detail!=null){
-            skip.setEmployee(employee);
-            skip.setDetail(detail);
-            skipDao.save(skip);
-            return skip ;
+            Detail detail = detailService.findByWording(wording);
+            if (detail != null) {
+                skip.setEmployee(employee);
+                skip.setDetail(detail);
+                skipDao.save(skip);
+                return skip;
+            } else {
+                return null;
             }
-            else return null;
         }
     }
 
-
-    public EmployeeService getEmployeeService() {
-        return employeeService;
+    @Override
+    public List<Skip> findAllSkips() {
+        return skipDao.findAll();
     }
 
-    public void setEmployeeService(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    @Override
+    public int removeSkip(Long id) {
+        Skip skip = skipDao.getOne(id);
+        if (skip == null) {
+            return -1;
+        } else {
+            List<DayDetail> dds = dayDetailService.findBySkipId(id);
+            for (DayDetail dayDetail : dds) {
+                dayDetail.setSkip(null);
+            }
+            skipDao.delete(skip);
+            return 1;
+        }
     }
 
-
-    public SkipDao getSkipDao() {
-        return skipDao;
-    }
-
-    public void setSkipDao(SkipDao skipDao) {
-        this.skipDao = skipDao;
-    }
-
-    public DetailService getDetailService() {
-        return detailService;
-    }
-
-    public void setDetailService(DetailService detailService) {
-        this.detailService = detailService;
-    }
-
-    public DayDetailDao getDayDetailDao() {
-        return dayDetailDao;
-    }
-
-    public void setDayDetailDao(DayDetailDao dayDetailDao) {
-        this.dayDetailDao = dayDetailDao;
-    }
-
-    public DayService getDayService() {
-        return dayService;
-    }
-
-    public void setDayService(DayService dayService) {
-        this.dayService = dayService;
-    }
-
-    public DayDao getDayDao() {
-        return dayDao;
-    }
-
-    public void setDayDao(DayDao dayDao) {
-        this.dayDao = dayDao;
-    }
-    
-    
-    
-
- @Override
+    @Override
     public int updateSkip(DayDetail dayDetail) {
         DayDetail dayDetail1 = dayDetailDao.getOne(dayDetail.getId());
         if (dayDetail1 == null) {
@@ -176,12 +146,12 @@ public class SkipServiceImpl implements SkipService {
                             return -7;
                         }
                     } else {
-                         skip1.setEmployee(dayDetail.getSkip().getEmployee());
-                            //skip1.setReference(dayDetail.getSkip().getReference());
-                            skip1.setType(dayDetail.getSkip().getType());
-                            skip1.setSkipDate(dayDetail.getSkip().getSkipDate());
-                            skip1.setDetail(dayDetail.getDetail());
-                            skipDao.save(skip1);
+                        skip1.setEmployee(dayDetail.getSkip().getEmployee());
+                        //skip1.setReference(dayDetail.getSkip().getReference());
+                        skip1.setType(dayDetail.getSkip().getType());
+                        skip1.setSkipDate(dayDetail.getSkip().getSkipDate());
+                        skip1.setDetail(dayDetail.getDetail());
+                        skipDao.save(skip1);
                         checkDayDetail1 = new DayDetail();
                         checkDayDetail1.setDetail(null);
                         checkDayDetail1.setSkip(skip1);
@@ -213,11 +183,11 @@ public class SkipServiceImpl implements SkipService {
                     }
                     if (checkDayDetail == null) {
                         skip1.setEmployee(dayDetail.getSkip().getEmployee());
-                            //skip1.setReference(dayDetail.getSkip().getReference());
-                            skip1.setType(dayDetail.getSkip().getType());
-                            skip1.setSkipDate(dayDetail.getSkip().getSkipDate());
-                            skip1.setDetail(dayDetail.getDetail());
-                            skipDao.save(skip1);
+                        //skip1.setReference(dayDetail.getSkip().getReference());
+                        skip1.setType(dayDetail.getSkip().getType());
+                        skip1.setSkipDate(dayDetail.getSkip().getSkipDate());
+                        skip1.setDetail(dayDetail.getDetail());
+                        skipDao.save(skip1);
                         checkDayDetail = new DayDetail();
                         checkDayDetail.setDetail(null);
                         checkDayDetail.setSkip(skip1);
@@ -251,4 +221,49 @@ public class SkipServiceImpl implements SkipService {
             }
         }
     }
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    public SkipDao getSkipDao() {
+        return skipDao;
+    }
+
+    public void setSkipDao(SkipDao skipDao) {
+        this.skipDao = skipDao;
+    }
+
+    public void setDetailService(DetailService detailService) {
+        this.detailService = detailService;
+    }
+
+    public DayDetailDao getDayDetailDao() {
+        return dayDetailDao;
+    }
+
+    public void setDayDetailDao(DayDetailDao dayDetailDao) {
+        this.dayDetailDao = dayDetailDao;
+    }
+
+    public DayService getDayService() {
+        return dayService;
+    }
+
+    public void setDayService(DayService dayService) {
+        this.dayService = dayService;
+    }
+
+    public DayDao getDayDao() {
+        return dayDao;
+    }
+
+    public void setDayDao(DayDao dayDao) {
+        this.dayDao = dayDao;
+    }
+
 }

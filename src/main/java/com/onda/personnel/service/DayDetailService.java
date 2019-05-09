@@ -45,4 +45,6 @@ public interface DayDetailService {
 
     public List<DayDetail> findBySkipIsNotNull();
 
+    public List<DayDetail> findBySkipId(Long id);
+
 }

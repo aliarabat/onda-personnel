@@ -512,4 +512,9 @@ public class DayDetailServiceImpl implements DayDetailService {
         this.replacementDao = replacementDao;
     }
 
+    @Override
+    public List<DayDetail> findBySkipId(Long id) {
+        return dayDetailDao.findBySkipId(id);
+    }
+
 }

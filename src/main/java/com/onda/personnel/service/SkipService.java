@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.onda.personnel.model.Skip;
+import com.onda.personnel.model.Vacation;
 
 /**
  *
@@ -22,5 +23,9 @@ public interface SkipService {
     public Skip createSkip(Integer matricule, String wording, Skip skip);
 
     public int updateSkip(DayDetail dayDetail);
+
+    public List<Skip> findAllSkips();
+    
+    public int removeSkip (Long id);
 
 }

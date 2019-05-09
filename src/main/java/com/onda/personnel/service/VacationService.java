@@ -6,6 +6,7 @@
 package com.onda.personnel.service;
 
 import com.onda.personnel.model.Vacation;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,14 @@ import com.onda.personnel.model.Vacation;
 public interface VacationService {
 
     public void saveVacation(Vacation vacation);
+    
+    public int removeVacation (Long id);
+    
+    public List<Vacation> findAllVacation();
+    
+    public Vacation getVacationByID(Long id);
+    
+   
+    
+    
 }

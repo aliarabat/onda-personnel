@@ -9,11 +9,13 @@ import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.model.Skip;
 import com.onda.personnel.rest.vo.SkipVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author AMINE
  */
+@Component
 public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
     
     
