@@ -11,7 +11,7 @@ package com.onda.personnel.common.util;
  * @author moulaYounes
  */
 public class Config {
-    private static String cheminJasper="C:\\Users\\hp\\Documents\\NetBeansProjects\\onda-personnel\\src\\main\\java\\com\\onda\\personnel\\reports\\Blank_A4.jasper";
+    private static String cheminJasper="C:\\Users\\hp\\Documents\\NetBeansProjects\\onda-personnel\\src\\main\\java\\com\\onda\\personnel\\reports\\";
     private static String cheminExport="E:\\employess";
 
     public static String getCheminJasper() {

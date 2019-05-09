@@ -80,7 +80,8 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
             workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfWeek().getDayOfMonth()+1;
             dayDate = DateUtil.getFirstDayOfWeek();
         } else {
-            workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
+            //workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
+        	workDetail= work.getWorkDetail();
             int size = workDetail.getDays().size();
             Day dayMin = Collections.min(workDetail.getDays(), new DayComparator());
             workDetailListLength = DateUtil.fromDate(workDetail.getWorkDetailDate()).lengthOfMonth() - dayMin.getDayDate().getDate() + 1;
@@ -106,7 +107,7 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
             work.setWorkDetail(workDetail);
             workService.saveWork(work);
         } else {
-            saveWorkDetail(workDetail);
+            //saveWorkDetail(workDetail);
             saveWorkDetail(newWorkDetail);
             if (work.getWorkDetail() == null) {
                 work.setWorkDetail(workDetail);
@@ -139,11 +140,11 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         int hoursHnWorked = workDetail.getHn().getHour() + day.getHn().getHour();
         int minutesHnWorked = workDetail.getHn().getMinute() + day.getHn().getMinute();
         if (minutesHnWorked >= 60) {
-            hoursHnWorked++;
+            ++hoursHnWorked;
             minutesHnWorked -= 60;
         }
         if (minutesHjfWorked >= 60) {
-            hoursHjfWorked++;
+            ++hoursHjfWorked;
             minutesHjfWorked -= 60;
         }
         workDetail.setPan(workDetail.getPan() + day.getPan());

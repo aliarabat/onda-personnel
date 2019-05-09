@@ -6,13 +6,9 @@
 package com.onda.personnel.rest;
 
 import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.model.Day;
 import com.onda.personnel.model.Vacation;
-import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.DayConverter;
-import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.DayVo;
-import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.DayService;
 
 import java.util.Date;
@@ -51,11 +47,11 @@ public class DayRest {
     public int createVacation(@RequestBody Vacation vacation) {
         return dayService.createVacation(vacation);
     }
-
+    /*
     @GetMapping("/matricule/{matricule}/year/{year}/month/{month}")
     public List<DayVo> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(@PathVariable Integer matricule, @PathVariable int year, @PathVariable int month) {
         return new DayConverter().toVo(dayService.findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(matricule, year, month));
-    }
+    }*/
 
     @GetMapping("/matricule/{matricule}/dayDate/{dayDate}")
     public DayVo findByEmployeeMatriculeAndDateOfTheDay(@PathVariable Integer matricule, @PathVariable String dayDate) {

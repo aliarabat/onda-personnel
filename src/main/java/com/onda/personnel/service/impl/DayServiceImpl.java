@@ -13,7 +13,6 @@ import com.onda.personnel.model.*;
 import com.onda.personnel.service.*;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +44,9 @@ public class DayServiceImpl implements DayService {
 
     @Autowired
     private VacationService vacationService;
+
+    @Autowired
+    private HolidayService holidayService;
 
     @Override
     public int createDay(Integer matricule, List<Day> days) {
@@ -80,29 +82,37 @@ public class DayServiceImpl implements DayService {
             minutesHeWorked += dd.getHe().getMinute();
             PeriodUtil.minutesToHour(hoursHnWorked, minutesHnWorked, hoursHeWorked, minutesHeWorked);
         }
+        Holiday holiday = holidayService.findByStartingDateLessThanEqualAndEndingDateGreaterThanEqual(ld, ld);
+        if (holiday != null) {
+            day.setReference(holiday.getReference());
+        }
         day.setHn(new Timing(hoursHnWorked, minutesHnWorked));
         day.setHe(new Timing(hoursHeWorked, minutesHeWorked));
         day.setPan(pan);
         dayDao.save(day);
         return day;
-    }
 
+    }
+    /*
     @Override
-    public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month) {
-        Work work = workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
-        if (work == null) {
-            return null;
-        } else {
-            return work.getWorkDetail().getDays();
-        }
-    }
+    public List<Day> findByHolidayId(Long id) {
+        return dayDao.findByHolidayId(id);
+    }*/
 
+    /*
+	 * @Override public List<Day>
+	 * findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year,
+	 * int month) { Work work =
+	 * workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
+	 * if (work == null) { return null; } else { return
+	 * work.getWorkDetail().getDays(); } }
+     */
     @Override
     public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate) {
         LocalDate localDate = DateUtil.fromDate(dayDate);
         LocalDate checklocalDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
         Date tmpDate = DateUtil.toDate(checklocalDate);
-        Work work = workService.findByEmployeeMatriculeAndWorkDetailTestDate(matricule, tmpDate);
+        Work work = workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, tmpDate);
         if (work == null) {
             return null;
         } else {
@@ -135,7 +145,8 @@ public class DayServiceImpl implements DayService {
         System.out.println(vacation.getStartingDate());
         if (emp == null) {
             return res = -1;
-        } else if (vacation.getType().equals("C.M") || vacation.getType().equals("C.AT") || vacation.getType().equals("C.EXCEP")) {
+        } else if (vacation.getType().equals("C.M") || vacation.getType().equals("C.AT")
+                || vacation.getType().equals("C.EXCEP")) {
             List<LocalDate> daysVacation = betweenDate.between(ldS, ldE);
             for (LocalDate ld : daysVacation) {
 
@@ -228,6 +239,39 @@ public class DayServiceImpl implements DayService {
             }
         }
         return listDay;
+    }
+
+    /*
+	 * @Override public int createHoliday(Integer matricule, String reference, Date
+	 * date) { Employee emp=employeeService.findByMatricule(matricule); if
+	 * (emp==null) { return -1; }else { Work
+	 * work=workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(
+	 * matricule, date); if (work==null) { return -2; }else { Day
+	 * day=work.getWorkDetail().getDays().stream()
+	 * .filter(d->d.getDayDate().compareTo(date)==0) .findAny().orElse(null); if
+	 * (day==null) { return -3; }else {
+	 * 
+	 * } } } }
+     */
+    public VacationService getVacationService() {
+        return vacationService;
+    }
+
+    public void setVacationService(VacationService vacationService) {
+        this.vacationService = vacationService;
+    }
+
+    public HolidayService getHolidayService() {
+        return holidayService;
+    }
+
+    public void setHolidayService(HolidayService holidayService) {
+        this.holidayService = holidayService;
+    }
+
+    @Override
+    public void save(Day d) {
+        dayDao.save(d);
     }
 
 }

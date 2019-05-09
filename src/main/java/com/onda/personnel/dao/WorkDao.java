@@ -21,7 +21,7 @@ import com.onda.personnel.model.WorkDetail;
 @Repository
 public interface WorkDao extends JpaRepository<Work, Long> {
 
-    Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date workDetailDate);
+    Work findByEmployeeMatriculeAndWorkDetailWorkDetailDateOrderByEmployeeMatriculeAsc(Integer matricule, Date workDetailDate);
 
     Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule);
 
@@ -29,9 +29,11 @@ public interface WorkDao extends JpaRepository<Work, Long> {
 
     List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Date date1, Date date2);
 
-    List<Work> findByWorkDetailWorkDetailDateBetween(Date date1, Date date2);
+    List<Work> findByWorkDetailWorkDetailDateBetweenOrderByEmployeeMatriculeAsc(Date date1, Date date2);
 
-    public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate);
+    public List<Work> findByWorkDetailWorkDetailDateOrderByEmployeeMatriculeAsc(Date workDetailDate);
+    
+    Work findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(Date date);
 
     //List<WorkDetail> findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date t);
 }

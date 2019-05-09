@@ -22,7 +22,7 @@ public interface DayService {
 
     public int createDay(Integer matricule, List<Day> days);
 
-    public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month);
+    //public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month);
 
     public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate);
 
@@ -33,4 +33,8 @@ public interface DayService {
     public int createVacation(Vacation vacation);
 
     Day setDayInfos(List<DayDetail> dayDetails, Date toDate);
+    
+    //List<Day> findByHolidayId(Long id);
+
+    public void save(Day d);
 }

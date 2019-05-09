@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="employee_profile" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="02d1af3d-4afd-4137-aa05-ad50317ebf7e">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="firstName" class="java.lang.String">
+		<fieldDescription><![CDATA[firstName]]></fieldDescription>
+	</field>
+	<field name="lastName" class="java.lang.String">
+		<fieldDescription><![CDATA[lastName]]></fieldDescription>
+	</field>
+	<field name="matricule" class="java.lang.Integer">
+		<fieldDescription><![CDATA[matricule]]></fieldDescription>
+	</field>
+	<field name="fonction" class="java.lang.String">
+		<fieldDescription><![CDATA[fonction]]></fieldDescription>
+	</field>
+	<field name="type" class="java.lang.String">
+		<fieldDescription><![CDATA[type]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="246" y="0" width="70" height="79" uuid="1514167f-704c-434d-8b07-7a01adb2db6d"/>
+				<imageExpression><![CDATA["src/main/java/com/onda/personnel/asset/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="362" splitType="Stretch">
+			<textField>
+				<reportElement x="167" y="40" width="229" height="30" uuid="95856b90-0976-4037-a925-1b2f0c0dc72b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Matricule :        "+$F{matricule}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="167" y="80" width="229" height="30" uuid="2687d0fb-4ebd-4694-ac71-3426349d1ff6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nom :        "+$F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="124" width="229" height="30" uuid="3c18c41d-8d36-4827-8be8-3f970e5dabb5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Prénom :        "+$F{firstName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="170" width="229" height="30" uuid="141794d8-e88a-4b6f-8a40-e5bad58761bb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fonction :        "+$F{fonction}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="212" width="229" height="30" uuid="e8e539d1-4ba1-488c-98e5-d611a6d67035"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Type :        "+$F{type}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

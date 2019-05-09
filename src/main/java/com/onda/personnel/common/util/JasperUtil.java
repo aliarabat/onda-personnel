@@ -9,31 +9,22 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
+import com.onda.personnel.model.Work;
+import com.onda.personnel.rest.vo.WorkVo;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRCsvExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JsonExporter;
-import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleJsonExporterOutput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
-import net.sf.jasperreports.export.SimplePdfReportConfiguration;
-import net.sf.jasperreports.export.SimpleWriterExporterOutput;
-import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -69,126 +60,151 @@ public class JasperUtil {
 //        }
 //
 //    }
-    @Autowired
-    private ResourceLoader resourceLoader;
-    
-    public JasperPrint generatePdf(List list, String cheminJapser, String cheminExport, Map params, boolean isPdfVisible) throws FileNotFoundException, JRException, IOException {
-        //String path=resourceLoader.getResource("classpath:Blank_A4.jrxml").getURI().getPath();
-        InputStream reportSource = new FileInputStream(cheminJapser);
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list);
-         
-        //  JasperExportManager.exportReportToPdfFile(jasperPrint, "D:\\monpremierpdf.pdf");
-        //JasperExportManager.exportReportToPdfFile(jasperPrint, cheminExport);
-        //JasperExportManager.exportReportToPdfStream(reportSource, outputStream);
-        //JRPdfExporter exporter = new JRPdfExporter();
-        JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, beanCollectionDataSource);
-        return jasperPrint;
-        /*
-        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(
-                new SimpleOutputStreamExporterOutput(cheminExport));
 
-        SimplePdfReportConfiguration reportConfig
-                = new SimplePdfReportConfiguration();
-        reportConfig.setSizePageToContent(true);
-        reportConfig.setForceLineBreakPolicy(false);
+	public JasperPrint generatePdf(List<WorkVo> list, Map<String, Object> params, String cheminJapser)
+			throws FileNotFoundException, JRException, IOException {
+		// String
+		// path=resourceLoader.getResource("classpath:Blank_A4.jrxml").getURI().getPath();
+		InputStream reportSource = new FileInputStream(cheminJapser);
+		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list);
+		params.put("workDataSource", beanCollectionDataSource);
+		// JasperExportManager.exportReportToPdfFile(jasperPrint,
+		// "D:\\monpremierpdf.pdf");
+		// JasperExportManager.exportReportToPdfFile(jasperPrint, cheminExport);
+		// JasperExportManager.exportReportToPdfStream(reportSource, outputStream);
+		// JRPdfExporter exporter = new JRPdfExporter();
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, new JREmptyDataSource());
+		return jasperPrint;
+		/*
+		 * exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		 * exporter.setExporterOutput( new
+		 * SimpleOutputStreamExporterOutput(cheminExport));
+		 * 
+		 * SimplePdfReportConfiguration reportConfig = new
+		 * SimplePdfReportConfiguration(); reportConfig.setSizePageToContent(true);
+		 * reportConfig.setForceLineBreakPolicy(false);
+		 * 
+		 * SimplePdfExporterConfiguration exportConfig = new
+		 * SimplePdfExporterConfiguration(); exportConfig.setMetadataAuthor("baeldung");
+		 * exportConfig.setEncrypted(true);
+		 * exportConfig.setAllowedPermissionsHint("PRINTING");
+		 * 
+		 * exporter.setConfiguration(reportConfig);
+		 * exporter.setConfiguration(exportConfig);
+		 * 
+		 * exporter.exportReport();
+		 */
+		/*
+		 * if (isPdfVisible) { showPdf(cheminExport); } reportSource.close();
+		 */
+	}
 
-        SimplePdfExporterConfiguration exportConfig
-                = new SimplePdfExporterConfiguration();
-        exportConfig.setMetadataAuthor("baeldung");
-        exportConfig.setEncrypted(true);
-        exportConfig.setAllowedPermissionsHint("PRINTING");
+	public JasperPrint generateDoc(List<WorkVo> list, Map<String, Object> params, String jasperFile, String type)
+			throws FileNotFoundException, JRException, IOException {
+		JasperPrint jasperPrint = null;
+		switch (type.toLowerCase()) {
+		case "pdf":
+			jasperPrint = generatePdf(list, params, Config.getCheminJasper() + jasperFile);
+			break;
+		case "xlsx":
+			jasperPrint = generateXls(list, params, Config.getCheminJasper() + jasperFile, Config.getCheminExport());
+			break;
+		case "csv":
+			jasperPrint = generateCsv(list, params, Config.getCheminJasper() + jasperFile, Config.getCheminExport());
+			break;
+		default:
+			break;
+		}
+		return jasperPrint;
+	}
 
-        exporter.setConfiguration(reportConfig);
-        exporter.setConfiguration(exportConfig);
-        
-        exporter.exportReport();*/
-        /*if (isPdfVisible) {
-            showPdf(cheminExport);
-        }
-        reportSource.close();*/
-    }
+	public static void show(String chemin) throws IOException {
+		Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + chemin);
+	}
 
-    public JasperPrint generatePdf(List list, Map params, boolean isPdfVisible) throws FileNotFoundException, JRException, IOException {
-        return generatePdf(list, Config.getCheminJasper(), Config.getCheminExport() + new Date().getTime() + ".pdf", params, isPdfVisible);
-    }
+	public static JasperPrint generateXls(List list, Map<String, Object> params, String cheminJapser,
+			String cheminExport) throws JRException, FileNotFoundException, IOException {
+		InputStream reportSource = null;
+		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list);
+		reportSource = new FileInputStream(cheminJapser);
+		params.put("workDataSource", beanCollectionDataSource);
 
-    public static void showPdf(String chemin) throws IOException {
-        Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + chemin);
-    }
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, new JREmptyDataSource());
+		return jasperPrint;
+		/*
+		 * JRXlsxExporter exporter = new JRXlsxExporter();
+		 * 
+		 * exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		 * exporter.setExporterOutput(new
+		 * SimpleOutputStreamExporterOutput(cheminExport));
+		 * 
+		 * SimpleXlsxReportConfiguration reportConfig = new
+		 * SimpleXlsxReportConfiguration(); reportConfig.setSheetNames(new String[] {
+		 * "Employee Data" });
+		 * 
+		 * exporter.setConfiguration(reportConfig); exporter.exportReport();
+		 * reportSource.close();
+		 */
+	}
 
-    public static void generateXls(List list, String cheminJapser, String cheminExport, Map params, boolean isPdfVisible) throws JRException, FileNotFoundException, IOException {
-        InputStream reportSource = null;
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list);
-        reportSource = new FileInputStream(cheminJapser);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, beanCollectionDataSource);
+	/*
+	 * public static void generateXls(List list, Map params, boolean isXlsVisible)
+	 * throws JRException, FileNotFoundException, IOException { generateXls(list,
+	 * Config.getCheminJasper(), Config.getCheminExport() + new Date().getTime() +
+	 * ".xlsx", params, isXlsVisible); }
+	 */
 
-        JRXlsxExporter exporter = new JRXlsxExporter();
+	public static JasperPrint generateCsv(List list, Map<String, Object> params, String cheminJapser,
+			String cheminExport) throws JRException, FileNotFoundException, IOException {
+		InputStream reportSource;
+		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list);
+		reportSource = new FileInputStream(cheminJapser);
 
-        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(
-                new SimpleOutputStreamExporterOutput(cheminExport));
+		params.put("workDataSource", beanCollectionDataSource);
 
-        SimpleXlsxReportConfiguration reportConfig
-                = new SimpleXlsxReportConfiguration();
-        reportConfig.setSheetNames(new String[]{"Employee Data"});
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, new JREmptyDataSource());
+		return jasperPrint;
+		/*
+		 * JRCsvExporter exporter = new JRCsvExporter();
+		 * 
+		 * exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		 * exporter.setExporterOutput(new SimpleWriterExporterOutput(cheminExport));
+		 * exporter.exportReport();
+		 */
+		/*
+		 * show(cheminExport); reportSource.close();
+		 */
+	}
 
-        exporter.setConfiguration(reportConfig);
-        exporter.exportReport();
-        if (isPdfVisible) {
-            showPdf(cheminExport);
-        }
-        reportSource.close();
-    }
-    
-    public static void generateXls(List list, Map params, boolean isXlsVisible) throws JRException, FileNotFoundException, IOException{
-        generateXls(list, Config.getCheminJasper(), Config.getCheminExport() + new Date().getTime() + ".xlsx", params, isXlsVisible);
-    }
-    
-    public static void generateCsv(List list, String cheminJapser, String cheminExport, Map params, boolean isPdfVisible) throws JRException, FileNotFoundException, IOException {
-        InputStream reportSource;
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list);
-        reportSource = new FileInputStream(cheminJapser);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, beanCollectionDataSource);
+	/*
+	 * public static void generateCsv(List list, Map params, boolean isXlsVisible)
+	 * throws JRException, FileNotFoundException, IOException { generateCsv(list,
+	 * Config.getCheminJasper(), Config.getCheminExport() + new Date().getTime() +
+	 * ".csv", params, isXlsVisible); }
+	 */
 
-        JRCsvExporter exporter = new JRCsvExporter();
+	public static void generateJson(List list, String cheminJapser, String cheminExport, Map params)
+			throws JRException, FileNotFoundException, IOException {
+		InputStream reportSource;
+		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list);
+		reportSource = new FileInputStream(cheminJapser);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, beanCollectionDataSource);
 
-        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(
-                new SimpleWriterExporterOutput(cheminExport));
-        exporter.exportReport();
-        if (isPdfVisible) {
-            showPdf(cheminExport);
-        }
-        reportSource.close();
-    }
-    
-    public static void generateCsv(List list, Map params, boolean isXlsVisible) throws JRException, FileNotFoundException, IOException{
-        generateCsv(list, Config.getCheminJasper(), Config.getCheminExport() + new Date().getTime() + ".csv", params, isXlsVisible);
-    }
-    
-    public static void generateJson(List list, String cheminJapser, String cheminExport, Map params, boolean isPdfVisible) throws JRException, FileNotFoundException, IOException {
-        InputStream reportSource;
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list);
-        reportSource = new FileInputStream(cheminJapser);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, beanCollectionDataSource);
+		JsonExporter exporter = new JsonExporter();
 
-       
-        
-        JsonExporter exporter=new JsonExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleJsonExporterOutput(cheminExport));
+		exporter.exportReport();
+		show(cheminExport);
 
-        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(
-                new SimpleJsonExporterOutput(cheminExport));
-        exporter.exportReport();
-        if (isPdfVisible) {
-            showPdf(cheminExport);
-        }
-        reportSource.close();
-    }
-    
-    public static void generateJson(List list, Map params, boolean isXlsVisible) throws JRException, FileNotFoundException, IOException{
-        generateCsv(list, Config.getCheminJasper(), Config.getCheminExport() + new Date().getTime() + ".json", params, isXlsVisible);
-    }
+		reportSource.close();
+	}
+
+	/*
+	 * public static void generateJson(List list, Map params, boolean isXlsVisible)
+	 * throws JRException, FileNotFoundException, IOException { generateCsv(list,
+	 * Config.getCheminJasper(), Config.getCheminExport() + new Date().getTime() +
+	 * ".json", params, isXlsVisible); }
+	 */
 
 }

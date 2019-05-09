@@ -32,6 +32,8 @@ public class DayConverter extends AbstractConverter<Day, DayVo>  {
             d.setHn(new TimingConverter().toItem(vo.getHn()));
             d.setPan(NumberUtil.toInteger(vo.getPan()));
             d.setVacation(new VacationConverter().toItem(vo.getVacationVo()));
+            //d.setHoliday(new HolidayConverter().toItem(vo.getHolidayVo()));
+            d.setReference(vo.getReference());
             d.setDayDetails(new DayDetailConverter().toItem(vo.getDayDetailsVo()));
             d.setDayDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getDayDate())));
             return d;
@@ -49,6 +51,8 @@ public class DayConverter extends AbstractConverter<Day, DayVo>  {
             dVo.setHn(new TimingConverter().toVo(item.getHn()));
             dVo.setPan(NumberUtil.toString(item.getPan()));
             dVo.setVacationVo(new VacationConverter().toVo(item.getVacation()));
+            //dVo.setHolidayVo(new HolidayConverter().toVo(item.getHoliday()));
+            dVo.setReference(item.getReference());
             dVo.setDayDetailsVo(new DayDetailConverter().toVo(item.getDayDetails()));
             dVo.setDayDate(DateUtil.toString(DateUtil.fromDate(item.getDayDate())));
             return dVo;

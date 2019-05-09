@@ -105,7 +105,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         OutputStream out = null;
         try {
             out = response.getOutputStream();
-            jasperPrint = new JasperUtil().generatePdf(list, null, true);
+            //jasperPrint = new JasperUtil().generatePdf(list, null, "Employee_Profile.jasper");
             JasperExportManager.exportReportToPdfStream(jasperPrint, out);
         } catch (IOException ex) {
             Logger.getLogger(EmployeeServiceImpl.class.getName()).log(Level.SEVERE, null, ex);

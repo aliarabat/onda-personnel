@@ -19,6 +19,8 @@ import com.onda.personnel.model.Day;
 @Repository
 public interface DayDao extends JpaRepository<Day, Long> {
 
-     public List<Day> findByDayDate(Date dayDate);
+    public List<Day> findByDayDate(Date dayDate);
+
+    //List<Day> findByHolidayId(Long id);
 
 }

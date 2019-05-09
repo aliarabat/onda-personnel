@@ -18,161 +18,168 @@ import javax.persistence.Id;
 @Entity
 public class Employee implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private Integer matricule;
-    private String firstName;
-    private String lastName;
-    private String fonction;
-    private String type;
-    private boolean isExist;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private Integer matricule;
+	private String firstName;
+	private String lastName;
+	private String fonction;
+	private String type;
+	private boolean isExist;
 
-    /**
-     *
-     * @return
-     */
-    public Long getId() {
-        return id;
-    }
+	public Employee(Integer matricule, String firstName, String lastName) {
+		super();
+		this.matricule = matricule;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
-    /**
-     *
-     * @param id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Employee() {
+	}
 
-    /**
-     *
-     * @return
-     */
-    public Integer getMatricule() {
-        return matricule;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     *
-     * @param matricule
-     */
-    public void setMatricule(Integer matricule) {
-        this.matricule = matricule;
-    }
+	/**
+	 *
+	 * @param id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String getFirstName() {
-        return firstName;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public Integer getMatricule() {
+		return matricule;
+	}
 
-    /**
-     *
-     * @param firstName
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	/**
+	 *
+	 * @param matricule
+	 */
+	public void setMatricule(Integer matricule) {
+		this.matricule = matricule;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String getLastName() {
-        return lastName;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
 
-    /**
-     *
-     * @param lastName
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	/**
+	 *
+	 * @param firstName
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String getFonction() {
-        return fonction;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String getLastName() {
+		return lastName;
+	}
 
-    /**
-     *
-     * @param fonction
-     */
-    public void setFonction(String fonction) {
-        this.fonction = fonction;
-    }
+	/**
+	 *
+	 * @param lastName
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String getType() {
-        return type;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String getFonction() {
+		return fonction;
+	}
 
-    /**
-     *
-     * @param type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 *
+	 * @param fonction
+	 */
+	public void setFonction(String fonction) {
+		this.fonction = fonction;
+	}
 
-    public boolean isIsExist() {
-        return isExist;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String getType() {
+		return type;
+	}
 
-    public void setIsExist(boolean isExist) {
-        this.isExist = isExist;
-    }
+	/**
+	 *
+	 * @param type
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
+	public boolean isIsExist() {
+		return isExist;
+	}
 
+	public void setIsExist(boolean isExist) {
+		this.isExist = isExist;
+	}
 
-    /**
-     *
-     * @return
-     */
+	/**
+	 *
+	 * @return
+	 */
 
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	/**
+	 *
+	 * @param object
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Employee)) {
+			return false;
+		}
+		Employee other = (Employee) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    /**
-     *
-     * @param object
-     * @return
-     */
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employee)) {
-            return false;
-        }
-        Employee other = (Employee) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "javaapplication1.Employee[ id=" + id + " ]";
-    }
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public String toString() {
+		return "javaapplication1.Employee[ id=" + id + " ]";
+	}
 
 }

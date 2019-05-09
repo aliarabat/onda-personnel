@@ -5,21 +5,40 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.dao.WorkDao;
-import com.onda.personnel.model.Employee;
-import com.onda.personnel.model.Work;
-import com.onda.personnel.model.WorkDetail;
-import com.onda.personnel.service.WorkService;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.common.util.JasperUtil;
+import com.onda.personnel.common.util.MonthUtil;
+import com.onda.personnel.common.util.NumberUtil;
+import com.onda.personnel.dao.WorkDao;
+import com.onda.personnel.model.Work;
+import com.onda.personnel.rest.converter.WorkConverter;
+import com.onda.personnel.rest.vo.DayDetailVo;
+import com.onda.personnel.rest.vo.WorkVo;
+import com.onda.personnel.service.WorkService;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
 /**
  * @author AMINE
@@ -27,101 +46,268 @@ import org.springframework.stereotype.Service;
 @Service
 public class WorkServiceImpl implements WorkService {
 
-    @Autowired
-    private WorkDao workDao;
+	@Autowired
+	private WorkDao workDao;
 
-    @Override
-    public void saveWork(Work work) {
-        workDao.save(work);
-    }
+	@Override
+	public void saveWork(Work work) {
+		workDao.save(work);
+	}
 
-    @Override
-    public Work findByEmployeeMatriculeAndWorkDetailTestDate(Integer matricule, Date workDetailDate) {
-        return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, workDetailDate);
-    }
+	@Override
+	public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date workDetailDate) {
+		return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDateOrderByEmployeeMatriculeAsc(matricule,
+				workDetailDate);
+	}
 
-    public WorkDao getWorkDao() {
-        return workDao;
-    }
+	public WorkDao getWorkDao() {
+		return workDao;
+	}
 
-    public void setWorkDao(WorkDao workDao) {
-        this.workDao = workDao;
-    }
+	public void setWorkDao(WorkDao workDao) {
+		this.workDao = workDao;
+	}
 
-    @Override
-    public Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule) {
-        return workDao.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
-    }
+	@Override
+	public Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule) {
+		return workDao.findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
+	}
 
-    @Override
-    public List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee) {
-        LocalDate ldStart = LocalDate.of(annee, 1, 1);
-        LocalDate ldEnd = LocalDate.of(annee, 12, 31);
-        return workDao.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
-    }
+	@Override
+	public List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee) {
+		LocalDate ldStart = LocalDate.of(annee, 1, 1);
+		LocalDate ldEnd = LocalDate.of(annee, 12, 31);
+		List<Work> works = workDao.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule,
+				DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
+		listWorkToShow(works);
+		return works;
+	}
 
-    @Override
-    public List<Work> findAllByWorkDetailWorkDetailDateBetween(Integer annee) {
-        LocalDate ldStart = LocalDate.of(annee, 1, 1);
-        LocalDate ldEnd = LocalDate.of(annee, 12, 31);
-        return workDao.findByWorkDetailWorkDetailDateBetween(DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
-    }
+	@Override
+	public List<Work> findAllByWorkDetailWorkDetailDateBetween(Integer annee) {
+		LocalDate ldStart = LocalDate.of(annee, 1, 1);
+		LocalDate ldEnd = LocalDate.of(annee, 12, 31);
+		List<Work> works = workDao.findByWorkDetailWorkDetailDateBetweenOrderByEmployeeMatriculeAsc(
+				DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
+		listWorkToShow(works);
+		return works;
+	}
 
-    @Override
-    public List<String> findFromDateToDate(Integer matricule) {
-        Work work = findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
-        List<String> dateList = new ArrayList<>(2);
-        LocalDate fromDate;
-        LocalDate toDate;
-        if (work == null) {
-            fromDate = DateUtil.getFirstDayOfWeek();
-            //toDate = fromDate.plusDays(6);
-        } else {
-            int size = work.getWorkDetail().getDays().size();
-            fromDate = DateUtil.fromDate(work.getWorkDetail().getDays().get(size - 1).getDayDate()).plusDays(1);
-        }
-        toDate = fromDate.plusDays(6);
-        dateList.add(0, fromDate.toString());
-        dateList.add(1, toDate.toString());
-        return dateList;
-    }
+	private void minutesManipulations(int hnHours, int hnMinutes, int hjfHours, int hjfMinutes) {
+		if (hnMinutes < 0) {
+			--hnHours;
+			hnMinutes = hnMinutes + 60;
+		}
+		if (hjfMinutes < 0) {
+			--hjfHours;
+			hjfMinutes = hjfMinutes + 60;
+		}
+	}
 
-    @Override
-    public Work findByEmployeeMatriculeAndMonthAndYear(Integer matricule, int year, int month) {
-        LocalDate localDate = LocalDate.of(year, month, 1);
-        Date theDate = DateUtil.toDate(localDate);
-        Work theWork = findByEmployeeMatriculeAndWorkDetailTestDate(matricule, theDate);
-        if (theWork == null) {
-            return null;
-        } else {
-            return theWork;
-        }
-    }
+	public List<WorkVo> listToPrintToVo(List<Work> works) {
+		List<WorkVo> worksVo = new WorkConverter().toVo(works);
+		worksVo.stream().forEach((w) -> {
+			w.getWorkDetailVo().getDaysVo().stream().forEach((day) -> {
+				Calendar c = Calendar.getInstance();
+				c.setTime(DateUtil.toDate(DateUtil.fromStringToLocalDate(day.getDayDate())));
+				if (day.getVacationVo() != null) {
+					if (day.getVacationVo().getType().equals("C.R") && day.getReference() == null) {
+						w.getWorkDetailVo().setAdm(w.getWorkDetailVo().getAdm() + 1);
+					} else if (day.getVacationVo().getType().equals("C.M")) {
+						w.getWorkDetailVo().setCm(w.getWorkDetailVo().getCm() + 1);
+					} else if (day.getVacationVo().getType().equals("A.T")) {
+						w.getWorkDetailVo().setAt(w.getWorkDetailVo().getAt() + 1);
+					} else if (day.getVacationVo().getType().equals("C.EX")) {
+						w.getWorkDetailVo().setCex(w.getWorkDetailVo().getCex() + 1);
+					}
+				} else {
+					DayDetailVo dayDetailVoCheck = day
+							.getDayDetailsVo().stream().filter(d -> d.getMissionVo() != null
+									|| d.getReplacementVo() != null || !d.getDetailVo().getWording().equals("R"))
+							.findAny().orElse(null);
+					if (day.getReference() != null && dayDetailVoCheck != null) {
+						if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+							w.getWorkDetailVo().setHolidayHundered(w.getWorkDetailVo().getHolidayHundered() + 1);
+						} else {
+							w.getWorkDetailVo().setHolidayZero(w.getWorkDetailVo().getHolidayZero() + 1);
+						}
+					}
+				}
+			});
+			Integer hjf = NumberUtil.toInteger(w.getWorkDetailVo().getHjf().getHour());
+			if (hjf > 192) {
+				w.getWorkDetailVo().setThreeTeams(hjf - 192);
+			}
+		});
+		return worksVo;
+	}
 
-    @Override
-    public List<Work> findByMonthAndYear(int year, int month) {
-        LocalDate localDate = LocalDate.of(year, month, 1);
-        Date theDate = DateUtil.toDate(localDate);
-        List<Work> listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
-        if (listOfWorksMonthly.isEmpty() || listOfWorksMonthly == null) {
-            return null;
-        } else {
-            return listOfWorksMonthly;
-        }
-    }
+	public void listWorkToShow(List<Work> works) {
 
-    @Override
-    public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate) {
-        return workDao.findByWorkDetailWorkDetailDate(workDetailDate);
+		works.stream().forEach((w) -> {
+			w.getWorkDetail().getDays().stream().forEach((day) -> {
+				if (day.getVacation() == null) {
+					day.getDayDetails().stream().forEach((dd) -> {
+						if (dd.getMission() != null || dd.getReplacement() != null || dd.getSkip() != null) {
+							int hnHours = w.getWorkDetail().getHn().getHour() - dd.getDetail().getHn().getHour();
+							int hnMinutes = w.getWorkDetail().getHn().getMinute() - dd.getDetail().getHn().getMinute();
+							int hjfHours = w.getWorkDetail().getHjf().getHour() - dd.getDetail().getHn().getHour();
+							int hjfMinutes = w.getWorkDetail().getHjf().getMinute()
+									- dd.getDetail().getHn().getMinute();
 
-    }
+							minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
 
-    @Override
-    public List<Work> findWorksByDate(Date workDate) {
-        LocalDate checklocalDate = DateUtil.fromDate(workDate);
-        LocalDate localDate = LocalDate.of(checklocalDate.getYear(), checklocalDate.getMonth(), 1);
-        Date theDate = DateUtil.toDate(localDate);
-        return findByWorkDetailWorkDetailDate(theDate);
-    }
+							w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getDetail().getPan());
+							w.getWorkDetail().getHn().setHour(hnHours);
+							w.getWorkDetail().getHn().setMinute(hnMinutes);
+							w.getWorkDetail().getHjf().setHour(hjfHours);
+							w.getWorkDetail().getHjf().setMinute(hjfMinutes);
+						}
+					});
+				} else {
+					int hnHours = w.getWorkDetail().getHn().getHour() - day.getHn().getHour();
+					int hnMinutes = w.getWorkDetail().getHn().getMinute() - day.getHn().getMinute();
+					int hjfHours = w.getWorkDetail().getHjf().getHour() - day.getHn().getHour();
+					int hjfMinutes = w.getWorkDetail().getHjf().getMinute() - day.getHn().getMinute();
+					minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
+					w.getWorkDetail().setPan(w.getWorkDetail().getPan() - day.getPan());
+					w.getWorkDetail().getHn().setHour(hnHours);
+					w.getWorkDetail().getHn().setMinute(hnMinutes);
+					w.getWorkDetail().getHjf().setHour(hjfHours);
+					w.getWorkDetail().getHjf().setMinute(hjfMinutes);
+				}
+			});
+		});
+	}
+
+	@Override
+	public List<String> findFromDateToDate(Integer matricule) {
+		Work work = findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(matricule);
+		List<String> dateList = new ArrayList<>(2);
+		LocalDate fromDate;
+		LocalDate toDate;
+		if (work == null) {
+			fromDate = DateUtil.getFirstDayOfWeek();
+			// toDate = fromDate.plusDays(6);
+		} else {
+			int size = work.getWorkDetail().getDays().size();
+			fromDate = DateUtil.fromDate(work.getWorkDetail().getDays().get(size - 1).getDayDate()).plusDays(1);
+		}
+		toDate = fromDate.plusDays(6);
+		dateList.add(0, fromDate.toString());
+		dateList.add(1, toDate.toString());
+		return dateList;
+	}
+
+	@Override
+	public List<Work> findByEmployeeMatriculeAndMonthAndYear(Integer matricule, int year, int month) {
+		LocalDate localDate = LocalDate.of(year, month, 1);
+		Date theDate = DateUtil.toDate(localDate);
+		Work theWork = findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, theDate);
+		if (theWork == null) {
+			return null;
+		} else {
+			List<Work> works = new ArrayList<>();
+			works.add(theWork);
+			listWorkToShow(works);
+			return works;
+		}
+	}
+
+	@Override
+	public List<Work> findByMonthAndYear(int year, int month) {
+		LocalDate localDate = LocalDate.of(year, month, 1);
+		Date theDate = DateUtil.toDate(localDate);
+		List<Work> listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
+		if (listOfWorksMonthly.isEmpty() || listOfWorksMonthly == null) {
+			return null;
+		} else {
+			return listOfWorksMonthly;
+		}
+	}
+
+	@Override
+	public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate) {
+		return workDao.findByWorkDetailWorkDetailDateOrderByEmployeeMatriculeAsc(workDetailDate);
+
+	}
+
+	@Override
+	public List<Work> findWorksByDate(Date workDate) {
+		LocalDate checklocalDate = DateUtil.fromDate(workDate);
+		LocalDate localDate = LocalDate.of(checklocalDate.getYear(), checklocalDate.getMonth(), 1);
+		Date theDate = DateUtil.toDate(localDate);
+		List<Work> works = findByWorkDetailWorkDetailDate(theDate);
+		listWorkToShow(works);
+		return works;
+	}
+
+	@Override
+	public void printDoc(HttpServletResponse response, Integer year, Integer month) {
+		JasperPrint jasperPrint = null;
+		Map<String, Object> params = new HashMap<String, Object>();
+		String mois = MonthUtil.getMonth(month - 1);
+
+		params.put("month", mois);
+		params.put("year", year);
+		List<Work> list = findByMonthAndYear(year, month);
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition","attachement; filename=\"etatsElements" + mois + year + ".pdf" + "\"");
+		OutputStream out = null;
+
+		try {
+			out = response.getOutputStream();
+			jasperPrint = new JasperUtil().generateDoc(listToPrintToVo(list), params, "etat_elements.jasper", "pdf");
+			JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void printXlsx(HttpServletResponse response, Integer year, Integer month) {
+		JasperPrint jasperPrint = null;
+		Map<String, Object> params = new HashMap<String, Object>();
+		String mois = MonthUtil.getMonth(month - 1);
+
+		params.put("month", mois);
+		params.put("year", year);
+		List<Work> list = findByMonthAndYear(year, month);
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		response.addHeader("Content-Disposition",
+				"attachement; filename=\"etatsElements" + mois + year + ".xlsx" + "\"");
+		OutputStream out = null;
+
+		try {
+			out = response.getOutputStream();
+			jasperPrint = new JasperUtil().generateDoc(listToPrintToVo(list), params, "etat_elements.jasper", "xlsx");
+			JRXlsxExporter exporter = new JRXlsxExporter();
+
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+
+			SimpleXlsxReportConfiguration reportConfig = new SimpleXlsxReportConfiguration();
+			reportConfig.setUseTimeZone(true);
+			exporter.setConfiguration(reportConfig);
+			exporter.exportReport();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public Work findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(Date date) {
+		return workDao.findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(date);
+	}
 
 }

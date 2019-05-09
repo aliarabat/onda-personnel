@@ -8,13 +8,11 @@ package com.onda.personnel.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,13 +36,19 @@ public class WorkDetail implements Serializable {
     private Date workDetailDate;
     private Integer pan = 0;
     @OneToOne(cascade = CascadeType.PERSIST)
-    private Timing hn =new Timing(0,0);
+    private Timing hn = new Timing(0, 0);
     @OneToOne(cascade = CascadeType.PERSIST)
-    private Timing hjf =new Timing(0,0);
+    private Timing hjf = new Timing(0, 0);
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Day> days = new ArrayList<>();
 
     public WorkDetail() {
+    }
+
+    public WorkDetail(Integer pan, Timing hn) {
+        super();
+        this.pan = pan;
+        this.hn = hn;
     }
 
     public WorkDetail(Date workDetailDate) {
@@ -100,8 +104,6 @@ public class WorkDetail implements Serializable {
     public void setHjf(Timing hjf) {
         this.hjf = hjf;
     }
-
-
 
     @Override
     public int hashCode() {

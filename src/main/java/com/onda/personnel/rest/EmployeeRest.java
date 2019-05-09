@@ -88,50 +88,10 @@ public class EmployeeRest {
     public int deleteEmployee(@PathVariable Integer matricule) {
         return employeeService.deleteEmployee(matricule);
     }
-    
-    /*@RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
-    public ModelAndView home(){
-        ModelAndView mav=new ModelAndView();
-        mav.setViewName("home");
-        return mav;
-    }*/
 
     @GetMapping("/generatepdf/matricule/{matricule}")
     public void generatePdf(HttpServletResponse response,@PathVariable Integer matricule) throws JRException, IOException {
         employeeService.print(response, matricule);
-    }
-    
-    @GetMapping("/generateXLS")
-    public @ResponseBody void generateXls(HttpServletResponse response) throws JRException, IOException {
-
-        List<Employee> employees = findByIsExist(true);
-//        response.setContentType("application/x-download");
-//        response.setHeader("Content-Disposition", String.format("attachement; filename=\"empployees.pdf\""));
-
-        JasperUtil.generateXls(employees, null, true);
-
-    }
-    
-    @GetMapping("/generateCSV")
-    public @ResponseBody void generateCsv(HttpServletResponse response) throws JRException, IOException {
-
-        List<Employee> employees = findByIsExist(true);
-//        response.setContentType("application/x-download");
-//        response.setHeader("Content-Disposition", String.format("attachement; filename=\"empployees.pdf\""));
-
-        JasperUtil.generateCsv(employees, null, true);
-
-    }
-    
-    @GetMapping("/generateJSON")
-    public @ResponseBody void generateJson(HttpServletResponse response) throws JRException, IOException {
-
-        List<Employee> employees = findByIsExist(true);
-//        response.setContentType("application/x-download");
-//        response.setHeader("Content-Disposition", String.format("attachement; filename=\"empployees.pdf\""));
-
-        JasperUtil.generateJson(employees, null, true);
-
     }
     
 
