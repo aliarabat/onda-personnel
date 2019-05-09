@@ -13,7 +13,7 @@ public class ReplacementVo {
     private Long id;
     private String reference;
     private EmployeeVo originalEmployee;
-    private EmployeeVo replacedEmpolyee;
+    private EmployeeVo replacedEmployee;
     private String replacementDate;
     private DetailVo detailVo;
 
@@ -50,13 +50,15 @@ public class ReplacementVo {
         this.originalEmployee = originalEmployee;
     }
 
-    public EmployeeVo getReplacedEmpolyee() {
-        return replacedEmpolyee;
+    public EmployeeVo getReplacedEmployee() {
+        return replacedEmployee;
     }
 
-    public void setReplacedEmpolyee(EmployeeVo replacedEmpolyee) {
-        this.replacedEmpolyee = replacedEmpolyee;
+    public void setReplacedEmployee(EmployeeVo replacedEmployee) {
+        this.replacedEmployee = replacedEmployee;
     }
+
+    
 
 
     public String getReplacementDate() {

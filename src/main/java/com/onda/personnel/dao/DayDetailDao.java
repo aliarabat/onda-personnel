@@ -15,7 +15,16 @@ import org.springframework.stereotype.Repository;
  * @author AMINE
  */
 @Repository
-public interface DayDetailDao extends JpaRepository<DayDetail, Long>{
-    
+public interface DayDetailDao extends JpaRepository<DayDetail, Long> {
+
     public List<DayDetail> findByMissionIsNotNull();
+
+    public List<DayDetail> findByReplacementIsNotNullAndDetailIsNotNull();
+
+    public List<DayDetail> findByDetailIsNullAndSkipIsNullAndReplacementIsNullAndMissionIsNull();
+
+    public DayDetail findByReplacementIdAndDetailIsNull(Long id);
+
+    public List<DayDetail> findBySkipIsNotNull();
+
 }

@@ -5,10 +5,10 @@
  */
 package com.onda.personnel.service;
 
+import com.onda.personnel.model.DayDetail;
 import java.util.Date;
 import java.util.List;
 
-import com.onda.personnel.model.Employee;
 import com.onda.personnel.model.Mission;
 
 /**
@@ -17,6 +17,10 @@ import com.onda.personnel.model.Mission;
  */
 public interface MissionService {
 
-        public Mission createMisssion (Integer matricule,Mission mission);
-  public List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule,Date startingDate); 
+    public Mission createMisssion(Integer matricule,String wording, Mission mission);
+
+    public List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule, Date startingDate);
+    
+    public int updateMission(DayDetail dayDetail);
+
 }

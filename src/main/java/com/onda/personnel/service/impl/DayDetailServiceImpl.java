@@ -5,10 +5,11 @@
  */
 package com.onda.personnel.service.impl;
 
-
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.dao.DayDetailDao;
+import com.onda.personnel.dao.MissionDao;
+import com.onda.personnel.dao.ReplacementDao;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.dao.WorkDetailDao;
 import com.onda.personnel.model.Day;
@@ -55,6 +56,9 @@ public class DayDetailServiceImpl implements DayDetailService {
     private SkipService skipService;
     @Autowired
     private ReplacementService replacementService;
+
+    @Autowired
+    private ReplacementDao replacementDao;
     @Autowired
     private EmployeeService employeeService;
     @Autowired
@@ -62,6 +66,9 @@ public class DayDetailServiceImpl implements DayDetailService {
 
     @Autowired
     private DetailService detailService;
+
+    @Autowired
+    private MissionDao missionDao;
 
     @Override
     public DayDetail createDayDetail(DayDetail dayDetail) {
@@ -118,7 +125,7 @@ public class DayDetailServiceImpl implements DayDetailService {
                         if (thedayDetail.getReplacement() != null || thedayDetail.getSkip() != null || thedayDetail.getMission() != null) {
                             return -2;
                         } else {
-                            Mission checkMission = missionService.createMisssion(matricule, mission);
+                            Mission checkMission = missionService.createMisssion(matricule, wordingDetail, mission);
                             if (checkMission != null) {
                                 thedayDetail.setMission(checkMission);
                                 dayDetailDao.save(thedayDetail);
@@ -186,7 +193,7 @@ public class DayDetailServiceImpl implements DayDetailService {
                         if (thedayDetail.getReplacement() != null || thedayDetail.getSkip() != null || thedayDetail.getMission() != null) {
                             return -2;
                         } else {
-                            Skip checkSkip = skipService.createSkip(matricule, skip);
+                            Skip checkSkip = skipService.createSkip(matricule, wordingDetail, skip);
                             if (checkSkip != null) {
                                 thedayDetail.setSkip(checkSkip);
                                 dayDetailDao.save(thedayDetail);
@@ -311,6 +318,104 @@ public class DayDetailServiceImpl implements DayDetailService {
         }
     }
 
+    @Override
+    public List<DayDetail> findAll() {
+        return dayDetailDao.findAll();
+    }
+
+    @Override
+    public List<DayDetail> findByMissionIsNotNull() {
+        return dayDetailDao.findByMissionIsNotNull();
+    }
+
+    @Override
+    public int updateDayDetailByDeletingMission(DayDetail dayDetail) {
+        List<DayDetail> listdayDetails = findByMissionIsNotNull();
+        int res = 0;
+        DayDetail dayDetail1 = new DayDetail();
+        for (DayDetail listdayDetail : listdayDetails) {
+            if (listdayDetail.getId().compareTo(dayDetail.getId()) == 0) {
+                dayDetail1 = listdayDetail;
+                res = 1;
+                break;
+            }
+        }
+        if (res == 1) {
+            Mission mission = dayDetail1.getMission();
+            dayDetail1.setMission(null);
+
+            missionDao.delete(mission);
+            dayDetailDao.save(dayDetail1);
+
+            return res;
+        } else {
+            return res;
+        }
+    }
+
+    @Override
+    public DayDetail findById(Long id) {
+        return dayDetailDao.getOne(id);
+    }
+
+    @Override
+    public List<DayDetail> findByReplacementIsNotNullAndDetailIsNotNull() {
+        return dayDetailDao.findByReplacementIsNotNullAndDetailIsNotNull();
+    }
+
+    @Override
+    public List<DayDetail> findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull() {
+        return dayDetailDao.findByDetailIsNullAndSkipIsNullAndReplacementIsNullAndMissionIsNull();
+    }
+
+    @Override
+    public int deleteDayDetailWhereIsNull() {
+
+        List<DayDetail> listDayDetails = findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull();
+        for (DayDetail listDayDetail : listDayDetails) {
+            dayDetailDao.delete(listDayDetail);
+        }
+        return 1;
+    }
+
+    @Override
+    public DayDetail findByReplacementIdAndDetailIsNull(Long id) {
+        return dayDetailDao.findByReplacementIdAndDetailIsNull(id);
+    }
+
+    @Override
+    public int updateDayDetailByDeletingReplacement(DayDetail dayDetail) {
+        List<DayDetail> listdayDetails = findByReplacementIsNotNullAndDetailIsNotNull();
+        int res = 0;
+        DayDetail dayDetail1 = new DayDetail();
+        for (DayDetail listdayDetail : listdayDetails) {
+            if (listdayDetail.getId().compareTo(dayDetail.getId()) == 0) {
+                dayDetail1 = listdayDetail;
+                res = 1;
+                break;
+            }
+        }
+
+        if (res == 1) {
+            Replacement replacement = dayDetail1.getReplacement();
+            dayDetail1.setReplacement(null);
+            DayDetail dayDetail2 = findByReplacementIdAndDetailIsNull(replacement.getId());
+            dayDetail2.setReplacement(null);
+            dayDetailDao.save(dayDetail1);
+            dayDetailDao.save(dayDetail2);
+            replacementDao.delete(replacement);
+            deleteDayDetailWhereIsNull();
+            return res;
+        } else {
+            return res;
+        }
+    }
+
+    @Override
+    public List<DayDetail> findBySkipIsNotNull() {
+        return dayDetailDao.findBySkipIsNotNull();
+    }
+
     public DayDetailDao getDayDetailDao() {
         return dayDetailDao;
     }
@@ -383,14 +488,28 @@ public class DayDetailServiceImpl implements DayDetailService {
         this.skipService = skipService;
     }
 
-    @Override
-    public List<DayDetail> findAll() {
-        return dayDetailDao.findAll();
+    public ReplacementService getReplacementService() {
+        return replacementService;
     }
 
-    @Override
-    public List<DayDetail> findByMissionIsNotNull() {
-        return dayDetailDao.findByMissionIsNotNull();
+    public void setReplacementService(ReplacementService replacementService) {
+        this.replacementService = replacementService;
+    }
+
+    public MissionDao getMissionDao() {
+        return missionDao;
+    }
+
+    public void setMissionDao(MissionDao missionDao) {
+        this.missionDao = missionDao;
+    }
+
+    public ReplacementDao getReplacementDao() {
+        return replacementDao;
+    }
+
+    public void setReplacementDao(ReplacementDao replacementDao) {
+        this.replacementDao = replacementDao;
     }
 
 }

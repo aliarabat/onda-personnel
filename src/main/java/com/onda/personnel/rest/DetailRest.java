@@ -42,8 +42,8 @@ public class DetailRest {
     private TimingConverter timingConverter;
 
     @GetMapping("/wording/{wording}")
-    public Detail findByWording(@PathVariable String wording) {
-        return detailService.findByWording(wording);
+    public DetailVo findByWording(@PathVariable String wording) {
+        return new DetailConverter().toVo(detailService.findByWording(wording));
     }
 
     @PostMapping("/")

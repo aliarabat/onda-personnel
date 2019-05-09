@@ -18,6 +18,7 @@ public class MissionVo {
     private EmployeeVo employeeVo;
     private String type;
     private String startingDate;
+    private DetailVo detailVo;
    
     public Long getId() {
         return id;
@@ -58,6 +59,14 @@ public class MissionVo {
 
     public void setStartingDate(String startingDate) {
         this.startingDate = startingDate;
+    }
+
+    public DetailVo getDetailVo() {
+        return detailVo;
+    }
+
+    public void setDetailVo(DetailVo detailVo) {
+        this.detailVo = detailVo;
     }
 
    

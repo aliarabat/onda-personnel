@@ -31,6 +31,8 @@ public class Skip implements Serializable {
     private String type;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date skipDate;
+    @OneToOne
+    private Detail detail;
 
     /**
      *
@@ -148,6 +150,14 @@ public class Skip implements Serializable {
     @Override
     public String toString() {
         return "onda.personnel.horaire.model.Skip[ id=" + id + " ]";
+    }
+
+    public Detail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Detail detail) {
+        this.detail = detail;
     }
 
 }

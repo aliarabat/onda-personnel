@@ -5,6 +5,7 @@
  */
 package com.onda.personnel.service;
 
+import com.onda.personnel.model.DayDetail;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,11 @@ import com.onda.personnel.model.Skip;
  * @author JaafarDiyaou
  */
 public interface SkipService {
-          public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule,Date skipDate); 
-          public Skip createSkip(Integer matricule,Skip skip);
+
+    public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate);
+
+    public Skip createSkip(Integer matricule, String wording, Skip skip);
+
+    public int updateSkip(DayDetail dayDetail);
+
 }

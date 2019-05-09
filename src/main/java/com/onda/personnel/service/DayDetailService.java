@@ -5,7 +5,6 @@
  */
 package com.onda.personnel.service;
 
-
 import com.onda.personnel.model.DayDetail;
 import com.onda.personnel.model.Mission;
 import com.onda.personnel.model.Replacement;
@@ -29,5 +28,21 @@ public interface DayDetailService {
     public List<DayDetail> findAll();
 
     public List<DayDetail> findByMissionIsNotNull();
+
+    public int updateDayDetailByDeletingMission(DayDetail dayDetail);
+
+    public int updateDayDetailByDeletingReplacement(DayDetail dayDetail);
+
+    public DayDetail findById(Long id);
+
+    public List<DayDetail> findByReplacementIsNotNullAndDetailIsNotNull();
+
+    public List<DayDetail> findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull();
+
+    public int deleteDayDetailWhereIsNull();
+
+    public DayDetail findByReplacementIdAndDetailIsNull(Long id);
+
+    public List<DayDetail> findBySkipIsNotNull();
 
 }

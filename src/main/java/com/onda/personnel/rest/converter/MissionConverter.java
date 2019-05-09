@@ -27,6 +27,7 @@ public class MissionConverter extends AbstractConverter<Mission, MissionVo> {
             miss.setStartingDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getStartingDate())));
             miss.setType(vo.getType());
             miss.setEmployee(new EmployeeConverter().toItem(vo.getEmployee()));
+            miss.setDetail(new DetailConverter().toItem(vo.getDetailVo()));
             return miss;
         }
     }
@@ -42,6 +43,7 @@ public class MissionConverter extends AbstractConverter<Mission, MissionVo> {
             missVo.setStartingDate(DateUtil.toString(DateUtil.fromDate(item.getStartingDate())));
             missVo.setType(item.getType());
             missVo.setEmployee(new EmployeeConverter().toVo(item.getEmployee()));
+            missVo.setDetailVo(new DetailConverter().toVo(item.getDetail()));
             return missVo;
         }
     }

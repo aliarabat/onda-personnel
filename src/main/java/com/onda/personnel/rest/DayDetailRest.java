@@ -5,7 +5,8 @@
  */
 package com.onda.personnel.rest;
 
-
+import com.onda.personnel.dao.DayDetailDao;
+import com.onda.personnel.model.DayDetail;
 import com.onda.personnel.rest.converter.DayDetailConverter;
 import com.onda.personnel.rest.converter.MissionConverter;
 import com.onda.personnel.rest.converter.ReplacementConverter;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,6 +39,8 @@ public class DayDetailRest {
 
     @Autowired
     DayDetailService dayDetailService;
+    @Autowired
+    private DayDetailDao dayDetailDao;
 
     @PutMapping("/mission/matricule/{matricule}/wordingDetail/{wordingDetail}")
     public int updateDayDetailMission(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody MissionVo missionVo) {
@@ -53,15 +57,56 @@ public class DayDetailRest {
         return dayDetailService.updateDayDetailReplacement(matricule, matricule1, wordingDetail, new ReplacementConverter().toItem(replacementVo));
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public List<DayDetailVo> findAll() {
-        return new DayDetailConverter().toVo(dayDetailService.findAll()) ;
+        return new DayDetailConverter().toVo(dayDetailService.findAll());
     }
+
+    @GetMapping("/")
+    public List<DayDetailVo> findBySkipIsNotNull() {
+        return new DayDetailConverter().toVo(dayDetailService.findBySkipIsNotNull());
+    }
+
     @GetMapping("/Mission/")
     public List<DayDetailVo> findByMissionIsNotNull() {
         return new DayDetailConverter().toVo(dayDetailService.findByMissionIsNotNull());
     }
+
     
+
+    @PutMapping("/mission/id/{idDayDetail}")
+    public int updateDayDetailByDeletingMission(@PathVariable Long idDayDetail) {
+        DayDetail dayDetail = dayDetailDao.getOne(idDayDetail);
+        return dayDetailService.updateDayDetailByDeletingMission(dayDetail);
+    }
+
+    @PutMapping("/replacement/id/{idDayDetail}")
+    public int updateDayDetailByDeletingReplacement(@PathVariable Long idDayDetail) {
+        DayDetail dayDetail = dayDetailDao.getOne(idDayDetail);
+        return dayDetailService.updateDayDetailByDeletingReplacement(dayDetail);
+    }
+
+    @GetMapping("/id/{id}")
+    public DayDetailVo findById(@PathVariable Long id) {
+        return new DayDetailConverter().toVo(dayDetailService.findById(id));
+    }
+
+    @GetMapping("/replacement/")
+    public List<DayDetailVo> findByReplacementIsNotNullAndDetailIsNotNull() {
+        return new DayDetailConverter().toVo(dayDetailService.findByReplacementIsNotNullAndDetailIsNotNull());
+    }
+
+    @GetMapping("/Mission/skip/replacement")
+    public List<DayDetail> findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull() {
+        return dayDetailService.findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull();
+    }
+
+    @DeleteMapping("/null")
+    public void deleteDayDetailWhereIsNull() {
+        dayDetailService.deleteDayDetailWhereIsNull();
+    }
+
+    @PutMapping
 
     public DayDetailService getDayDetailService() {
         return dayDetailService;
@@ -69,6 +114,14 @@ public class DayDetailRest {
 
     public void setDayDetailService(DayDetailService dayDetailService) {
         this.dayDetailService = dayDetailService;
+    }
+
+    public DayDetailDao getDayDetailDao() {
+        return dayDetailDao;
+    }
+
+    public void setDayDetailDao(DayDetailDao dayDetailDao) {
+        this.dayDetailDao = dayDetailDao;
     }
 
 }
