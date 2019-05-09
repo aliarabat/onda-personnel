@@ -10,10 +10,13 @@ import com.onda.personnel.model.Day;
 import com.onda.personnel.model.Vacation;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.DayConverter;
+import com.onda.personnel.rest.converter.VacationConverter;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.DayVo;
+import com.onda.personnel.rest.vo.VacationVo;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.DayService;
+import com.onda.personnel.service.VacationService;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,15 +45,26 @@ public class DayRest {
     @Autowired
     private DayConverter dayConverter;
 
+    @Autowired
+    private VacationConverter vacationConverter;
+
+    @Autowired
+    private VacationService vacationService;
+
     @PostMapping("/matricule/{matricule}")
     public int createDay(@PathVariable Integer matricule, @RequestBody List<DayVo> days) {
         days.forEach(day -> System.out.println(day.toString()));
         return dayService.createDay(matricule, dayConverter.toItem(days));
     }
 
-    @PostMapping("/vacation/")
-    public int createVacation(@RequestBody Vacation vacation) {
-        return dayService.createVacation(vacation);
+    @PostMapping("/vacation/matricule/{matricule}")
+    public int createVacation(@RequestBody VacationVo vacationVo, @PathVariable Integer matricule) {
+        return dayService.createVacation(vacationConverter.toItem(vacationVo), matricule);
+    }
+
+    @PutMapping("/vacation/matricule/{matricule}")
+    public int updateVacation(@RequestBody VacationVo vacationVo, @PathVariable Integer matricule) {
+        return dayService.updateVacation(vacationConverter.toItem(vacationVo), matricule);
     }
 
     @GetMapping("/matricule/{matricule}/year/{year}/month/{month}")
@@ -73,13 +88,42 @@ public class DayRest {
         Date thedate = DateUtil.toDate(DateUtil.fromStringToLocalDate(dayDate));
         return new DayConverter().toVo(dayService.findByDayDate(thedate));
     }
+    @GetMapping("/vacation/id/{id}")
+    public VacationVo getVacationByID(@PathVariable Long id) {
+        return vacationConverter.toVo(vacationService.getVacationByID(id));
+    }
 
+    
     public DayService getDayService() {
         return dayService;
     }
 
     public void setDayService(DayService dayService) {
         this.dayService = dayService;
+    }
+
+    public DayConverter getDayConverter() {
+        return dayConverter;
+    }
+
+    public VacationService getVacationService() {
+        return vacationService;
+    }
+
+    public void setVacationService(VacationService vacationService) {
+        this.vacationService = vacationService;
+    }
+
+    public void setDayConverter(DayConverter dayConverter) {
+        this.dayConverter = dayConverter;
+    }
+
+    public VacationConverter getVacationConverter() {
+        return vacationConverter;
+    }
+
+    public void setVacationConverter(VacationConverter vacationConverter) {
+        this.vacationConverter = vacationConverter;
     }
 
 }

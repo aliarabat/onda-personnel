@@ -12,17 +12,24 @@ import com.onda.personnel.model.Detail;
 import com.onda.personnel.model.Mission;
 import com.onda.personnel.model.Replacement;
 import com.onda.personnel.model.Skip;
+import java.util.List;
 
 /**
  *
  * @author AMINE
  */
 public interface DayDetailService {
-    
-    public DayDetail createDayDetail ( DayDetail dayDetail);
-        public int updateDayDetailMission(Integer matricule, String wordingDetail,Mission mission);
-        public int updateDayDetailSkip(Integer matricule,  String wordingDetail,Skip skip);
-        public int updateDayDetailReplacement(Integer matricule,Integer matricule1,  String wordingDetail,Replacement replacement);
 
+    public DayDetail createDayDetail(DayDetail dayDetail);
+
+    public int updateDayDetailMission(Integer matricule, String wordingDetail, Mission mission);
+
+    public int updateDayDetailSkip(Integer matricule, String wordingDetail, Skip skip);
+
+    public int updateDayDetailReplacement(Integer matricule, Integer matricule1, String wordingDetail, Replacement replacement);
+
+    public List<DayDetail> findBySkipIsNotNull();
+
+    public List<DayDetail> findBySkipId(Long id);
 
 }

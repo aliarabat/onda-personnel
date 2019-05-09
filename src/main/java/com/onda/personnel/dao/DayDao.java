@@ -20,5 +20,7 @@ import com.onda.personnel.model.Day;
 public interface DayDao extends JpaRepository<Day, Long> {
 
      public List<Day> findByDayDate(Date dayDate);
+     
+     public List<Day> findByVacationId(Long id);
 
 }

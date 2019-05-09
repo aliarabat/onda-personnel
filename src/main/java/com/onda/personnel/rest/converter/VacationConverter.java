@@ -30,7 +30,7 @@ public class VacationConverter extends AbstractConverter<Vacation, VacationVo> {
             vac.setEndingDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getEndingDate())));
             vac.setStartingDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getStartingDate())));
             vac.setType(vo.getType());
-            vac.setEmployee(new EmployeeConverter().toItem(vo.getEmployee()));
+            vac.setEmployee(new EmployeeConverter().toItem(vo.getEmployeeVo()));
 
             return vac;
         }
@@ -46,9 +46,9 @@ public class VacationConverter extends AbstractConverter<Vacation, VacationVo> {
             vacVo.setId(item.getId());
             vacVo.setReference(item.getReference());
             vacVo.setEndingDate(DateUtil.toString(DateUtil.fromDate(item.getEndingDate())));
-            vacVo.setStartingDate(DateUtil.toString(DateUtil.fromDate(item.getEndingDate())));
+            vacVo.setStartingDate(DateUtil.toString(DateUtil.fromDate(item.getStartingDate())));
             vacVo.setType(item.getType());
-            vacVo.setEmployee(new EmployeeConverter().toVo(item.getEmployee()));
+            vacVo.setEmployeeVo(new EmployeeConverter().toVo(item.getEmployee()));
             
             return vacVo;
         }

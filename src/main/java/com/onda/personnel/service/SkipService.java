@@ -9,12 +9,20 @@ import java.util.Date;
 import java.util.List;
 
 import com.onda.personnel.model.Skip;
+import com.onda.personnel.model.Vacation;
 
 /**
  *
  * @author JaafarDiyaou
  */
 public interface SkipService {
-          public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule,Date skipDate); 
-          public Skip createSkip(Integer matricule,Skip skip);
+
+    public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate);
+
+    public Skip createSkip(Integer matricule, Skip skip);
+
+    public List<Skip> findAllSkips();
+    
+    public int removeSkip (Long id);
+
 }

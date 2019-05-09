@@ -309,7 +309,16 @@ public class DayDetailServiceImpl implements DayDetailService {
 
         }
     }
-
+    
+   @Override
+    public List<DayDetail> findBySkipIsNotNull() {
+        return dayDetailDao.findBySkipIsNotNull();
+    }
+    
+     @Override
+    public List<DayDetail> findBySkipId(Long id) {
+        return  dayDetailDao.findBySkipId(id);
+    }
     public DayDetailDao getDayDetailDao() {
         return dayDetailDao;
     }
@@ -381,5 +390,9 @@ public class DayDetailServiceImpl implements DayDetailService {
     public void setSkipService(SkipService skipService) {
         this.skipService = skipService;
     }
+
+   
+
+ 
 
 }

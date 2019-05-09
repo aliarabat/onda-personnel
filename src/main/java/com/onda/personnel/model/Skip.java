@@ -7,6 +7,7 @@ package com.onda.personnel.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +27,7 @@ public class Skip implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String reference;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Employee employee;
     private String type;
     @Temporal(javax.persistence.TemporalType.DATE)

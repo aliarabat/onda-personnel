@@ -30,5 +30,6 @@ public interface DetailService {
     public List<Detail> findByMode(String mode);
 
     public  Timing getHoursBetween(int startingHour, int startingMinute, int endingHour, int endingMinute, boolean isNight); 
-
+     
+    public Detail getDetailById(Long id );
 }

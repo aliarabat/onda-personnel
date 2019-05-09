@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.onda.personnel.model.DayDetail;
+import com.onda.personnel.model.Skip;
+import java.util.List;
 
 /**
  *
@@ -17,5 +19,7 @@ import com.onda.personnel.model.DayDetail;
 @Repository
 public interface DayDetailDao extends JpaRepository<DayDetail, Long>{
     
+    public List<DayDetail> findBySkipIsNotNull();
     
+    public List<DayDetail> findBySkipId(Long id);
 }

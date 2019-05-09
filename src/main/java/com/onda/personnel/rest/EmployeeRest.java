@@ -88,6 +88,10 @@ public class EmployeeRest {
     public int deleteEmployee(@PathVariable Integer matricule) {
         return employeeService.deleteEmployee(matricule);
     }
+    @GetMapping("/id/{id}")
+    public EmployeeVo getEmployeeById( @PathVariable Long id) {
+        return employeeConverter.toVo(employeeService.getEmployeeById(id));
+    }
     
     /*@RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     public ModelAndView home(){

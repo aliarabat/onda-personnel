@@ -5,49 +5,78 @@
  */
 package com.onda.personnel.common.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  *
  * @author AMINE
  */
 public class betweenDate {
-     public static List<LocalDate> between(LocalDate date1, LocalDate date2) {
 
-        int dayS = date1.getDayOfMonth();
-        System.out.println(dayS);
-        int dayE = date2.getDayOfMonth();
 
-        List<LocalDate> days = new ArrayList<>();
-        for (int i = dayS; i <= dayE; i++) {
-            days.add(LocalDate.of(date1.getYear(), date1.getMonth(), i));
+    public static List<LocalDate> between(LocalDate startdate, LocalDate enddate) {
+
+        List<LocalDate> dates = new ArrayList<>();
+
+        while (!startdate.equals(enddate.plusDays(1))) {
+            dates.add(startdate);
+            startdate = startdate.plusDays(1);
         }
-        return days;
+        return dates;
     }
 
-    public static List<LocalDate> withoutSunday(LocalDate date1, LocalDate date2) {
-        int dayS = date1.getDayOfMonth();
-        int dayE = date2.getDayOfMonth();
+    public static List<LocalDate> withoutSunday(LocalDate startdate, LocalDate enddate) {
         List<LocalDate> daysWithoutSunday = new ArrayList<>();
-        List<LocalDate> daysWithSunday = new ArrayList<>();
-        List<LocalDate> days = new ArrayList<>();
-        for (int i = dayS; i <= dayE; i++) {
-            LocalDate date = date1.of(date1.getYear(), date1.getMonth(), i);
-            if (!date.getDayOfWeek().name().equals("SUNDAY")) {
-                daysWithoutSunday.add(date);
-            } else {
-                daysWithSunday.add(date);
-
-            }
-        }
+        List<LocalDate> daysWithSunday = Sundays(startdate, enddate);
         int x = daysWithSunday.size();
-        for (int i = dayS; i <= dayE + x; i++) {
-            LocalDate date = date1.of(date1.getYear(), date1.getMonth(), i);
-            days.add(date);
-        }
 
-        return days;
+        do {
+            if (!startdate.getDayOfWeek().name().equals("SUNDAY")) {
+                daysWithoutSunday.add(startdate);
+            }
+            startdate = startdate.plusDays(1);
+
+        } while (!startdate.equals(enddate.plusDays(1+x)));
+
+        return daysWithoutSunday;
+
     }
+
+    public static List<LocalDate> Sundays(LocalDate startdate, LocalDate enddate) {
+        List<LocalDate> daysWithSunday = new ArrayList<>();
+        do {
+            if (startdate.getDayOfWeek().name().equals("SUNDAY")) {
+                daysWithSunday.add(startdate);
+            }
+            startdate = startdate.plusDays(1);
+
+        } while (!startdate.equals(enddate.plusDays(1)));
+
+        return daysWithSunday;
+
+    }
+
+
+    public static void main(String[] args) {
+
+        List<LocalDate> days = withoutSunday(LocalDate.of(2019, 05, 10), LocalDate.of(2019, 05, 20));
+        for (LocalDate day : days) {
+
+            // LocalDate LD = LocalDate.of(2019, 05, 10);
+            System.out.println(day);
+
+        }
+    }
+
 }

@@ -6,8 +6,12 @@
 package com.onda.personnel.service.impl;
 
 import com.onda.personnel.dao.SkipDao;
+import com.onda.personnel.model.Day;
+import com.onda.personnel.model.DayDetail;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.model.Skip;
+import com.onda.personnel.model.Vacation;
+import com.onda.personnel.service.DayDetailService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.SkipService;
 
@@ -27,6 +31,8 @@ public class SkipServiceImpl implements SkipService {
     SkipDao skipDao;
     @Autowired
     EmployeeService employeeService;
+    @Autowired
+    DayDetailService dayDetailService;
 
     @Override
     public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate) {
@@ -45,6 +51,27 @@ public class SkipServiceImpl implements SkipService {
     }
 
 
+    @Override
+    public List<Skip> findAllSkips() {
+        return skipDao.findAll();
+    }
+    
+    
+    @Override
+    public int removeSkip(Long id) {
+        Skip skip = skipDao.getOne(id);
+        if (skip == null){
+            return -1;
+        }else{
+      List<DayDetail> dds = dayDetailService.findBySkipId(id);
+            for (DayDetail dayDetail : dds) {
+                dayDetail.setSkip(null);
+            }
+            skipDao.delete(skip);
+            return 1;
+        }
+    }
+    
     public EmployeeService getEmployeeService() {
         return employeeService;
     }
@@ -61,6 +88,17 @@ public class SkipServiceImpl implements SkipService {
     public void setSkipDao(SkipDao skipDao) {
         this.skipDao = skipDao;
     }
+
+    public DayDetailService getDayDetailService() {
+        return dayDetailService;
+    }
+
+    public void setDayDetailService(DayDetailService dayDetailService) {
+        this.dayDetailService = dayDetailService;
+    }
+
+   
+
 
 
 }
