@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-    
+
 /**
  * @author AMINE
  */
@@ -88,25 +88,31 @@ public class EmployeeRest {
     public int deleteEmployee(@PathVariable Integer matricule) {
         return employeeService.deleteEmployee(matricule);
     }
+
+    @DeleteMapping("revert/matricule/{matricule}")
+    public int revert(@PathVariable Integer matricule) {
+        return employeeService.revert(matricule);
+    }
+
     @GetMapping("/id/{id}")
-    public EmployeeVo getEmployeeById( @PathVariable Long id) {
+    public EmployeeVo getEmployeeById(@PathVariable Long id) {
         return employeeConverter.toVo(employeeService.getEmployeeById(id));
     }
-    
+
     /*@RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     public ModelAndView home(){
         ModelAndView mav=new ModelAndView();
         mav.setViewName("home");
         return mav;
     }*/
-
     @GetMapping("/generatepdf/matricule/{matricule}")
-    public void generatePdf(HttpServletResponse response,@PathVariable Integer matricule) throws JRException, IOException {
+    public void generatePdf(HttpServletResponse response, @PathVariable Integer matricule) throws JRException, IOException {
         employeeService.print(response, matricule);
     }
-    
+
     @GetMapping("/generateXLS")
-    public @ResponseBody void generateXls(HttpServletResponse response) throws JRException, IOException {
+    public @ResponseBody
+    void generateXls(HttpServletResponse response) throws JRException, IOException {
 
         List<Employee> employees = findByIsExist(true);
 //        response.setContentType("application/x-download");
@@ -115,9 +121,10 @@ public class EmployeeRest {
         JasperUtil.generateXls(employees, null, true);
 
     }
-    
+
     @GetMapping("/generateCSV")
-    public @ResponseBody void generateCsv(HttpServletResponse response) throws JRException, IOException {
+    public @ResponseBody
+    void generateCsv(HttpServletResponse response) throws JRException, IOException {
 
         List<Employee> employees = findByIsExist(true);
 //        response.setContentType("application/x-download");
@@ -126,9 +133,10 @@ public class EmployeeRest {
         JasperUtil.generateCsv(employees, null, true);
 
     }
-    
+
     @GetMapping("/generateJSON")
-    public @ResponseBody void generateJson(HttpServletResponse response) throws JRException, IOException {
+    public @ResponseBody
+    void generateJson(HttpServletResponse response) throws JRException, IOException {
 
         List<Employee> employees = findByIsExist(true);
 //        response.setContentType("application/x-download");
@@ -137,7 +145,6 @@ public class EmployeeRest {
         JasperUtil.generateJson(employees, null, true);
 
     }
-    
 
     public EmployeeService getEmployeeService() {
         return employeeService;

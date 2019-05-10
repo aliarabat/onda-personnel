@@ -150,7 +150,7 @@ public class DayServiceImpl implements DayService {
             return res = 1;
 
         } else if (vacation.getType().equals("C.R")) {
-            List<LocalDate> daysVacationWithoutSunday = betweenDate.withoutSunday(ldS, ldE);
+            List<LocalDate> daysVacationWithoutSunday = betweenDate.noSundays(ldS, ldE);
             for (LocalDate ld : daysVacationWithoutSunday) {
                 System.out.println(ld);
                 Day day = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld));
@@ -208,11 +208,11 @@ public class DayServiceImpl implements DayService {
             return res = 1;
 
         } else if (vacation.getType().equals("C.R")) {
-            List<LocalDate> daysVacation = betweenDate.withoutSunday(ldS, ldE);
-            List<LocalDate> daysVacationOld = betweenDate.withoutSunday(ldSOld, ldEOld);
+            List<LocalDate> daysVacation = betweenDate.noSundays(ldS, ldE);
+            List<LocalDate> daysVacationOld = betweenDate.noSundays(ldSOld, ldEOld);
             daysVacation.removeAll(daysVacationOld);
-            List<LocalDate> daysVacation2 = betweenDate.withoutSunday(ldS, ldE);
-            List<LocalDate> daysVacationOld2 = betweenDate.withoutSunday(ldSOld, ldEOld);
+            List<LocalDate> daysVacation2 = betweenDate.noSundays(ldS, ldE);
+            List<LocalDate> daysVacationOld2 = betweenDate.noSundays(ldSOld, ldEOld);
             daysVacationOld2.removeAll(daysVacation2);
             oldVacation.setEmployee(emp);
             oldVacation.setEndingDate(vacation.getEndingDate());

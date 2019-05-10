@@ -10,6 +10,8 @@ import com.onda.personnel.rest.vo.DayDetailVo;
 import com.onda.personnel.service.SkipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,8 @@ public class SkipRest {
     public int updateSkip(@RequestBody DayDetailVo dayDetailVo) {
         return skipService.updateSkip(new DayDetailConverter().toItem(dayDetailVo));
     }
+
+    
 
     public SkipService getSkipService() {
         return skipService;
