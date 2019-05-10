@@ -30,4 +30,5 @@ public interface EmployeeService {
     
     public Employee getEmployeeById(Long id);
 
+    public int revert(Integer matricule);
 }

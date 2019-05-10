@@ -27,7 +27,7 @@ public class Skip implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String reference;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
     private Employee employee;
     private String type;
     @Temporal(javax.persistence.TemporalType.DATE)

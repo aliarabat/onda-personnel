@@ -118,5 +118,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+    @Override
+    public int revert(Integer matricule) {
+           Employee checkEmployee = findByMatricule(matricule);
+        if (checkEmployee == null) {
+            return -1;
+
+        } else {
+            checkEmployee.setIsExist(true);
+            employeeDao.save(checkEmployee);
+            return 1;
+        }
+    }
+
  
 }

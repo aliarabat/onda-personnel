@@ -16,6 +16,7 @@ import com.onda.personnel.rest.vo.MissionVo;
 import com.onda.personnel.rest.vo.ReplacementVo;
 import com.onda.personnel.rest.vo.SkipVo;
 import com.onda.personnel.service.DayDetailService;
+import com.onda.personnel.service.SkipService;
 
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class DayDetailRest {
 
     @Autowired
     DayDetailService dayDetailService;
+     @Autowired
+    SkipService skipService;
     @Autowired
     private DayDetailDao dayDetailDao;
 
@@ -72,7 +75,10 @@ public class DayDetailRest {
         return new DayDetailConverter().toVo(dayDetailService.findByMissionIsNotNull());
     }
 
-    
+    @DeleteMapping("/id/{id}")
+    public int removeSkip(@PathVariable Long id) {
+        return skipService.removeSkip(id);
+    }
 
     @PutMapping("/mission/id/{idDayDetail}")
     public int updateDayDetailByDeletingMission(@PathVariable Long idDayDetail) {
@@ -122,6 +128,14 @@ public class DayDetailRest {
 
     public void setDayDetailDao(DayDetailDao dayDetailDao) {
         this.dayDetailDao = dayDetailDao;
+    }
+
+    public SkipService getSkipService() {
+        return skipService;
+    }
+
+    public void setSkipService(SkipService skipService) {
+        this.skipService = skipService;
     }
 
 }

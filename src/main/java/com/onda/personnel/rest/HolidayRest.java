@@ -48,8 +48,8 @@ public class HolidayRest {
 	}
 
 	@GetMapping("/reference/{reference}")
-	public Holiday findByReference(@PathVariable String reference) {
-		return holidayService.findByReference(reference);
+	public HolidayVo findByReference(@PathVariable String reference) {
+		return new HolidayConverter().toVo(holidayService.findByReference(reference));
 	}
 
 	@DeleteMapping("/id/{id}")

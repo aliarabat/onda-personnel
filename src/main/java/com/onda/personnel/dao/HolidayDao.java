@@ -10,5 +10,5 @@ public interface HolidayDao extends JpaRepository<Holiday, Long> {
 
     Holiday findByReference(String reference);
 
-    Holiday findByStartingDateLessThanEqualAndEndingDateGreaterThanEqual(Date date1, Date date2);
+    Holiday findTopByStartingDateLessThanEqualAndEndingDateGreaterThanEqualOrderByIdAsc(Date date1, Date date2);
 }

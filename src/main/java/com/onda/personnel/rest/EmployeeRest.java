@@ -91,15 +91,21 @@ public class EmployeeRest {
         return employeeService.deleteEmployee(matricule);
     }
 
-    @GetMapping("/generatepdf/matricule/{matricule}")
-    public void generatePdf(HttpServletResponse response, @PathVariable Integer matricule) throws JRException, IOException {
-        employeeService.print(response, matricule);
+    @DeleteMapping("revert/matricule/{matricule}")
+    public int revert(@PathVariable Integer matricule) {
+        return employeeService.revert(matricule);
     }
 
     @GetMapping("/id/{id}")
     public EmployeeVo getEmployeeById(@PathVariable Long id) {
         return employeeConverter.toVo(employeeService.getEmployeeById(id));
     }
+
+    @GetMapping("/generatepdf/matricule/{matricule}")
+    public void generatePdf(HttpServletResponse response, @PathVariable Integer matricule) throws JRException, IOException {
+        employeeService.print(response, matricule);
+    }
+
 
     public EmployeeService getEmployeeService() {
         return employeeService;

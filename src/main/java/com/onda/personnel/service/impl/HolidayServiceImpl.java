@@ -48,7 +48,7 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public Holiday findByStartingDateLessThanEqualAndEndingDateGreaterThanEqual(Date date1, Date date2) {
-        return holidayDao.findByStartingDateLessThanEqualAndEndingDateGreaterThanEqual(date1, date2);
+        return holidayDao.findTopByStartingDateLessThanEqualAndEndingDateGreaterThanEqualOrderByIdAsc(date1, date2);
     }
 
     @Override
