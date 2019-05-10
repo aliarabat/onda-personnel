@@ -22,7 +22,7 @@ public interface DayService {
 
     public int createDay(Integer matricule, List<Day> days);
 
-    //public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month);
+    public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month);
 
     public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate);
 
@@ -30,11 +30,11 @@ public interface DayService {
 
     public List<Day> findByDateOfTheWork(Date dateOfTheDay);
 
-    public int createVacation(Vacation vacation);
-
-    Day setDayInfos(List<DayDetail> dayDetails, Date toDate);
+    public int createVacation(Vacation vacation, Integer matricule);
     
-    //List<Day> findByHolidayId(Long id);
+   public int updateVacation(Vacation vacation, Integer matricule);
 
-    public void save(Day d);
+   Day setDayInfos(List<DayDetail> dayDetails, Date toDate);
+
+    public List<Day> findByVacationId(Long id);
 }

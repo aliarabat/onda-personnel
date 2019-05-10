@@ -5,8 +5,10 @@
  */
 package com.onda.personnel.rest;
 
+
 import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.rest.converter.AbstractConverter;
+import com.onda.personnel.rest.converter.WorkDetailConverter;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,11 +40,17 @@ public class WorkDetailRest {
     public WorkDetailVo updateWorkDetail(@RequestBody WorkDetailVo workDetailVo) {
         return workDetailConverter.toVo(workDetailSevice.updateWorkDetail(workDetailConverter.toItem(workDetailVo)));
     }
+        @GetMapping("/matricule/{matricule}/year/{year}/month/{month}")
+        public WorkDetailVo findByEmployeeMatriculeAndWorkDetailDate(@PathVariable Integer matricule,@PathVariable int year,@PathVariable int month) {
+        return new WorkDetailConverter().toVo(workDetailSevice.findByEmployeeMatriculeAndWorkDetailDate(matricule, year, month)) ;
+    }
+
 
     public WorkDetailService getWorkDetailSevice() {
         return workDetailSevice;
     }
 
+    
     public void setWorkDetailSevice(WorkDetailService workDetailSevice) {
         this.workDetailSevice = workDetailSevice;
     }

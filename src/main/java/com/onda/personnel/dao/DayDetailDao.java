@@ -5,17 +5,28 @@
  */
 package com.onda.personnel.dao;
 
+import com.onda.personnel.model.DayDetail;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.onda.personnel.model.DayDetail;
 
 /**
  *
  * @author AMINE
  */
 @Repository
-public interface DayDetailDao extends JpaRepository<DayDetail, Long>{
-    
-    
+public interface DayDetailDao extends JpaRepository<DayDetail, Long> {
+
+    public List<DayDetail> findByMissionIsNotNull();
+
+    public List<DayDetail> findByReplacementIsNotNullAndDetailIsNotNull();
+
+    public List<DayDetail> findByDetailIsNullAndSkipIsNullAndReplacementIsNullAndMissionIsNull();
+
+    public DayDetail findByReplacementIdAndDetailIsNull(Long id);
+
+    public List<DayDetail> findBySkipIsNotNull();
+
+    public List<DayDetail> findBySkipId(Long id);
+
 }

@@ -42,8 +42,8 @@ public class DetailRest {
     private TimingConverter timingConverter;
 
     @GetMapping("/wording/{wording}")
-    public Detail findByWording(@PathVariable String wording) {
-        return detailService.findByWording(wording);
+    public DetailVo findByWording(@PathVariable String wording) {
+        return new DetailConverter().toVo(detailService.findByWording(wording));
     }
 
     @PostMapping("/")
@@ -74,6 +74,10 @@ public class DetailRest {
     @GetMapping("/between/startingHour/{startingHour}/startingMinute/{startingMinute}/endingHour/{endingHour}/endingMinute/{endingMinute}/isNight/{isNight}")
     public TimingVo getHoursBetween(@PathVariable int startingHour, @PathVariable int startingMinute, @PathVariable int endingHour, @PathVariable int endingMinute, @PathVariable boolean isNight) {
         return timingConverter.toVo(detailService.getHoursBetween(startingHour, startingMinute, endingHour, endingMinute, isNight));
+    }
+    @GetMapping("/id/{id}")
+    public DetailVo getDetailById(@PathVariable Long id) {
+        return detailConverter.toVo(detailService.getDetailById(id));
     }
 
 

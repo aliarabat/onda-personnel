@@ -28,8 +28,8 @@ public class ReplacementConverter extends AbstractConverter<Replacement, Replace
         } else {
             Replacement rep = new Replacement();
             rep.setId(vo.getId());
-            rep.setOriginalEmployee(employeeConverter.toItem(vo.getOriginalEmployee()));
-            rep.setReplacedEmpolyee(employeeConverter.toItem(vo.getReplacedEmpolyee()));
+            rep.setOriginalEmployee(new EmployeeConverter().toItem(vo.getOriginalEmployee()) );
+            rep.setReplacedEmpolyee(new EmployeeConverter().toItem(vo.getReplacedEmployee()));
             rep.setReplacementDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getReplacementDate())));
             rep.setReference(vo.getReference());
             rep.setDetail(new DetailConverter().toItem(vo.getDetailVo()));
@@ -45,8 +45,8 @@ public class ReplacementConverter extends AbstractConverter<Replacement, Replace
         } else {
             ReplacementVo repVo = new ReplacementVo();
             repVo.setId(item.getId());
-            repVo.setOriginalEmployee(employeeConverter.toVo(item.getOriginalEmployee()));
-            repVo.setReplacedEmpolyee(employeeConverter.toVo(item.getReplacedEmpolyee()));
+            repVo.setOriginalEmployee(new EmployeeConverter().toVo(item.getOriginalEmployee()));
+            repVo.setReplacedEmployee(new EmployeeConverter().toVo(item.getReplacedEmpolyee()));
             repVo.setReplacementDate(DateUtil.toString(DateUtil.fromDate(item.getReplacementDate())));
             repVo.setReference(item.getReference());
             repVo.setDetailVo(new DetailConverter().toVo(item.getDetail()));

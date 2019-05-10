@@ -5,21 +5,24 @@
  */
 package com.onda.personnel.rest;
 
+
 import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
+
+
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.JRException;
 
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author AMINE
@@ -37,7 +40,7 @@ public class WorkRest {
 
     @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
     public WorkVo findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule, @PathVariable String workDetailDate) {
-        return new WorkConverter().toVo(workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule,DateUtil.toDate(DateUtil.fromStringToLocalDate(workDetailDate)) ))  ;
+        return new WorkConverter().toVo(workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule,DateUtil.toDate(DateUtil.fromStringToLocalDate(workDetailDate))))  ;
     }
 
     @GetMapping("/matricule/{matricule}")
@@ -85,7 +88,7 @@ public class WorkRest {
         workService.printDoc(response, year, month);
     }
     
-    @RequestMapping( value="/generatedoc/year/{year}/month/{month}/type/xlsx", produces=MediaType.ALL_VALUE, method=RequestMethod.GET)
+    @RequestMapping( value="/generatedoc/year/{year}/month/{month}/type/xlsx", produces= MediaType.ALL_VALUE, method=RequestMethod.GET)
     public void generateXlsx(HttpServletResponse response, @PathVariable int year, @PathVariable int month) throws JRException, IOException {
         workService.printXlsx(response, year, month);
     }
@@ -96,6 +99,11 @@ public class WorkRest {
     	LocalDate ld=LocalDate.of(year, month, 1);
 		return workConverter.toVo(workService.findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(DateUtil.toDate(ld)));
 	}
+
+    @GetMapping("/")
+    public List<WorkVo> findAll() {
+        return new WorkConverter().toVo(workService.findAll());
+    }
 
 	public WorkService getWorkService() {
         return workService;

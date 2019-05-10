@@ -5,15 +5,24 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.model.Mission;
-import com.onda.personnel.model.Replacement;
-import com.onda.personnel.model.Skip;
+import com.onda.personnel.dao.DayDetailDao;
+import com.onda.personnel.model.DayDetail;
+import com.onda.personnel.rest.converter.DayDetailConverter;
+import com.onda.personnel.rest.converter.MissionConverter;
+import com.onda.personnel.rest.converter.ReplacementConverter;
+import com.onda.personnel.rest.converter.SkipConverter;
+import com.onda.personnel.rest.vo.DayDetailVo;
+import com.onda.personnel.rest.vo.MissionVo;
+import com.onda.personnel.rest.vo.ReplacementVo;
+import com.onda.personnel.rest.vo.SkipVo;
 import com.onda.personnel.service.DayDetailService;
 
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,25 +39,74 @@ public class DayDetailRest {
 
     @Autowired
     DayDetailService dayDetailService;
+    @Autowired
+    private DayDetailDao dayDetailDao;
 
     @PutMapping("/mission/matricule/{matricule}/wordingDetail/{wordingDetail}")
-    public int updateDayDetailMission(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody Mission mission) {
-        return dayDetailService.updateDayDetailMission(matricule, wordingDetail, mission);
+    public int updateDayDetailMission(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody MissionVo missionVo) {
+        return dayDetailService.updateDayDetailMission(matricule, wordingDetail, new MissionConverter().toItem(missionVo));
     }
 
     @PutMapping("/skip/matricule/{matricule}/wordingDetail/{wordingDetail}")
-    public int updateDayDetailSkip(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody Skip skip) {
-        return dayDetailService.updateDayDetailSkip(matricule, wordingDetail, skip);
+    public int updateDayDetailSkip(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody SkipVo skipVo) {
+        return dayDetailService.updateDayDetailSkip(matricule, wordingDetail, new SkipConverter().toItem(skipVo));
     }
 
     @PutMapping("/replacement/matricule/{matricule}/matricule1/{matricule1}/wordingDetail/{wordingDetail}")
-    public int updateDayDetailReplacement(@PathVariable Integer matricule, @PathVariable Integer matricule1, @PathVariable String wordingDetail, @RequestBody Replacement replacement) {
-        return dayDetailService.updateDayDetailReplacement(matricule, matricule1, wordingDetail, replacement);
+    public int updateDayDetailReplacement(@PathVariable Integer matricule, @PathVariable Integer matricule1, @PathVariable String wordingDetail, @RequestBody ReplacementVo replacementVo) {
+        return dayDetailService.updateDayDetailReplacement(matricule, matricule1, wordingDetail, new ReplacementConverter().toItem(replacementVo));
     }
 
+    @GetMapping("/all")
+    public List<DayDetailVo> findAll() {
+        return new DayDetailConverter().toVo(dayDetailService.findAll());
+    }
 
-    //@PutMapping("/matricule/{matricule}/dateMission/{dateMission}/wordingDetail/{wordingDetail}")
+    @GetMapping("/")
+    public List<DayDetailVo> findBySkipIsNotNull() {
+        return new DayDetailConverter().toVo(dayDetailService.findBySkipIsNotNull());
+    }
 
+    @GetMapping("/Mission/")
+    public List<DayDetailVo> findByMissionIsNotNull() {
+        return new DayDetailConverter().toVo(dayDetailService.findByMissionIsNotNull());
+    }
+
+    
+
+    @PutMapping("/mission/id/{idDayDetail}")
+    public int updateDayDetailByDeletingMission(@PathVariable Long idDayDetail) {
+        DayDetail dayDetail = dayDetailDao.getOne(idDayDetail);
+        return dayDetailService.updateDayDetailByDeletingMission(dayDetail);
+    }
+
+    @PutMapping("/replacement/id/{idDayDetail}")
+    public int updateDayDetailByDeletingReplacement(@PathVariable Long idDayDetail) {
+        DayDetail dayDetail = dayDetailDao.getOne(idDayDetail);
+        return dayDetailService.updateDayDetailByDeletingReplacement(dayDetail);
+    }
+
+    @GetMapping("/id/{id}")
+    public DayDetailVo findById(@PathVariable Long id) {
+        return new DayDetailConverter().toVo(dayDetailService.findById(id));
+    }
+
+    @GetMapping("/replacement/")
+    public List<DayDetailVo> findByReplacementIsNotNullAndDetailIsNotNull() {
+        return new DayDetailConverter().toVo(dayDetailService.findByReplacementIsNotNullAndDetailIsNotNull());
+    }
+
+    @GetMapping("/Mission/skip/replacement")
+    public List<DayDetail> findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull() {
+        return dayDetailService.findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull();
+    }
+
+    @DeleteMapping("/null")
+    public void deleteDayDetailWhereIsNull() {
+        dayDetailService.deleteDayDetailWhereIsNull();
+    }
+
+    @PutMapping
 
     public DayDetailService getDayDetailService() {
         return dayDetailService;
@@ -58,5 +116,12 @@ public class DayDetailRest {
         this.dayDetailService = dayDetailService;
     }
 
+    public DayDetailDao getDayDetailDao() {
+        return dayDetailDao;
+    }
+
+    public void setDayDetailDao(DayDetailDao dayDetailDao) {
+        this.dayDetailDao = dayDetailDao;
+    }
 
 }

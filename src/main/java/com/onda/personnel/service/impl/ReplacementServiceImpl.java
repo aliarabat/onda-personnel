@@ -5,10 +5,16 @@
  */
 package com.onda.personnel.service.impl;
 
+import com.onda.personnel.dao.DayDao;
+import com.onda.personnel.dao.DayDetailDao;
+import com.onda.personnel.dao.MissionDao;
 import com.onda.personnel.dao.ReplacementDao;
+import com.onda.personnel.model.Day;
+import com.onda.personnel.model.DayDetail;
 import com.onda.personnel.model.Detail;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.model.Replacement;
+import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.DetailService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.ReplacementService;
@@ -33,6 +39,14 @@ public class ReplacementServiceImpl implements ReplacementService {
     @Autowired
     DetailService detailService;
 
+    @Autowired
+    DayDetailDao dayDetailDao;
+    @Autowired
+    DayService dayService;
+
+    @Autowired
+    DayDao dayDao;
+
     @Override
     public List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule, Date replacementDate) {
         return replacementDao.findByOriginalEmployeeMatriculeAndReplacementDate(matricule, replacementDate);
@@ -53,9 +67,10 @@ public class ReplacementServiceImpl implements ReplacementService {
                 replacement.setDetail(detail);
                 replacementDao.save(replacement);
                 return replacement;
-            } else return null;
+            } else {
+                return null;
+            }
         }
-
 
     }
 
@@ -83,5 +98,6 @@ public class ReplacementServiceImpl implements ReplacementService {
         this.detailService = detailService;
     }
 
+   
 
 }

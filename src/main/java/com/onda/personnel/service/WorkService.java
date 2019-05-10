@@ -5,12 +5,11 @@
  */
 package com.onda.personnel.service;
 
-import java.util.Date;
-import java.util.List;
+import com.onda.personnel.model.Work;
 
 import javax.servlet.http.HttpServletResponse;
-
-import com.onda.personnel.model.Work;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -43,5 +42,7 @@ public interface WorkService {
     void printXlsx(HttpServletResponse response, Integer year, Integer month);
     
     Work findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(Date date);
+
+    List<Work> findAll();
 
 }

@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -77,11 +78,10 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
             //Date firstMondayOfMonth=DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY));
             Date firstDayOfMonth = DateUtil.getFirstDayOfMonth();
             workDetail = new WorkDetail(firstDayOfMonth);
-            workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfWeek().getDayOfMonth()+1;
+            workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfWeek().getDayOfMonth() + 1;
             dayDate = DateUtil.getFirstDayOfWeek();
         } else {
-            //workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
-        	workDetail= work.getWorkDetail();
+            workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
             int size = workDetail.getDays().size();
             Day dayMin = Collections.min(workDetail.getDays(), new DayComparator());
             workDetailListLength = DateUtil.fromDate(workDetail.getWorkDetailDate()).lengthOfMonth() - dayMin.getDayDate().getDate() + 1;
@@ -107,7 +107,7 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
             work.setWorkDetail(workDetail);
             workService.saveWork(work);
         } else {
-            //saveWorkDetail(workDetail);
+            saveWorkDetail(workDetail);
             saveWorkDetail(newWorkDetail);
             if (work.getWorkDetail() == null) {
                 work.setWorkDetail(workDetail);
@@ -140,11 +140,11 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         int hoursHnWorked = workDetail.getHn().getHour() + day.getHn().getHour();
         int minutesHnWorked = workDetail.getHn().getMinute() + day.getHn().getMinute();
         if (minutesHnWorked >= 60) {
-            ++hoursHnWorked;
+            hoursHnWorked++;
             minutesHnWorked -= 60;
         }
         if (minutesHjfWorked >= 60) {
-            ++hoursHjfWorked;
+            hoursHjfWorked++;
             minutesHjfWorked -= 60;
         }
         workDetail.setPan(workDetail.getPan() + day.getPan());
@@ -185,5 +185,24 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
 
     public void setDayService(DayService dayService) {
         this.dayService = dayService;
+    }
+
+    @Override
+    public WorkDetail findByEmployeeMatriculeAndWorkDetailDate(Integer matricule, int year, int month) {
+        Employee employee = employeeService.findByMatricule(matricule);
+        if (employee == null) {
+            return null;
+        } else {
+
+            LocalDate localDate = LocalDate.of(year, month, 1);
+            Date theDate = DateUtil.toDate(localDate);
+            Work work = workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, theDate);
+            if (work == null) {
+                return null;
+            } else {
+                WorkDetail workDetail = work.getWorkDetail();
+                return workDetail;
+            }
+        }
     }
 }

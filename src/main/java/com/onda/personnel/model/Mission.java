@@ -31,7 +31,8 @@ public class Mission implements Serializable {
     private String type;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startingDate;
-    
+    @OneToOne
+    private Detail detail;
 
     /**
      *
@@ -153,6 +154,15 @@ public class Mission implements Serializable {
         }
         return true;
     }
+
+    public Detail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Detail detail) {
+        this.detail = detail;
+    }
+    
 
     /**
      *

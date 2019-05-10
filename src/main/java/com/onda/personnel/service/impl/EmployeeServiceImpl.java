@@ -80,7 +80,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             return 1;
         }
     }
-
+   @Override
+    public Employee getEmployeeById(Long id) {
+        return employeeDao.getOne(id);
+    }
     @Override
     public List<Employee> findByIsExist(boolean isExist) {
         return employeeDao.findByIsExist(isExist);
@@ -115,4 +118,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+ 
 }

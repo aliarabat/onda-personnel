@@ -16,6 +16,7 @@ public class SkipVo {
     private EmployeeVo employeeVo;
     private String type;
     private String skipDate;
+    private DetailVo detailVo;
 
     public String getSkipDate() {
         return skipDate;
@@ -55,6 +56,14 @@ public class SkipVo {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public DetailVo getDetailVo() {
+        return detailVo;
+    }
+
+    public void setDetailVo(DetailVo detailVo) {
+        this.detailVo = detailVo;
     }
 
 }

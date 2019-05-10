@@ -25,6 +25,8 @@ public class DetailServiceImpl implements DetailService {
 
     @Autowired
     private DetailDao detailDao;
+    @Autowired
+    private DetailService detailService;
 
     @Override
     public Detail findByWording(String wording) {
@@ -35,7 +37,10 @@ public class DetailServiceImpl implements DetailService {
     public int createDetail(List<Detail> details) {
         for (Detail detail : details) {
             Detail dd = findByWording(detail.getWording());
-            if (dd == null) {
+            if(dd!= null){
+                return -1;
+            }
+            else if (dd == null) {
                 dd = new Detail();
                 dd.setStartingTime(detail.getStartingTime());
                 dd.setEndingTime(detail.getEndingTime());
@@ -51,7 +56,7 @@ public class DetailServiceImpl implements DetailService {
     }
 
     @Override
-    public int updateDetail( Detail detail) {
+    public int updateDetail(Detail detail) {
         Detail oldDayDetail = detailDao.getOne(detail.getId());
         if (oldDayDetail == null) {
             return -1;
@@ -81,7 +86,7 @@ public class DetailServiceImpl implements DetailService {
 
     @Override
     public Timing getHoursBetween(int startingHour, int startingMinute, int endingHour, int endingMinute, boolean isNight) {
-           return PeriodUtil.getHoursBetween(startingHour, startingMinute, endingHour, endingMinute, isNight);
+        return PeriodUtil.getHoursBetween(startingHour, startingMinute, endingHour, endingMinute, isNight);
     }
 
     @Override
@@ -94,6 +99,11 @@ public class DetailServiceImpl implements DetailService {
         return detailDao.findByMode(mode);
     }
 
+    @Override
+    public Detail getDetailById(Long id) {
+        return detailDao.getOne(id);
+    }
+    
     public DetailDao getDayDetailDao() {
         return detailDao;
     }
@@ -102,6 +112,22 @@ public class DetailServiceImpl implements DetailService {
         this.detailDao = detailDao;
     }
 
-    
+    public DetailDao getDetailDao() {
+        return detailDao;
+    }
+
+    public void setDetailDao(DetailDao detailDao) {
+        this.detailDao = detailDao;
+    }
+
+    public DetailService getDetailService() {
+        return detailService;
+    }
+
+    public void setDetailService(DetailService detailService) {
+        this.detailService = detailService;
+    }
+
+   
 
 }

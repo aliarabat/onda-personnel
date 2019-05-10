@@ -9,11 +9,13 @@ import com.onda.personnel.common.util.DateUtil;
 import com.onda.personnel.model.Skip;
 import com.onda.personnel.rest.vo.SkipVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author AMINE
  */
+@Component
 public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
     
     
@@ -29,10 +31,11 @@ public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
         } else {
             Skip skip = new Skip();
             skip.setId(vo.getId());
-            skip.setEmployee(employeeConverter.toItem(vo.getEmployeeVo()));
+            skip.setEmployee(new EmployeeConverter().toItem(vo.getEmployeeVo()));
             skip.setReference(vo.getReference());
             skip.setType(vo.getType());
             skip.setSkipDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getSkipDate())));
+            skip.setDetail(new DetailConverter().toItem(vo.getDetailVo()));
             return skip;
         }
         
@@ -45,10 +48,11 @@ public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
         } else {
             SkipVo skipVo = new SkipVo();
             skipVo.setId(item.getId());
-            skipVo.setEmployeeVo(employeeConverter.toVo(item.getEmployee()));
+            skipVo.setEmployeeVo(new EmployeeConverter().toVo(item.getEmployee()));
             skipVo.setType(item.getType());
             skipVo.setReference(item.getReference());
             skipVo.setSkipDate(DateUtil.toString(DateUtil.fromDate(item.getSkipDate())));
+            skipVo.setDetailVo(new DetailConverter().toVo(item.getDetail()));
             return skipVo;
         }
     }

@@ -10,6 +10,7 @@ import com.onda.personnel.model.Employee;
 import com.onda.personnel.rest.converter.AbstractConverter;
 import com.onda.personnel.rest.vo.EmployeeVo;
 import com.onda.personnel.service.EmployeeService;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -20,6 +21,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -45,7 +47,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-    
+
 /**
  * @author AMINE
  */
@@ -90,10 +92,14 @@ public class EmployeeRest {
     }
 
     @GetMapping("/generatepdf/matricule/{matricule}")
-    public void generatePdf(HttpServletResponse response,@PathVariable Integer matricule) throws JRException, IOException {
+    public void generatePdf(HttpServletResponse response, @PathVariable Integer matricule) throws JRException, IOException {
         employeeService.print(response, matricule);
     }
-    
+
+    @GetMapping("/id/{id}")
+    public EmployeeVo getEmployeeById(@PathVariable Long id) {
+        return employeeConverter.toVo(employeeService.getEmployeeById(id));
+    }
 
     public EmployeeService getEmployeeService() {
         return employeeService;

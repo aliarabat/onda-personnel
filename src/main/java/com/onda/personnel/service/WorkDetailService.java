@@ -5,11 +5,11 @@
  */
 package com.onda.personnel.service;
 
+
+
 import com.onda.personnel.model.Day;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.model.WorkDetail;
-import com.onda.personnel.rest.vo.WorkDetailVo;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,6 +20,8 @@ import java.util.List;
 public interface WorkDetailService {
 
     public WorkDetail findByWorkDetailDate(LocalDate localDate);
+
+    public WorkDetail findByEmployeeMatriculeAndWorkDetailDate(Integer matricule, int year,int month);
 
     public void saveWorkDetail(WorkDetail workDetail);
 

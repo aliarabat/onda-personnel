@@ -5,13 +5,11 @@
  */
 package com.onda.personnel.service;
 
-import java.util.Date;
-
 import com.onda.personnel.model.DayDetail;
-import com.onda.personnel.model.Detail;
 import com.onda.personnel.model.Mission;
 import com.onda.personnel.model.Replacement;
 import com.onda.personnel.model.Skip;
+import java.util.List;
 
 /**
  *
@@ -19,13 +17,34 @@ import com.onda.personnel.model.Skip;
  */
 public interface DayDetailService {
 
-	public DayDetail createDayDetail(DayDetail dayDetail);
+    DayDetail createDayDetail(DayDetail dayDetail);
 
-	public int updateDayDetailMission(Integer matricule, String wordingDetail, Mission mission);
+    int updateDayDetailMission(Integer matricule, String wordingDetail, Mission mission);
 
-	public int updateDayDetailSkip(Integer matricule, String wordingDetail, Skip skip);
+    int updateDayDetailSkip(Integer matricule, String wordingDetail, Skip skip);
 
-	public int updateDayDetailReplacement(Integer matricule, Integer matricule1, String wordingDetail,
-			Replacement replacement);
+    int updateDayDetailReplacement(Integer matricule, Integer matricule1, String wordingDetail, Replacement replacement);
+
+    List<DayDetail> findAll();
+
+    List<DayDetail> findByMissionIsNotNull();
+
+    int updateDayDetailByDeletingMission(DayDetail dayDetail);
+
+    int updateDayDetailByDeletingReplacement(DayDetail dayDetail);
+
+    DayDetail findById(Long id);
+
+    List<DayDetail> findByReplacementIsNotNullAndDetailIsNotNull();
+
+    List<DayDetail> findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull();
+
+    int deleteDayDetailWhereIsNull();
+
+    DayDetail findByReplacementIdAndDetailIsNull(Long id);
+
+    List<DayDetail> findBySkipIsNotNull();
+
+    List<DayDetail> findBySkipId(Long id);
 
 }
