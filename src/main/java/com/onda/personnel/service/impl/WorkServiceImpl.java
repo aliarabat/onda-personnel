@@ -79,7 +79,7 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee) {
         LocalDate ldStart = LocalDate.of(annee, 1, 1);
         LocalDate ldEnd = LocalDate.of(annee, 12, 31);
-        List<Work> works = workDao.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule,
+        List<Work> works = workDao.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByWorkDetailWorkDetailDateAsc(matricule,
                 DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
         listWorkToShow(works);
         return works;
@@ -89,18 +89,18 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> findAllByWorkDetailWorkDetailDateBetween(Integer annee) {
         LocalDate ldStart = LocalDate.of(annee, 1, 1);
         LocalDate ldEnd = LocalDate.of(annee, 12, 31);
-        List<Work> works = workDao.findByWorkDetailWorkDetailDateBetweenOrderByEmployeeMatriculeAsc(
+        List<Work> works = workDao.findByWorkDetailWorkDetailDateBetweenOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(
                 DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
         listWorkToShow(works);
         return works;
     }
 
     private void minutesManipulations(int hnHours, int hnMinutes, int hjfHours, int hjfMinutes) {
-        if (hnMinutes <= 0) {
+        if (hnMinutes < 0) {
             --hnHours;
             hnMinutes = hnMinutes + 60;
         }
-        if (hjfMinutes <= 0) {
+        if (hjfMinutes < 0) {
             --hjfHours;
             hjfMinutes = hjfMinutes + 60;
         }
@@ -121,15 +121,15 @@ public class WorkServiceImpl implements WorkService {
                         w.getWorkDetailVo().setCm(w.getWorkDetailVo().getCm() + 1);
                     } else if (day.getVacationVo().getType().equals("A.T")) {
                         w.getWorkDetailVo().setAt(w.getWorkDetailVo().getAt() + 1);
-                    } else if (day.getVacationVo().getType().equals("C.EX")) {
+                    } else if (day.getVacationVo().getType().equals("C.EXCEP")) {
                         w.getWorkDetailVo().setCex(w.getWorkDetailVo().getCex() + 1);
                     }
                 } else {
                     DayDetailVo dayDetailVoCheck = day
-                            .getDayDetailsVo().stream().filter((d) -> (
-                                    d.getDetailVo() != null && d.getMissionVo() != null) ||
-                                    (!d.getDetailVo().getWording().equals("R") && (d.getReplacementVo() == null || d.getSkipVo() == null)) ||
-                                    (d.getDetailVo() == null && (d.getReplacementVo() != null) || d.getMissionVo() != null))
+                            .getDayDetailsVo().stream().filter((d) ->
+                                    //(d.getDetailVo() != null && d.getMissionVo() != null) ||
+                                    (!d.getDetailVo().getWording().equals("R") && d.getReplacementVo() == null && d.getSkipVo() == null) ||
+                                    (d.getDetailVo() == null && (d.getReplacementVo() != null || d.getMissionVo() != null)))
                             .findAny().orElse(null);
                     if (day.getReference() != null && dayDetailVoCheck != null) {
                         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
@@ -149,21 +149,20 @@ public class WorkServiceImpl implements WorkService {
     }
 
     public void listWorkToShow(List<Work> works) {
-        works.stream().forEach((w) -> {
-            w.getWorkDetail().getDays().stream().forEach((day) -> {
+        works.forEach((w) -> {
+            w.getWorkDetail().getDays().forEach((day) -> {
                 if (day.getVacation() == null) {
-                    day.getDayDetails().stream().forEach((dd) -> {
+                    day.getDayDetails().forEach((dd) -> {
                         int hnHours = w.getWorkDetail().getHn().getHour();
                         int hnMinutes = w.getWorkDetail().getHn().getMinute();
                         int hjfHours = w.getWorkDetail().getHjf().getHour();
                         int hjfMinutes = w.getWorkDetail().getHjf().getMinute();
                         if (dd.getDetail() != null) {
                             if (dd.getMission() != null || dd.getReplacement() != null || dd.getSkip() != null) {
-                                hnHours = hnHours - dd.getDetail().getHn().getHour();
-                                hnMinutes = hnMinutes - dd.getDetail().getHn().getMinute();
-                                hjfHours = hjfHours - dd.getDetail().getHn().getHour();
-                                hjfMinutes = hjfMinutes - dd.getDetail().getHn().getMinute();
-
+                                 hnHours = hnHours- dd.getDetail().getHn().getHour();
+                                 hnMinutes = hnMinutes - dd.getDetail().getHn().getMinute();
+                                 hjfHours = hjfHours - dd.getDetail().getHe().getHour();
+                                 hjfMinutes = hjfMinutes - dd.getDetail().getHe().getMinute();
                                 minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
 
                                 w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getDetail().getPan());
@@ -178,18 +177,17 @@ public class WorkServiceImpl implements WorkService {
 
                                 w.getWorkDetail().setPan(w.getWorkDetail().getPan() + dd.getReplacement().getDetail().getPan());
 
-                                replacementMinutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);}
-//                             else if (dd.getMission() != null) {
-//                                hnHours = hnHours - dd.getMission().getDetail().getHn().getHour();
-//                                hnMinutes = hnMinutes - dd.getMission().getDetail().getHn().getMinute();
-//                                hjfHours = hjfHours - dd.getMission().getDetail().getHe().getHour();
-//                                hjfMinutes = hjfMinutes - dd.getMission().getDetail().getHe().getMinute();
-//
-//                                minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
-//
-//                                w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getMission().getDetail().getPan());
-//                            } 
-                            else if (dd.getSkip() != null) {
+                                replacementMinutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
+                            } /*else if (dd.getMission() != null) {
+                                hnHours = hnHours - dd.getMission().getDetail().getHn().getHour();
+                                hnMinutes = hnMinutes - dd.getMission().getDetail().getHn().getMinute();
+                                hjfHours = hjfHours - dd.getMission().getDetail().getHe().getHour();
+                                hjfMinutes = hjfMinutes - dd.getMission().getDetail().getHe().getMinute();
+
+                                minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
+
+                                w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getMission().getDetail().getPan());
+                            } */else if (dd.getSkip() != null) {
                                 hnHours = hnHours - dd.getSkip().getDetail().getHn().getHour();
                                 hnMinutes = hnMinutes - dd.getSkip().getDetail().getHn().getMinute();
                                 hjfHours = hjfHours - dd.getSkip().getDetail().getHe().getHour();
@@ -205,8 +203,8 @@ public class WorkServiceImpl implements WorkService {
                 } else {
                     int hnHours = w.getWorkDetail().getHn().getHour() - day.getHn().getHour();
                     int hnMinutes = w.getWorkDetail().getHn().getMinute() - day.getHn().getMinute();
-                    int hjfHours = w.getWorkDetail().getHjf().getHour() - day.getHn().getHour();
-                    int hjfMinutes = w.getWorkDetail().getHjf().getMinute() - day.getHn().getMinute();
+                    int hjfHours = w.getWorkDetail().getHjf().getHour() - day.getHe().getHour();
+                    int hjfMinutes = w.getWorkDetail().getHjf().getMinute() - day.getHe().getMinute();
 
                     minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
 
@@ -244,6 +242,8 @@ public class WorkServiceImpl implements WorkService {
         if (work == null) {
             fromDate = DateUtil.getFirstDayOfWeek();
             // toDate = fromDate.plusDays(6);
+            //for tests
+            //fromDate = DateUtil.getFirstDayOfMonth();
         } else {
             int size = work.getWorkDetail().getDays().size();
             fromDate = DateUtil.fromDate(work.getWorkDetail().getDays().get(size - 1).getDayDate()).plusDays(1);
@@ -272,19 +272,18 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<Work> findByMonthAndYear(int year, int month) {
         LocalDate localDate = LocalDate.of(year, month, 1);
-        Date theDate = DateUtil.toDate(localDate);
-        List<Work> listOfWorksMonthly = findByWorkDetailWorkDetailDate(theDate);
+        List<Work> listOfWorksMonthly = findByWorkDetailWorkDetailDate(DateUtil.toDate(localDate));
         if (listOfWorksMonthly.isEmpty() || listOfWorksMonthly == null) {
             return null;
         } else {
+            listWorkToShow(listOfWorksMonthly);
             return listOfWorksMonthly;
         }
     }
 
     @Override
     public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate) {
-        return workDao.findByWorkDetailWorkDetailDateOrderByEmployeeMatriculeAsc(workDetailDate);
-
+        return workDao.findByWorkDetailWorkDetailDateOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(workDetailDate);
     }
 
     @Override

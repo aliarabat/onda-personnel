@@ -77,12 +77,14 @@ public class DayServiceImpl implements DayService {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
             dayDetail.setDetail(dd);
             day.getDayDetails().add(dayDetailService.createDayDetail(dayDetail));
-            pan += dd.getPan();
-            hoursHnWorked += dd.getHn().getHour();
-            minutesHnWorked += dd.getHn().getMinute();
-            hoursHeWorked += dd.getHe().getHour();
-            minutesHeWorked += dd.getHe().getMinute();
-            PeriodUtil.minutesToHour(hoursHnWorked, minutesHnWorked, hoursHeWorked, minutesHeWorked);
+            if (!dd.getWording().equals("R")){
+                pan += dd.getPan();
+                hoursHnWorked += dd.getHn().getHour();
+                minutesHnWorked += dd.getHn().getMinute();
+                hoursHeWorked += dd.getHe().getHour();
+                minutesHeWorked += dd.getHe().getMinute();
+                PeriodUtil.minutesToHour(hoursHnWorked, minutesHnWorked, hoursHeWorked, minutesHeWorked);
+            }
         }
         day.setHn(new Timing(hoursHnWorked, minutesHnWorked));
         day.setHe(new Timing(hoursHeWorked, minutesHeWorked));

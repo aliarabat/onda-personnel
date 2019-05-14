@@ -127,7 +127,13 @@ public class WorkDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.WorkDetail[ id=" + id + " ]";
+        return "WorkDetail{" +
+                "id=" + id +
+                ", workDetailDate=" + workDetailDate +
+                ", pan=" + pan +
+                ", hn=" + hn +
+                ", hjf=" + hjf +
+                ", days=" + days +
+                '}';
     }
-
 }

@@ -110,7 +110,8 @@ public class DayDetail implements Serializable {
      */
     @Override
     public String toString() {
-        return "javaapplication1.DayDetail[ id=" + id + " ]";
+        return "DayDetail{" +
+                "detail=" + detail +
+                '}';
     }
-
 }

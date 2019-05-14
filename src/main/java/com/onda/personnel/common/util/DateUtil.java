@@ -94,6 +94,14 @@ return localDate.toString();
         return toDate(localDate);
     }
 
+    //for tests
+    /*
+    public static LocalDate getFirstDayOfMonth(){
+        LocalDate localDate=LocalDate.of(getFirstDayOfWeek().getYear(), Month.MARCH,1);
+        return localDate;
+    }
+     */
+
     public static int lenghtOfMonth(LocalDate date){
         return date.lengthOfMonth();
     }
