@@ -5,8 +5,6 @@
  */
 package com.onda.personnel.rest.vo;
 
-
-
 /**
  *
  * @author AMINE
@@ -18,8 +16,9 @@ public class MissionVo {
     private EmployeeVo employeeVo;
     private String type;
     private String startingDate;
-    private DetailVo detailVo;
-   
+    private TimingVo startingTimeVo;
+    private TimingVo endingTimeVo;
+
     public Long getId() {
         return id;
     }
@@ -44,7 +43,6 @@ public class MissionVo {
         this.reference = reference;
     }
 
-
     public String getType() {
         return type;
     }
@@ -61,14 +59,22 @@ public class MissionVo {
         this.startingDate = startingDate;
     }
 
-    public DetailVo getDetailVo() {
-        return detailVo;
+    public TimingVo getStartingTimeVo() {
+        return startingTimeVo;
     }
 
-    public void setDetailVo(DetailVo detailVo) {
-        this.detailVo = detailVo;
+    public void setStartingTimeVo(TimingVo startingTimeVo) {
+        this.startingTimeVo = startingTimeVo;
     }
 
-   
+    public TimingVo getEndingTimeVo() {
+        return endingTimeVo;
+    }
+
+    public void setEndingTimeVo(TimingVo endingTimeVo) {
+        this.endingTimeVo = endingTimeVo;
+    }
+
+    
 
 }

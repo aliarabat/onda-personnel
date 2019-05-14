@@ -7,6 +7,7 @@ package com.onda.personnel.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,8 +32,10 @@ public class Mission implements Serializable {
     private String type;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startingDate;
-    @OneToOne
-    private Detail detail;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing startingTime;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Timing endingTime;
 
     /**
      *
@@ -155,13 +158,23 @@ public class Mission implements Serializable {
         return true;
     }
 
-    public Detail getDetail() {
-        return detail;
+    public Timing getStartingTime() {
+        return startingTime;
     }
 
-    public void setDetail(Detail detail) {
-        this.detail = detail;
+    public void setStartingTime(Timing startingTime) {
+        this.startingTime = startingTime;
     }
+
+    public Timing getEndingTime() {
+        return endingTime;
+    }
+
+    public void setEndingTime(Timing endingTime) {
+        this.endingTime = endingTime;
+    }
+
+   
     
 
     /**

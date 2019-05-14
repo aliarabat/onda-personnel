@@ -19,7 +19,7 @@ public interface DayDetailService {
 
     DayDetail createDayDetail(DayDetail dayDetail);
 
-    int updateDayDetailMission(Integer matricule, String wordingDetail, Mission mission);
+    int updateDayDetailMission(Integer matricule, Mission mission);
 
     int updateDayDetailSkip(Integer matricule, String wordingDetail, Skip skip);
 

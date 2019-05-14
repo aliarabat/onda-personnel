@@ -45,9 +45,9 @@ public class DayDetailRest {
     @Autowired
     private DayDetailDao dayDetailDao;
 
-    @PutMapping("/mission/matricule/{matricule}/wordingDetail/{wordingDetail}")
-    public int updateDayDetailMission(@PathVariable Integer matricule, @PathVariable String wordingDetail, @RequestBody MissionVo missionVo) {
-        return dayDetailService.updateDayDetailMission(matricule, wordingDetail, new MissionConverter().toItem(missionVo));
+    @PutMapping("/mission/matricule/{matricule}")
+    public int updateDayDetailMission(@PathVariable Integer matricule, @RequestBody MissionVo missionVo) {
+        return dayDetailService.updateDayDetailMission(matricule, new MissionConverter().toItem(missionVo));
     }
 
     @PutMapping("/skip/matricule/{matricule}/wordingDetail/{wordingDetail}")

@@ -76,7 +76,7 @@ public class DayDetailServiceImpl implements DayDetailService {
     }
 
     @Override
-    public int updateDayDetailMission(Integer matricule, String wordingDetail, Mission mission) {
+    public int updateDayDetailMission(Integer matricule, Mission mission) {
         Employee employee = employeeService.findByMatricule(matricule);
         if (employee == null) {
             return -5;
@@ -107,34 +107,21 @@ public class DayDetailServiceImpl implements DayDetailService {
                         return -3;
                     } else {
 
-                        List<DayDetail> listdayDetails = theDay.getDayDetails();
-
                         DayDetail thedayDetail = new DayDetail();
-                        Detail detail = detailService.findByWording(wordingDetail);
 
-                        for (DayDetail dayDetail : listdayDetails) {
-                            if (dayDetail.getDetail() != null) {
-                                if (dayDetail.getDetail().getWording().equals(detail.getWording())) {
-                                    thedayDetail = dayDetailDao.getOne(dayDetail.getId());
+                        Mission checkMission = missionService.createMisssion(matricule, mission);
+                        if (checkMission != null) {
 
-                                }
+                            thedayDetail.setMission(checkMission);
+                            dayDetailDao.save(thedayDetail);
+                            theDay.getDayDetails().add(thedayDetail);
+                            dayDao.save(theDay);
 
-                            }
-                        }
-
-                        if (thedayDetail.getReplacement() != null || thedayDetail.getSkip() != null || thedayDetail.getMission() != null) {
-                            return -2;
+                            return 1;
                         } else {
-                            Mission checkMission = missionService.createMisssion(matricule, wordingDetail, mission);
-                            if (checkMission != null) {
-                                thedayDetail.setMission(checkMission);
-                                dayDetailDao.save(thedayDetail);
-
-                                return 1;
-                            } else {
-                                return -1;
-                            }
+                            return -1;
                         }
+
                     }
                 }
             }

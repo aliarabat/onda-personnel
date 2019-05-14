@@ -17,10 +17,10 @@ import com.onda.personnel.model.Mission;
  */
 public interface MissionService {
 
-    public Mission createMisssion(Integer matricule,String wording, Mission mission);
+    public Mission createMisssion(Integer matricule, Mission mission);
 
     public List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule, Date startingDate);
-    
+
     public int updateMission(DayDetail dayDetail);
 
 }
