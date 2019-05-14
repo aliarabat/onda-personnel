@@ -34,7 +34,7 @@ public class PeriodUtil {
         int sumMinute = 0;
 
         if (startingMinute < endingMinute) {
-            sumMinute = endingMinute - startingHour;
+            sumMinute = endingMinute - startingMinute;
         } else if (startingMinute > endingMinute){
             sumMinute = (60 - startingMinute) + endingMinute;
         }
@@ -43,6 +43,7 @@ public class PeriodUtil {
             if (isNight) {
                 if (isIn(int1.getHour(), nightModel)) {
                     sumHour++;
+                    sumMinute = 0;
                 }
             } else {
                 sumHour++;
