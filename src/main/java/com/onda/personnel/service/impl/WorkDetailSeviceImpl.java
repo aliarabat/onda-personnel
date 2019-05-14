@@ -76,10 +76,15 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         if (work == null || work.getWorkDetail() == null) {
             work = new Work(emp);
             //Date firstMondayOfMonth=DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY));
+            //for tests
+            //Date firstDayOfMonth = DateUtil.toDate(DateUtil.getFirstDayOfMonth());
             Date firstDayOfMonth = DateUtil.getFirstDayOfMonth();
             workDetail = new WorkDetail(firstDayOfMonth);
             workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfWeek().getDayOfMonth() + 1;
             dayDate = DateUtil.getFirstDayOfWeek();
+            //for tests
+            /*workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfMonth().getDayOfMonth() + 1;
+            dayDate = DateUtil.getFirstDayOfMonth();*/
         } else {
             workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
             int size = workDetail.getDays().size();
