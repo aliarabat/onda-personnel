@@ -23,4 +23,6 @@ public interface DetailDao extends JpaRepository<Detail, Long> {
     public List<Detail> findAll();
 
     public List<Detail> findByMode(String mode);
+
+    Detail findTopByWording(String wording);
 }

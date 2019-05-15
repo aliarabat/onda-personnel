@@ -49,8 +49,8 @@ public class DetailServiceImpl implements DetailService {
                     detail.setPan(detail.getPan());
                     detailDao.save(detail);
                     Detail ddd = new Detail();
-                    ddd.setWording(detail.getWording());
                     ddd.setMode("Ramadan");
+                    ddd.setWording(detail.getWording());
                     ddd.setEndingTime(detail.getEndingTime());
                     ddd.setStartingTime(detail.getStartingTime());
                     ddd.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
@@ -59,6 +59,8 @@ public class DetailServiceImpl implements DetailService {
                     detailDao.save(ddd);
 
                 } else {
+                    detail.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
+                    detail.setHn(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), true));
                     detailDao.save(detail);
                 }
 
@@ -114,6 +116,11 @@ public class DetailServiceImpl implements DetailService {
     @Override
     public Detail getDetailById(Long id) {
         return detailDao.getOne(id);
+    }
+
+    @Override
+    public Detail findTopByWording(String wording) {
+        return detailDao.findTopByWording(wording);
     }
 
     public DetailDao getDayDetailDao() {

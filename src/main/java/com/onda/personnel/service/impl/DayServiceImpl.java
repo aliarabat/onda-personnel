@@ -72,7 +72,12 @@ public class DayServiceImpl implements DayService {
         day.setDayDate(ld);
         System.out.println("hha size nta3 la liste ==> " + dayDetails.size());
         for (DayDetail dayDetail : dayDetails) {
-            Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
+            Detail dd = new Detail();
+            if (dayDetail.getDetail().getWording().equals("R")){
+                dd=detailService.findTopByWording("R");
+            }else{
+                dd=detailService.findByWording(dayDetail.getDetail().getWording());
+            }
             dayDetail.setDetail(dd);
             day.getDayDetails().add(dayDetailService.createDayDetail(dayDetail));
             if (!dd.getWording().equals("R")) {

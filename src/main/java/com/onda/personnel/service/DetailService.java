@@ -32,4 +32,6 @@ public interface DetailService {
     public  Timing getHoursBetween(int startingHour, int startingMinute, int endingHour, int endingMinute, boolean isNight); 
      
     public Detail getDetailById(Long id );
+
+    Detail findTopByWording(String r);
 }
