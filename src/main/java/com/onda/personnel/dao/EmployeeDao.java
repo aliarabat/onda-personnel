@@ -22,4 +22,6 @@ public interface EmployeeDao extends JpaRepository<Employee, Long> {
 
     public List<Employee> findByIsExist(boolean isExist);
 
+    public List<Employee> findByType(String type);
+
 }

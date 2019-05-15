@@ -7,6 +7,7 @@ package com.onda.personnel.rest;
 
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.rest.converter.AbstractConverter;
+import com.onda.personnel.rest.converter.EmployeeConverter;
 import com.onda.personnel.rest.vo.EmployeeVo;
 import com.onda.personnel.service.EmployeeService;
 
@@ -61,6 +62,11 @@ public class EmployeeRest {
         return employeeService.findByIsExist(isExist);
     }
 
+    @GetMapping("/type/{type}")
+    public List<EmployeeVo> findByType(@PathVariable String type) {
+        return new EmployeeConverter().toVo(employeeService.findByType(type));
+    }
+
     @PutMapping("/")
     public int editEmployee(@RequestBody EmployeeVo newEmployeeVo) {
         Employee newEmployee = employeeConverter.toItem(newEmployeeVo);
@@ -86,7 +92,6 @@ public class EmployeeRest {
     public void generatePdf(HttpServletResponse response, @PathVariable Integer matricule) throws JRException, IOException {
         employeeService.print(response, matricule);
     }
-
 
     public EmployeeService getEmployeeService() {
         return employeeService;
