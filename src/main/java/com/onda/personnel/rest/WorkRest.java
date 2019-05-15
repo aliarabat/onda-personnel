@@ -6,7 +6,7 @@
 package com.onda.personnel.rest;
 
 
-import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.util.DateUtil;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.WorkVo;

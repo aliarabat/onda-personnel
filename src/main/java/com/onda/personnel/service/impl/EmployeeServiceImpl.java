@@ -5,7 +5,7 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.JasperUtil;
+import com.onda.personnel.util.JasperUtil;
 import com.onda.personnel.dao.EmployeeDao;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.service.EmployeeService;
@@ -80,10 +80,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             return 1;
         }
     }
-   @Override
+
+    @Override
     public Employee getEmployeeById(Long id) {
         return employeeDao.getOne(id);
     }
+
     @Override
     public List<Employee> findByIsExist(boolean isExist) {
         return employeeDao.findByIsExist(isExist);
@@ -100,11 +102,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void print(HttpServletResponse response, Integer matricule) {
         JasperPrint jasperPrint = null;
-        List<Employee> list=new ArrayList();
+        List<Employee> list = new ArrayList();
         Employee employee = findByMatricule(matricule);
         list.add(employee);
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", String.format("attachement; filename=\"empployee"+employee.getMatricule()+".pdf\""));
+        response.setHeader("Content-Disposition", String.format("attachement; filename=\"empployee" + employee.getMatricule() + ".pdf\""));
         OutputStream out = null;
         try {
             out = response.getOutputStream();
@@ -120,7 +122,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public int revert(Integer matricule) {
-           Employee checkEmployee = findByMatricule(matricule);
+        Employee checkEmployee = findByMatricule(matricule);
         if (checkEmployee == null) {
             return -1;
 
@@ -131,5 +133,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
- 
+    @Override
+    public List<Employee> findByType(String type) {
+        return employeeDao.findByType(type);
+    }
+
 }

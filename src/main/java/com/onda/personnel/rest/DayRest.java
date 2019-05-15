@@ -5,7 +5,7 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.util.DateUtil;
 import com.onda.personnel.rest.converter.DayConverter;
 import com.onda.personnel.rest.converter.VacationConverter;
 import com.onda.personnel.rest.vo.DayVo;

@@ -6,9 +6,9 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.DayComparator;
-import com.onda.personnel.common.util.PeriodUtil;
+import com.onda.personnel.util.DateUtil;
+import com.onda.personnel.util.DayComparator;
+import com.onda.personnel.util.PeriodUtil;
 import com.onda.personnel.dao.WorkDetailDao;
 import com.onda.personnel.model.Day;
 import com.onda.personnel.model.Employee;

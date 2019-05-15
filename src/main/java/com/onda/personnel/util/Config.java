@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.onda.personnel.common.util;
+package com.onda.personnel.util;
 
 /**
  *

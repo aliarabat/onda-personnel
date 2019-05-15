@@ -5,33 +5,18 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.common.util.JasperUtil;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.rest.converter.AbstractConverter;
+import com.onda.personnel.rest.converter.EmployeeConverter;
 import com.onda.personnel.rest.vo.EmployeeVo;
 import com.onda.personnel.service.EmployeeService;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.HashMap;
 
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,10 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author AMINE
@@ -80,6 +62,11 @@ public class EmployeeRest {
         return employeeService.findByIsExist(isExist);
     }
 
+    @GetMapping("/type/{type}")
+    public List<EmployeeVo> findByType(@PathVariable String type) {
+        return new EmployeeConverter().toVo(employeeService.findByType(type));
+    }
+
     @PutMapping("/")
     public int editEmployee(@RequestBody EmployeeVo newEmployeeVo) {
         Employee newEmployee = employeeConverter.toItem(newEmployeeVo);
@@ -105,7 +92,6 @@ public class EmployeeRest {
     public void generatePdf(HttpServletResponse response, @PathVariable Integer matricule) throws JRException, IOException {
         employeeService.print(response, matricule);
     }
-
 
     public EmployeeService getEmployeeService() {
         return employeeService;

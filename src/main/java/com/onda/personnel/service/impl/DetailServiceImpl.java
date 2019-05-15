@@ -5,7 +5,7 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.PeriodUtil;
+import com.onda.personnel.util.PeriodUtil;
 import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

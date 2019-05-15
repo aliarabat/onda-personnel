@@ -23,12 +23,14 @@ public interface EmployeeService {
     int editEmployee(Employee newEmployee);
 
     int deleteEmployee(Integer matricule);
-    
+
     public List<Employee> findByIsExist(boolean isExist);
-    
-    void print(HttpServletResponse response,Integer matricule);
-    
+
+    void print(HttpServletResponse response, Integer matricule);
+
     public Employee getEmployeeById(Long id);
 
     public int revert(Integer matricule);
+
+    public List<Employee> findByType(String type);
 }

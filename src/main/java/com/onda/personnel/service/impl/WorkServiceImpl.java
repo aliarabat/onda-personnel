@@ -23,10 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.JasperUtil;
-import com.onda.personnel.common.util.MonthUtil;
-import com.onda.personnel.common.util.NumberUtil;
+import com.onda.personnel.util.DateUtil;
+import com.onda.personnel.util.JasperUtil;
+import com.onda.personnel.util.MonthUtil;
+import com.onda.personnel.util.NumberUtil;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
