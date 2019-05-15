@@ -5,19 +5,18 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.PeriodUtil;
-import java.time.LocalTime;
+import com.onda.personnel.util.PeriodUtil;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.onda.personnel.dao.DetailDao;
 import com.onda.personnel.model.Detail;
 import com.onda.personnel.model.Timing;
 import com.onda.personnel.service.DetailService;
-import java.util.Date;
 
 /**
- *
  * @author AMINE
  */
 @Service
@@ -37,19 +36,32 @@ public class DetailServiceImpl implements DetailService {
     public int createDetail(List<Detail> details) {
         for (Detail detail : details) {
             Detail dd = findByWording(detail.getWording());
-            if(dd!= null){
+            if (dd != null) {
                 return -1;
-            }
-            else if (dd == null) {
-                dd = new Detail();
-                dd.setStartingTime(detail.getStartingTime());
-                dd.setEndingTime(detail.getEndingTime());
-                dd.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
-                dd.setHn(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), true));
-                dd.setPan(detail.getPan());
-                dd.setMode(detail.getMode());
-                dd.setWording(detail.getWording());
-                detailDao.save(dd);
+            } else if (dd == null) {
+
+                if (detail.getWording().equals("R")) {
+                    detail.setMode("Normal");
+                    detail.setEndingTime(detail.getEndingTime());
+                    detail.setStartingTime(detail.getStartingTime());
+                    detail.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
+                    detail.setHn(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), true));
+                    detail.setPan(detail.getPan());
+                    detailDao.save(detail);
+                    Detail ddd = new Detail();
+                    ddd.setWording(detail.getWording());
+                    ddd.setMode("Ramadan");
+                    ddd.setEndingTime(detail.getEndingTime());
+                    ddd.setStartingTime(detail.getStartingTime());
+                    ddd.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
+                    ddd.setHn(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), true));
+                    ddd.setPan(detail.getPan());
+                    detailDao.save(ddd);
+
+                } else {
+                    detailDao.save(detail);
+                }
+
             }
         }
         return 1;
@@ -103,7 +115,7 @@ public class DetailServiceImpl implements DetailService {
     public Detail getDetailById(Long id) {
         return detailDao.getOne(id);
     }
-    
+
     public DetailDao getDayDetailDao() {
         return detailDao;
     }
@@ -127,7 +139,5 @@ public class DetailServiceImpl implements DetailService {
     public void setDetailService(DetailService detailService) {
         this.detailService = detailService;
     }
-
-   
 
 }

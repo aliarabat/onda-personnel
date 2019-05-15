@@ -5,7 +5,7 @@
  */
 package com.onda.personnel.rest.converter;
 
-import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.util.DateUtil;
 import com.onda.personnel.model.Replacement;
 import com.onda.personnel.rest.vo.ReplacementVo;
 import org.springframework.beans.factory.annotation.Autowired;

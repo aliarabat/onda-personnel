@@ -5,7 +5,6 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.JasperUtil;
 import com.onda.personnel.dao.EmployeeDao;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.service.EmployeeService;
@@ -14,7 +13,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;

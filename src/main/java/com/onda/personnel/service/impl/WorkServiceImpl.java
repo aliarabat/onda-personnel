@@ -18,15 +18,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.onda.personnel.model.DayDetail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.JasperUtil;
-import com.onda.personnel.common.util.MonthUtil;
-import com.onda.personnel.common.util.NumberUtil;
+import com.onda.personnel.util.DateUtil;
+import com.onda.personnel.util.JasperUtil;
+import com.onda.personnel.util.MonthUtil;
+import com.onda.personnel.util.NumberUtil;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
@@ -115,34 +113,59 @@ public class WorkServiceImpl implements WorkService {
                 if (day.getVacationVo() != null) {
                     if (day.getVacationVo().getType().equals("C.R") && day.getReference() == null) {
                         if (c.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-                            w.getWorkDetailVo().setAdm(w.getWorkDetailVo().getAdm() + 1);
+                            w.getWorkDetailVo().setAdm(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getAdm()) + 1));
                         }
                     } else if (day.getVacationVo().getType().equals("C.M")) {
-                        w.getWorkDetailVo().setCm(w.getWorkDetailVo().getCm() + 1);
+                        w.getWorkDetailVo().setCm(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCm()) + 1));
                     } else if (day.getVacationVo().getType().equals("A.T")) {
-                        w.getWorkDetailVo().setAt(w.getWorkDetailVo().getAt() + 1);
+                        w.getWorkDetailVo().setAt(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getAt()) + 1));
                     } else if (day.getVacationVo().getType().equals("C.EXCEP")) {
-                        w.getWorkDetailVo().setCex(w.getWorkDetailVo().getCex() + 1);
+                        w.getWorkDetailVo().setCex(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCex()) + 1));
                     }
                 } else {
                     DayDetailVo dayDetailVoCheck = day
                             .getDayDetailsVo().stream().filter((d) ->
                                     //(d.getDetailVo() != null && d.getMissionVo() != null) ||
                                     (!d.getDetailVo().getWording().equals("R") && d.getReplacementVo() == null && d.getSkipVo() == null) ||
-                                    (d.getDetailVo() == null && (d.getReplacementVo() != null || d.getMissionVo() != null)))
+                                            (d.getDetailVo() == null && (d.getReplacementVo() != null || d.getMissionVo() != null)))
                             .findAny().orElse(null);
                     if (day.getReference() != null && dayDetailVoCheck != null) {
                         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                            w.getWorkDetailVo().setHolidayHundered(w.getWorkDetailVo().getHolidayHundered() + 1);
+                            w.getWorkDetailVo().setHolidayHundered(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getHolidayHundered()) + 1));
                         } else {
-                            w.getWorkDetailVo().setHolidayZero(w.getWorkDetailVo().getHolidayZero() + 1);
+                            w.getWorkDetailVo().setHolidayZero(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getHolidayZero()) + 1));
                         }
                     }
                 }
             });
             Integer hjf = NumberUtil.toInteger(w.getWorkDetailVo().getHjf().getHour());
             if (hjf > 192) {
-                w.getWorkDetailVo().setThreeTeams(hjf - 192);
+                w.getWorkDetailVo().setThreeTeams(NumberUtil.toString(hjf - 192));
+            }
+            if (NumberUtil.toInteger(w.getWorkDetailVo().getPan()) == 0) {
+                w.getWorkDetailVo().setPan("");
+            }
+            if (NumberUtil.toInteger(w.getWorkDetailVo().getHn().getHour()) == 0) {
+                w.getWorkDetailVo().getHn().setHour("");
+            }
+            if (NumberUtil.toInteger(w.getWorkDetailVo().getAdm()) == 0) {
+                w.getWorkDetailVo().setAdm("");
+                System.out.println("haa l adm ==> " + w.getWorkDetailVo().getAdm());
+            }
+            if (NumberUtil.toInteger(w.getWorkDetailVo().getHolidayZero()) == 0) {
+                w.getWorkDetailVo().setHolidayZero("");
+            }
+            if (NumberUtil.toInteger(w.getWorkDetailVo().getHolidayHundered()) == 0) {
+                w.getWorkDetailVo().setHolidayHundered("");
+            }
+            if (NumberUtil.toInteger(w.getWorkDetailVo().getAt()) == 0) {
+                w.getWorkDetailVo().setAt("");
+            }
+            if (NumberUtil.toInteger(w.getWorkDetailVo().getCm()) == 0) {
+                w.getWorkDetailVo().setCm("");
+            }
+            if (NumberUtil.toInteger(w.getWorkDetailVo().getCex()) == 0) {
+                w.getWorkDetailVo().setCex("");
             }
         });
         return worksVo;
@@ -159,10 +182,10 @@ public class WorkServiceImpl implements WorkService {
                         int hjfMinutes = w.getWorkDetail().getHjf().getMinute();
                         if (dd.getDetail() != null) {
                             if (dd.getMission() != null || dd.getReplacement() != null || dd.getSkip() != null) {
-                                 hnHours = hnHours- dd.getDetail().getHn().getHour();
-                                 hnMinutes = hnMinutes - dd.getDetail().getHn().getMinute();
-                                 hjfHours = hjfHours - dd.getDetail().getHe().getHour();
-                                 hjfMinutes = hjfMinutes - dd.getDetail().getHe().getMinute();
+                                hnHours = hnHours - dd.getDetail().getHn().getHour();
+                                hnMinutes = hnMinutes - dd.getDetail().getHn().getMinute();
+                                hjfHours = hjfHours - dd.getDetail().getHe().getHour();
+                                hjfMinutes = hjfMinutes - dd.getDetail().getHe().getMinute();
                                 minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
 
                                 w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getDetail().getPan());
@@ -187,7 +210,7 @@ public class WorkServiceImpl implements WorkService {
                                 minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
 
                                 w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getMission().getDetail().getPan());
-                            } */else if (dd.getSkip() != null) {
+                            } */ else if (dd.getSkip() != null) {
                                 hnHours = hnHours - dd.getSkip().getDetail().getHn().getHour();
                                 hnMinutes = hnMinutes - dd.getSkip().getDetail().getHn().getMinute();
                                 hjfHours = hjfHours - dd.getSkip().getDetail().getHe().getHour();
@@ -240,7 +263,7 @@ public class WorkServiceImpl implements WorkService {
         LocalDate fromDate;
         LocalDate toDate;
         if (work == null) {
-            fromDate = DateUtil.getFirstDayOfWeek();
+            fromDate = DateUtil.getFirstDayOfMonth();
             // toDate = fromDate.plusDays(6);
             //for tests
             //fromDate = DateUtil.getFirstDayOfMonth();

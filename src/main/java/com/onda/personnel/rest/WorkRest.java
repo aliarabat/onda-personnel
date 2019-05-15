@@ -6,7 +6,7 @@
 package com.onda.personnel.rest;
 
 
-import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.util.DateUtil;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.WorkVo;
@@ -40,7 +40,7 @@ public class WorkRest {
 
     @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
     public WorkVo findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule, @PathVariable String workDetailDate) {
-        return new WorkConverter().toVo(workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule,DateUtil.toDate(DateUtil.fromStringToLocalDate(workDetailDate))))  ;
+        return new WorkConverter().toVo(workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, DateUtil.toDate(DateUtil.fromStringToLocalDate(workDetailDate))));
     }
 
     @GetMapping("/matricule/{matricule}")
@@ -82,30 +82,30 @@ public class WorkRest {
     public List<String> findFromDateToDate(@PathVariable Integer matricule) {
         return workService.findFromDateToDate(matricule);
     }
-    
-    @RequestMapping( value="/generatedoc/year/{year}/month/{month}/type/pdf", produces=MediaType.ALL_VALUE, method=RequestMethod.GET)
+
+    @RequestMapping(value = "/generatedoc/year/{year}/month/{month}/type/pdf", produces = MediaType.ALL_VALUE, method = RequestMethod.GET)
     public void generateDoc(HttpServletResponse response, @PathVariable int year, @PathVariable int month) throws JRException, IOException {
         workService.printDoc(response, year, month);
     }
-    
-    @RequestMapping( value="/generatedoc/year/{year}/month/{month}/type/xlsx", produces= MediaType.ALL_VALUE, method=RequestMethod.GET)
+
+    @RequestMapping(value = "/generatedoc/year/{year}/month/{month}/type/xlsx", produces = MediaType.ALL_VALUE, method = RequestMethod.GET)
     public void generateXlsx(HttpServletResponse response, @PathVariable int year, @PathVariable int month) throws JRException, IOException {
         workService.printXlsx(response, year, month);
     }
 
-    
+
     @GetMapping("/worktoprint/year/{year}/month/{month}")
     public WorkVo findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(@PathVariable int year, @PathVariable int month) {
-    	LocalDate ld=LocalDate.of(year, month, 1);
-		return workConverter.toVo(workService.findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(DateUtil.toDate(ld)));
-	}
+        LocalDate ld = LocalDate.of(year, month, 1);
+        return workConverter.toVo(workService.findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(DateUtil.toDate(ld)));
+    }
 
     @GetMapping("/")
     public List<WorkVo> findAll() {
         return new WorkConverter().toVo(workService.findAll());
     }
 
-	public WorkService getWorkService() {
+    public WorkService getWorkService() {
         return workService;
     }
 

@@ -6,22 +6,18 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.DayComparator;
-import com.onda.personnel.common.util.PeriodUtil;
+import com.onda.personnel.util.DateUtil;
+import com.onda.personnel.util.DayComparator;
 import com.onda.personnel.dao.WorkDetailDao;
 import com.onda.personnel.model.Day;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.model.WorkDetail;
-import com.onda.personnel.rest.vo.WorkDetailVo;
 import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.WorkService;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -77,14 +73,14 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
             work = new Work(emp);
             //Date firstMondayOfMonth=DateUtil.toDate(DateUtil.getFirstMonday(DayOfWeek.MONDAY));
             //for tests
-            //Date firstDayOfMonth = DateUtil.toDate(DateUtil.getFirstDayOfMonth());
-            Date firstDayOfMonth = DateUtil.getFirstDayOfMonth();
+            Date firstDayOfMonth = DateUtil.toDate(DateUtil.getFirstDayOfMonth());
+            //Date firstDayOfMonth = DateUtil.getFirstDayOfMonth();
             workDetail = new WorkDetail(firstDayOfMonth);
-            workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfWeek().getDayOfMonth() + 1;
-            dayDate = DateUtil.getFirstDayOfWeek();
+            /*workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfWeek().getDayOfMonth() + 1;
+            dayDate = DateUtil.getFirstDayOfWeek();*/
             //for tests
-            /*workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfMonth().getDayOfMonth() + 1;
-            dayDate = DateUtil.getFirstDayOfMonth();*/
+            workDetailListLength = workDetailListLength - DateUtil.getFirstDayOfMonth().getDayOfMonth() + 1;
+            dayDate = DateUtil.getFirstDayOfMonth();
         } else {
             workDetail = workDetailDao.getOne(work.getWorkDetail().getId());
             int size = workDetail.getDays().size();

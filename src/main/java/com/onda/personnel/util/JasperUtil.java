@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.onda.personnel.common.util;
+package com.onda.personnel.util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,7 +14,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.vo.WorkVo;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;

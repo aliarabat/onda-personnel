@@ -1,4 +1,4 @@
-package com.onda.personnel.common.util;
+package com.onda.personnel.util;
 
 public class MonthUtil {
 	

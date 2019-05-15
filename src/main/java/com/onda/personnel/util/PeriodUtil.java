@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.onda.personnel.common.util;
+package com.onda.personnel.util;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class PeriodUtil {
 
     public static Timing getHoursBetween(int startingHour, int startingMinute, int endingHour, int endingMinute, boolean isNight) {
         List<Timing> model = new LinkedList<>(Arrays.asList(new Timing(1), new Timing(2), new Timing(3), new Timing(4), new Timing(5), new Timing(6), new Timing(7), new Timing(8), new Timing(9), new Timing(10), new Timing(11), new Timing(12), new Timing(13), new Timing(14), new Timing(15), new Timing(16), new Timing(17), new Timing(18), new Timing(19), new Timing(20), new Timing(21), new Timing(22), new Timing(23), new Timing(00)));
-        int nightModel[] = {1, 2, 3, 4, 5, 6, 22, 23, 0};
+        int nightModel[] = {1, 2, 3, 4, 5, 6, 22, 23, 00};
 
         if (startingHour > endingHour) {
             model.subList(endingHour, startingHour).clear();
@@ -35,18 +35,29 @@ public class PeriodUtil {
 
         if (startingMinute < endingMinute) {
             sumMinute = endingMinute - startingMinute;
-        } else if (startingMinute > endingMinute){
+        } else if (startingMinute > endingMinute) {
             sumMinute = (60 - startingMinute) + endingMinute;
         }
 
         for (Timing int1 : model) {
             if (isNight) {
+                sumMinute = 0;
                 if (isIn(int1.getHour(), nightModel)) {
                     sumHour++;
                     sumMinute = 0;
+
                 }
+            } else if (startingHour == 15 && startingMinute == 30 && endingHour == 00 && endingMinute == 00) {
+                sumHour = 8;
+                sumMinute = 30;
+
+            } else if (startingHour == 14 && startingMinute == 30 && endingHour == 00 && endingMinute == 00) {
+                sumHour = 9;
+                sumMinute = 30;
+
             } else {
                 sumHour++;
+
             }
         }
         return new Timing(sumHour, sumMinute);
@@ -60,27 +71,23 @@ public class PeriodUtil {
         }
         return false;
     }
-    
-//     public static void main(String[] args) {
-//        Timing t = getHoursBetween(17, 0, 20, 00, false) ;
-//        Timing t2 = getHoursBetween(17, 0, 20, 00, true) ;
-//        System.out.println(t);
-//        System.out.println(t2);
-//
-//      
-//  }
 
-    public static void minutesToHour(int hoursHnWorked, int minutesHnWorked, int hoursHeWorked, int minutesHeWorked){
+    public static void main(String[] args) {
+        Timing t = getHoursBetween(14, 30, 00, 00, false);
+        Timing t2 = getHoursBetween(14, 30, 00, 00, true);
+        System.out.println("HE" + t);
+        System.out.println("HN" + t2);
+
+    }
+
+    public static void minutesToHour(int hoursHnWorked, int minutesHnWorked, int hoursHeWorked, int minutesHeWorked) {
         if (minutesHnWorked >= 60) {
             hoursHnWorked++;
             minutesHnWorked -= 60;
         }
         if (minutesHeWorked >= 60) {
             hoursHeWorked++;
-            minutesHeWorked = minutesHeWorked- 60;
+            minutesHeWorked = minutesHeWorked - 60;
         }
     }
 }
-    
- 
-

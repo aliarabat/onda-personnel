@@ -5,13 +5,10 @@
  */
 package com.onda.personnel.rest.converter;
 
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.NumberUtil;
-import com.onda.personnel.common.util.StringUtil;
+import com.onda.personnel.util.DateUtil;
+import com.onda.personnel.util.NumberUtil;
 import com.onda.personnel.model.Day;
-import com.onda.personnel.model.Timing;
 import com.onda.personnel.rest.vo.DayVo;
-import com.onda.personnel.rest.vo.TimingVo;
 import org.springframework.stereotype.Component;
 
 /**

@@ -5,16 +5,14 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.DateUtil;
-import com.onda.personnel.common.util.PeriodUtil;
-import com.onda.personnel.common.util.betweenDate;
-import static com.onda.personnel.common.util.betweenDate.between;
+import com.onda.personnel.util.DateUtil;
+import com.onda.personnel.util.PeriodUtil;
+import com.onda.personnel.util.betweenDate;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.model.*;
 import com.onda.personnel.service.*;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,7 +75,7 @@ public class DayServiceImpl implements DayService {
             Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
             dayDetail.setDetail(dd);
             day.getDayDetails().add(dayDetailService.createDayDetail(dayDetail));
-            if (!dd.getWording().equals("R")){
+            if (!dd.getWording().equals("R")) {
                 pan += dd.getPan();
                 hoursHnWorked += dd.getHn().getHour();
                 minutesHnWorked += dd.getHn().getMinute();
@@ -91,7 +89,7 @@ public class DayServiceImpl implements DayService {
         day.setPan(pan);
         Holiday hol = holidayService.findByStartingDateLessThanEqualAndEndingDateGreaterThanEqual(ld, ld);
 
-        if (hol!=null){
+        if (hol != null) {
             day.setReference(hol.getReference());
         }
         dayDao.save(day);
@@ -142,17 +140,17 @@ public class DayServiceImpl implements DayService {
         Employee emp = employeeService.findByMatricule(matricule);
         LocalDate ldS = DateUtil.fromDate(vacation.getStartingDate());
         LocalDate ldE = DateUtil.fromDate(vacation.getEndingDate());
-        
+
         if (emp == null) {
             return res = -1;
         } else if (vacation.getType().equals("C.M") || vacation.getType().equals("C.AT") || vacation.getType().equals("C.EXCEP")) {
             List<LocalDate> daysVacation = betweenDate.between(ldS, ldE);
-            System.out.println("hhhhhhhhh"+ldE);
-        System.out.println("hhhhhhhhhhhhh"+ldS);
+            System.out.println("hhhhhhhhh" + ldE);
+            System.out.println("hhhhhhhhhhhhh" + ldS);
             for (LocalDate ld : daysVacation) {
-                System.out.println("haaaaa amne"+ld);
+                System.out.println("haaaaa amne" + ld);
                 Day day = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld));
-                System.out.println("haaaaaaaaaaaa"+day);
+                System.out.println("haaaaaaaaaaaa" + day);
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);

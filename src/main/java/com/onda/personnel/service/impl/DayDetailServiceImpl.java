@@ -5,7 +5,7 @@
  */
 package com.onda.personnel.service.impl;
 
-import com.onda.personnel.common.util.DateUtil;
+import com.onda.personnel.util.DateUtil;
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.dao.DayDetailDao;
 import com.onda.personnel.dao.MissionDao;
