@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Graphe_Employee" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe438c92-3793-476e-82f1-1f905db18e29">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="93"/>
+	<subDataset name="dashboardDataSet" uuid="c44e164a-c3b8-4b5c-bd00-85087bfba070">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JavaBeans"/>
+		<parameter name="workDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
+			<defaultValueExpression><![CDATA[$P{workDataSource}]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="workDetailVo" class="com.onda.personnel.rest.vo.WorkDetailVo">
+			<fieldDescription><![CDATA[workDetailVo]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="workDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
+		<defaultValueExpression><![CDATA[$P{workDataSource}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="average" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[$P{average}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firstMonth" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{firstMonth}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="year" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{year}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lastMonth" class="java.lang.String"/>
+	<parameter name="employee" class="com.onda.personnel.model.Employee">
+		<defaultValueExpression><![CDATA[$P{employee}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="workMin" class="java.lang.Double"/>
+	<parameter name="workMax" class="java.lang.Double"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="workDetailVo" class="com.onda.personnel.rest.vo.WorkDetailVo">
+		<fieldDescription><![CDATA[workDetailVo]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="30" uuid="d394a6f8-2eb2-411a-ae70-26ceabdb9696"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="230" y="0" width="338" height="30" uuid="2f25c05a-3100-467e-856d-615fcd56e757"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[STATISTIQUE DE L'EMPLOYE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="65" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="4" width="320" height="61" uuid="b95bab81-74bd-485d-b408-2de2ea1d6209"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="110" y="5" width="100" height="30" uuid="4909c248-359b-45ad-a400-3db8f87bfd15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[O.N.D.A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="35" width="169" height="30" uuid="7f3b32ad-70da-46ee-b7bb-8abf5ef9bd83"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Aéroport Marrakech Menara]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="482" y="4" width="320" height="61" uuid="52722caa-ad35-4426-a2c2-381ebf15235b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="484" y="15" width="176" height="18" uuid="db7427e6-bf54-4253-a2f0-8ba0c3f2920f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Service des resources humaines]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="484" y="35" width="246" height="18" uuid="ab024779-59fb-4dd5-bb11-4d04b2d98dec"/>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Résultats: Année "+$P{year}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="361" y="8" width="80" height="55" uuid="39e7917c-4a2d-4a8e-a55d-21c9ebbcad26"/>
+				<imageExpression><![CDATA["src/main/java/com/onda/personnel/asset/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="88" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="36" width="299" height="28" uuid="da9ed272-5421-4827-b3b2-b37fbb3880b5"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="36" width="198" height="28" uuid="e5f595b5-bef2-4bab-bf63-08a7ecbfc9e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Moyenne]]></text>
+			</staticText>
+			<line>
+				<reportElement x="198" y="36" width="1" height="28" uuid="9f74a719-854e-466f-bac3-f9591f2a000a"/>
+			</line>
+			<textField>
+				<reportElement x="199" y="36" width="100" height="28" uuid="bfe586c2-ee68-443f-a2fb-93189168718a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{average}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="563" y="36" width="239" height="28" uuid="4cc5078c-f359-4fcd-9249-79602116c936"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="564" y="36" width="114" height="28" uuid="3268a72a-ca86-4700-81f1-5582b0e708c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Objectif]]></text>
+			</staticText>
+			<line>
+				<reportElement x="679" y="36" width="1" height="28" uuid="32825d58-dfc6-479f-a1bd-bb73466f6cd5"/>
+			</line>
+			<textField>
+				<reportElement x="680" y="36" width="122" height="28" uuid="8a54658c-4df7-4b76-9e48-faf493dce1d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[192]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="68" width="380" height="20" uuid="2e624cfe-bee5-49c8-a789-fcc5f207ebb1"/>
+			</rectangle>
+			<textField>
+				<reportElement x="2" y="68" width="378" height="20" uuid="4673216e-0316-4bc3-bb25-91e29ea30d76"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Analyse des résultats du mois "+$P{firstMonth}+" au "+$P{lastMonth}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="4" width="802" height="28" uuid="6c4ebe28-b70f-41a0-843a-b996200d508c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="4" width="210" height="28" uuid="53e4c965-fc43-4aa2-9109-745edf3c8db5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[  "Matricule: "+$P{employee}.getMatricule()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="4" width="200" height="28" uuid="a6777c3b-3f64-48e5-a3e5-12e096c32b21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nom: "+$P{employee}.getLastName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="568" y="4" width="234" height="28" uuid="42c93d2b-21be-459d-a711-2ca78c6c7d59"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Prénom: "+$P{employee}.getFirstName()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="530" y="4" width="1" height="28" uuid="27648765-67fd-4335-9835-1daab23fbc09"/>
+			</line>
+			<line>
+				<reportElement x="268" y="4" width="1" height="28" uuid="332c1ed8-1961-4bbc-915a-892d368a4275"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="350" splitType="Stretch">
+			<stackedBarChart>
+				<chart isShowLegend="true" evaluationTime="Master" customizerClass="com.onda.personnel.reports.MyBarChartCustomizer" theme="aegean">
+					<reportElement x="51" y="5" width="700" height="340" isRemoveLineWhenBlank="true" uuid="e5844881-736a-4415-aad7-2ff312ec3c04"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="dashboardDataSet" uuid="500ee0fc-489e-4c01-b4d4-dbbce52bfb4e">
+							<dataSourceExpression><![CDATA[$P{workDataSource}]]></dataSourceExpression>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate() +" ("+(Double.parseDouble($F{workDetailVo}.getHjf().getHour() )+(Double.parseDouble("0."+$F{workDetailVo}.getHjf().getMinute())*10/6))+")"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate()]]></categoryExpression>
+						<valueExpression><![CDATA[Double.parseDouble($F{workDetailVo}.getHjf().getHour() )+(Double.parseDouble($F{workDetailVo}.getHjf().getMinute())*10/6)]]></valueExpression>
+						<labelExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate()]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+					<rangeAxisMinValueExpression><![CDATA[$P{workMin}]]></rangeAxisMinValueExpression>
+					<rangeAxisMaxValueExpression><![CDATA[$P{workMax}]]></rangeAxisMaxValueExpression>
+				</barPlot>
+			</stackedBarChart>
+		</band>
+	</detail>
+	<summary>
+		<band height="21" splitType="Stretch"/>
+	</summary>
+</jasperReport>

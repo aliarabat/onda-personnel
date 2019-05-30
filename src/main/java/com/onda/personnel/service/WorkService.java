@@ -21,7 +21,7 @@ public interface WorkService {
 
     Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date workDetailDate);
 
-    List<Work> findWorksByDate( Date workDate);
+    List<Work> findWorksByDate(Date workDate);
 
     Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule);
 
@@ -36,12 +36,16 @@ public interface WorkService {
     public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate);
 
     List<String> findFromDateToDate(Integer matricule);
-    
+
     void printDoc(HttpServletResponse response, Integer annee, Integer month);
-    
+
     void printXlsx(HttpServletResponse response, Integer year, Integer month);
-    
+
+    void printGraphForEmployee(HttpServletResponse response, int matricule, int year);
+
     Work findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(Date date);
+    
+    Work findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, int year);
 
     List<Work> findAll();
 

@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,12 +26,14 @@ import com.onda.personnel.util.DateUtil;
 import com.onda.personnel.util.JasperUtil;
 import com.onda.personnel.util.MonthUtil;
 import com.onda.personnel.util.NumberUtil;
+import com.onda.personnel.util.WorkComparator;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.DayDetailVo;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
+import java.time.Month;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -56,8 +59,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date workDetailDate) {
-        return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDateOrderByEmployeeMatriculeAsc(matricule,
-                workDetailDate);
+        return workDao.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, workDetailDate);
     }
 
     public WorkDao getWorkDao() {
@@ -77,8 +79,9 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Integer annee) {
         LocalDate ldStart = LocalDate.of(annee, 1, 1);
         LocalDate ldEnd = LocalDate.of(annee, 12, 31);
-        List<Work> works = workDao.findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByWorkDetailWorkDetailDateAsc(matricule,
-                DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
+        List<Work> works = workDao
+                .findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByWorkDetailWorkDetailDateAsc(
+                        matricule, DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
         listWorkToShow(works);
         return works;
     }
@@ -87,8 +90,9 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> findAllByWorkDetailWorkDetailDateBetween(Integer annee) {
         LocalDate ldStart = LocalDate.of(annee, 1, 1);
         LocalDate ldEnd = LocalDate.of(annee, 12, 31);
-        List<Work> works = workDao.findByWorkDetailWorkDetailDateBetweenOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(
-                DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
+        List<Work> works = workDao
+                .findByWorkDetailWorkDetailDateBetweenOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(
+                        DateUtil.toDate(ldStart), DateUtil.toDate(ldEnd));
         listWorkToShow(works);
         return works;
     }
@@ -113,27 +117,32 @@ public class WorkServiceImpl implements WorkService {
                 if (day.getVacationVo() != null) {
                     if (day.getVacationVo().getType().equals("C.R") && day.getReference() == null) {
                         if (c.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-                            w.getWorkDetailVo().setAdm(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getAdm()) + 1));
+                            w.getWorkDetailVo().setAdm(
+                                    NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getAdm()) + 1));
                         }
                     } else if (day.getVacationVo().getType().equals("C.M")) {
-                        w.getWorkDetailVo().setCm(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCm()) + 1));
+                        w.getWorkDetailVo()
+                                .setCm(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCm()) + 1));
                     } else if (day.getVacationVo().getType().equals("A.T")) {
-                        w.getWorkDetailVo().setAt(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getAt()) + 1));
+                        w.getWorkDetailVo()
+                                .setAt(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getAt()) + 1));
                     } else if (day.getVacationVo().getType().equals("C.EXCEP")) {
-                        w.getWorkDetailVo().setCex(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCex()) + 1));
+                        w.getWorkDetailVo()
+                                .setCex(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCex()) + 1));
                     }
                 } else {
-                    DayDetailVo dayDetailVoCheck = day
-                            .getDayDetailsVo().stream().filter((d) ->
-                                    //(d.getDetailVo() != null && d.getMissionVo() != null) ||
-                                    (!d.getDetailVo().getWording().equals("R") && d.getReplacementVo() == null && d.getSkipVo() == null) ||
-                                            (d.getDetailVo() == null && (d.getReplacementVo() != null || d.getMissionVo() != null)))
+                    DayDetailVo dayDetailVoCheck = day.getDayDetailsVo().stream().filter((d)
+                            -> // (d.getDetailVo() != null && d.getMissionVo() != null) ||
+                            (!d.getDetailVo().getWording().equals("R") && d.getReplacementVo() == null && d.getSkipVo() == null)
+                            || (d.getDetailVo() == null && (d.getReplacementVo() != null || d.getMissionVo() != null)))
                             .findAny().orElse(null);
                     if (day.getReference() != null && dayDetailVoCheck != null) {
                         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                            w.getWorkDetailVo().setHolidayHundered(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getHolidayHundered()) + 1));
+                            w.getWorkDetailVo().setHolidayHundered(NumberUtil
+                                    .toString(NumberUtil.toInteger(w.getWorkDetailVo().getHolidayHundered()) + 1));
                         } else {
-                            w.getWorkDetailVo().setHolidayZero(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getHolidayZero()) + 1));
+                            w.getWorkDetailVo().setHolidayZero(NumberUtil
+                                    .toString(NumberUtil.toInteger(w.getWorkDetailVo().getHolidayZero()) + 1));
                         }
                     }
                 }
@@ -198,19 +207,11 @@ public class WorkServiceImpl implements WorkService {
                                 hjfHours = hjfHours + dd.getReplacement().getDetail().getHe().getHour();
                                 hjfMinutes = hjfMinutes + dd.getReplacement().getDetail().getHe().getMinute();
 
-                                w.getWorkDetail().setPan(w.getWorkDetail().getPan() + dd.getReplacement().getDetail().getPan());
+                                w.getWorkDetail()
+                                        .setPan(w.getWorkDetail().getPan() + dd.getReplacement().getDetail().getPan());
 
                                 replacementMinutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
-                            } /*else if (dd.getMission() != null) {
-                                hnHours = hnHours - dd.getMission().getDetail().getHn().getHour();
-                                hnMinutes = hnMinutes - dd.getMission().getDetail().getHn().getMinute();
-                                hjfHours = hjfHours - dd.getMission().getDetail().getHe().getHour();
-                                hjfMinutes = hjfMinutes - dd.getMission().getDetail().getHe().getMinute();
-
-                                minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
-
-                                w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getMission().getDetail().getPan());
-                            } */ else if (dd.getSkip() != null) {
+                            } else if (dd.getSkip() != null) {
                                 hnHours = hnHours - dd.getSkip().getDetail().getHn().getHour();
                                 hnMinutes = hnMinutes - dd.getSkip().getDetail().getHn().getMinute();
                                 hjfHours = hjfHours - dd.getSkip().getDetail().getHe().getHour();
@@ -218,7 +219,8 @@ public class WorkServiceImpl implements WorkService {
 
                                 minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
 
-                                w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getSkip().getDetail().getPan());
+                                w.getWorkDetail()
+                                        .setPan(w.getWorkDetail().getPan() - dd.getSkip().getDetail().getPan());
                             }
                             setWorkParams(w, hnHours, hnMinutes, hjfHours, hjfMinutes);
                         }
@@ -265,8 +267,8 @@ public class WorkServiceImpl implements WorkService {
         if (work == null) {
             fromDate = DateUtil.getFirstDayOfMonth();
             // toDate = fromDate.plusDays(6);
-            //for tests
-            //fromDate = DateUtil.getFirstDayOfMonth();
+            // for tests
+            // fromDate = DateUtil.getFirstDayOfMonth();
         } else {
             int size = work.getWorkDetail().getDays().size();
             fromDate = DateUtil.fromDate(work.getWorkDetail().getDays().get(size - 1).getDayDate()).plusDays(1);
@@ -306,7 +308,8 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate) {
-        return workDao.findByWorkDetailWorkDetailDateOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(workDetailDate);
+        return workDao
+                .findByWorkDetailWorkDetailDateOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(workDetailDate);
     }
 
     @Override
@@ -329,7 +332,8 @@ public class WorkServiceImpl implements WorkService {
         params.put("year", year);
         List<Work> list = findByMonthAndYear(year, month);
         response.setContentType("application/pdf");
-        response.addHeader("Content-Disposition", "attachement; filename=\"etatsElements" + mois + year + ".pdf" + "\"");
+        response.addHeader("Content-Disposition",
+                "attachement; filename=\"etatsElements" + mois + year + ".pdf" + "\"");
         OutputStream out = null;
 
         try {
@@ -378,16 +382,65 @@ public class WorkServiceImpl implements WorkService {
 
     }
 
+    @SuppressWarnings("deprecation")
+    @Override
+    public void printGraphForEmployee(HttpServletResponse response, int matricule, int year) {
+        List<Work> list = findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, year);
+        if (list != null && !list.isEmpty() && list.size()>1) {
+            JasperPrint jasperPrint = null;
+            Map<String, Object> params = new HashMap<>();
+
+            Double average = list.stream().mapToDouble(item -> item.getWorkDetail().getHjf().getHour()
+                    + (item.getWorkDetail().getHjf().getMinute() * 10 / 6)).average().getAsDouble();
+            Work workMin = Collections.min(list, new WorkComparator());
+            Work workMax = Collections.max(list, new WorkComparator());
+            String lastMonth = MonthUtil.getMonth(
+                    workMax.getWorkDetail().getWorkDetailDate().getMonth() - 1);
+            params.put("year", year);
+            params.put("average", average);
+            params.put("employee", list.get(0).getEmployee());
+            params.put("firstMonth", MonthUtil.getMonth(workMin.getWorkDetail().getWorkDetailDate().getMonth() - 1));
+            params.put("lastMonth", lastMonth);
+            params.put("workMin", Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "") - 4);
+            params.put("workMax", Double.parseDouble(workMax.getWorkDetail().getHjf().getHour() + "") + 4);
+
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition",
+                    "attachement; filename=\"graphe" + list.get(0).getEmployee().getMatricule() + year + ".pdf" + "\"");
+            OutputStream out = null;
+
+            try {
+                out = response.getOutputStream();
+                jasperPrint = new JasperUtil().generateDoc(listToPrintToVo(list), params, "Graphe_Employee.jasper",
+                        "pdf");
+                JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (JRException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public Work findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, int year) {
+        Date dateDebut = DateUtil.toDate(LocalDate.of(year, Month.JANUARY, 1));
+        Date dateFin = DateUtil.toDate(LocalDate.of(year, Month.DECEMBER, 31));
+        System.out.println("hha date debut ==> "+dateDebut);
+        System.out.println("hha date fin ==> "+dateFin);
+        return workDao.findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByIdAsc(matricule, dateDebut, dateFin);
+    }
+
     @Override
     public Work findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(Date date) {
         return workDao.findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(date);
     }
 
-
     @Override
     public List<Work> findAll() {
         return workDao.findAll();
     }
-
 
 }

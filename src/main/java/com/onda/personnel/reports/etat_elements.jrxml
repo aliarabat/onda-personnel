@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="etat_elements" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1a71562-900b-4f48-b38c-742db6093745">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="0.95589245313107"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
@@ -106,7 +105,7 @@
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<property name="com.jaspersoft.studio.unit.height" value="30"/>
 			<textField>
-				<reportElement x="256" y="2" width="290" height="22" uuid="4aebe8bd-6b16-4f38-aa15-c64ca019b28c"/>
+				<reportElement x="0" y="0" width="802" height="26" uuid="4aebe8bd-6b16-4f38-aa15-c64ca019b28c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Book Antiqua" isBold="true"/>
 				</textElement>

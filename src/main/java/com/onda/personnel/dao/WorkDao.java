@@ -12,7 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.onda.personnel.model.Work;
-import com.onda.personnel.model.WorkDetail;
 
 /**
  *
@@ -21,19 +20,26 @@ import com.onda.personnel.model.WorkDetail;
 @Repository
 public interface WorkDao extends JpaRepository<Work, Long> {
 
-    Work findByEmployeeMatriculeAndWorkDetailWorkDetailDateOrderByEmployeeMatriculeAsc(Integer matricule, Date workDetailDate);
+    Work findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date workDetailDate);
 
     Work findTopByEmployeeMatriculeOrderByWorkDetailWorkDetailDateDesc(Integer matricule);
 
     List<Work> findAllByEmployeeMatricule(Integer matricule);
 
-    List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByWorkDetailWorkDetailDateAsc(Integer matricule, Date date1, Date date2);
+    List<Work> findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByWorkDetailWorkDetailDateAsc(
+            Integer matricule, Date date1, Date date2);
 
-    List<Work> findByWorkDetailWorkDetailDateBetweenOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(Date date1, Date date2);
+    List<Work> findByWorkDetailWorkDetailDateBetweenOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(Date date1,
+            Date date2);
 
-    List<Work> findByWorkDetailWorkDetailDateOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(Date workDetailDate);
-    
+    List<Work> findByWorkDetailWorkDetailDateOrderByEmployeeMatriculeAscWorkDetailWorkDetailDateAsc(
+            Date workDetailDate);
+
     Work findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(Date date);
 
-    //List<WorkDetail> findByEmployeeMatriculeAndWorkDetailWorkDetailDate(Integer matricule, Date t);
+    List<Work> findByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByWorkDetailWorkDetailDateAsc(
+            int matricule, Date dateDebut, Date dateFin);
+
+    Work findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByIdAsc(Integer matricule, Date dateDebut, Date dateFin);
+
 }

@@ -9,11 +9,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.onda.personnel.model.Employee;
 import com.onda.personnel.rest.vo.WorkVo;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -199,6 +201,17 @@ public class JasperUtil {
 		reportSource.close();
 	}
 
+	public static JasperPrint generatePdf(Employee employee, String cheminJapser) throws FileNotFoundException, JRException {
+		InputStream reportSource = new FileInputStream(Config.getCheminJasper()+cheminJapser);
+		
+		Map<String, Object> params=new HashMap<String, Object>();
+		params.put("empolyeData", employee);
+		
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reportSource, params, new JREmptyDataSource());
+		return jasperPrint;
+		
+	}
+
 	/*
 	 * public static void generateJson(List list, Map params, boolean isXlsVisible)
 	 * throws JRException, FileNotFoundException, IOException { generateCsv(list,
@@ -207,3 +220,4 @@ public class JasperUtil {
 	 */
 
 }
+

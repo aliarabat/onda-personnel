@@ -8,6 +8,7 @@ package com.onda.personnel.service.impl;
 import com.onda.personnel.dao.EmployeeDao;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.service.EmployeeService;
+import com.onda.personnel.util.JasperUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -102,14 +103,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void print(HttpServletResponse response, Integer matricule) {
         JasperPrint jasperPrint = null;
-        List<Employee> list = new ArrayList();
+        //List<Employee> list = new ArrayList();
         Employee employee = findByMatricule(matricule);
-        list.add(employee);
+        System.out.println("matricule ==> "+employee.getMatricule());
+        //list.add(employee);
+       
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", String.format("attachement; filename=\"empployee" + employee.getMatricule() + ".pdf\""));
         OutputStream out = null;
         try {
             out = response.getOutputStream();
+            jasperPrint=JasperUtil.generatePdf(employee, "Repprt_Employee.jasper");
             //jasperPrint = new JasperUtil().generatePdf(list, null, "Employee_Profile.jasper");
             JasperExportManager.exportReportToPdfStream(jasperPrint, out);
         } catch (IOException ex) {

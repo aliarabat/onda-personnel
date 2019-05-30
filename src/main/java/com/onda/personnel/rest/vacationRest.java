@@ -9,7 +9,6 @@ import com.onda.personnel.model.Vacation;
 import com.onda.personnel.rest.converter.VacationConverter;
 import com.onda.personnel.rest.vo.VacationVo;
 import com.onda.personnel.service.VacationService;
-import groovy.transform.AutoClone;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
