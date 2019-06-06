@@ -120,6 +120,11 @@ public class WorkRest {
         return new WorkConverter().toVo(workService.findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, year));
     }
 
+    @GetMapping("/countall/year/{year}")
+    public List<WorkVo> countAll(@PathVariable int year) {
+        return workService.countAll(year);
+    }
+
     @GetMapping("/")
     public List<WorkVo> findAll() {
         return new WorkConverter().toVo(workService.findAll());

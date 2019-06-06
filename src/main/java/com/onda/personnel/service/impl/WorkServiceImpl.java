@@ -31,9 +31,12 @@ import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.DayDetailVo;
+import com.onda.personnel.rest.vo.DayVo;
+import com.onda.personnel.rest.vo.WorkDetailVo;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
 import java.time.Month;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -379,14 +382,13 @@ public class WorkServiceImpl implements WorkService {
         } catch (JRException | IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public void printGraphForEmployee(HttpServletResponse response, int matricule, int year) {
         List<Work> list = findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, year);
-        if (list != null && !list.isEmpty() && list.size()>1) {
+        if (list != null && !list.isEmpty() && list.size() > 1) {
             JasperPrint jasperPrint = null;
             Map<String, Object> params = new HashMap<>();
 
@@ -428,9 +430,8 @@ public class WorkServiceImpl implements WorkService {
     public Work findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, int year) {
         Date dateDebut = DateUtil.toDate(LocalDate.of(year, Month.JANUARY, 1));
         Date dateFin = DateUtil.toDate(LocalDate.of(year, Month.DECEMBER, 31));
-        System.out.println("hha date debut ==> "+dateDebut);
-        System.out.println("hha date fin ==> "+dateFin);
-        return workDao.findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByIdAsc(matricule, dateDebut, dateFin);
+        long count=workDao.countByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, dateDebut,dateFin);
+        return count>1? workDao.findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByIdAsc(matricule, dateDebut, dateFin):null;
     }
 
     @Override
@@ -443,4 +444,54 @@ public class WorkServiceImpl implements WorkService {
         return workDao.findAll();
     }
 
+    @Override
+    public List<WorkVo> countAll(int year) {
+        Date dateDebut = DateUtil.toDate(LocalDate.of(year, Month.JANUARY, 1));
+        Date dateFin = DateUtil.toDate(LocalDate.of(year, Month.DECEMBER, 1));
+        List<WorkVo> workVos = new WorkConverter().toVo(workDao.findByWorkDetailWorkDetailDateBetween(dateDebut, dateFin));
+        if (workVos != null && !workVos.isEmpty()) {
+            Map<String, List<WorkVo>> worksMapped = workVos.stream().collect(Collectors.groupingBy((t) -> {
+                return t.getWorkDetailVo().getWorkDetailDate();
+            }));
+            List<WorkVo> list = new ArrayList<>();
+            worksMapped.entrySet().forEach((Map.Entry<String, List<WorkVo>> entry) -> {
+                int holidaysNumber = 0;
+                int vacationNumber = 0;
+                int skipNumber = 0;
+                int missionNumber = 0;
+                int replacementNumber = 0;
+                for (WorkVo w : entry.getValue()) {
+                    for (DayVo dayVo : w.getWorkDetailVo().getDaysVo()) {
+                        if (dayVo.getReference() != null) {
+                            holidaysNumber++;
+                        } else if (dayVo.getVacationVo() != null) {
+                            vacationNumber++;
+                        } else {
+                            for (DayDetailVo dayDetailVo : dayVo.getDayDetailsVo()) {
+                                if (dayDetailVo.getDetailVo() == null && dayDetailVo.getReplacementVo() != null) {
+                                    replacementNumber++;
+                                } else {
+                                    if (dayDetailVo.getMissionVo() != null) {
+                                        missionNumber++;
+                                    } else if (dayDetailVo.getSkipVo() != null) {
+                                        skipNumber++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    w.getWorkDetailVo().setDaysVo(null);
+                    w.getWorkDetailVo().setHolidaysNumber(w.getWorkDetailVo().getHolidaysNumber() + holidaysNumber);
+                    w.getWorkDetailVo().setVacationNumber(w.getWorkDetailVo().getVacationNumber() + vacationNumber);
+                    w.getWorkDetailVo().setMissionNumber(w.getWorkDetailVo().getMissionNumber() + missionNumber);
+                    w.getWorkDetailVo().setReplacementNumber(w.getWorkDetailVo().getReplacementNumber() + replacementNumber);
+                    w.getWorkDetailVo().setSkipNumber(w.getWorkDetailVo().getSkipNumber() + skipNumber);
+                }
+                list.add(new WorkVo(new WorkDetailVo(entry.getKey(), skipNumber, missionNumber, replacementNumber, vacationNumber, holidaysNumber)));
+
+            });    
+            return list;
+        }
+        return null;
+    }
 }

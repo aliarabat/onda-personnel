@@ -141,5 +141,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> findByType(String type) {
         return employeeDao.findByType(type);
     }
+    
+    @Override
+    public long count(){
+        return employeeDao.count();
+    }
 
 }

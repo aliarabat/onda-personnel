@@ -21,56 +21,61 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/holiday")
 public class HolidayRest {
 
-	@Autowired
-	private HolidayService holidayService;
+    @Autowired
+    private HolidayService holidayService;
 
-	@Autowired
-	@Qualifier("holidayConverter")
-	private AbstractConverter<Holiday, HolidayVo> holidayConverter;
+    @Autowired
+    @Qualifier("holidayConverter")
+    private AbstractConverter<Holiday, HolidayVo> holidayConverter;
 
-	@PostMapping("/")
-	public int createHoliday(@RequestBody List<HolidayVo> holidaysVo) {
-		return holidayService.createHoliday(new HolidayConverter().toItem(holidaysVo));
-	}
+    @PostMapping("/")
+    public int createHoliday(@RequestBody List<HolidayVo> holidaysVo) {
+        return holidayService.createHoliday(new HolidayConverter().toItem(holidaysVo));
+    }
 
-	@GetMapping("/")
-	public List<HolidayVo> findAll() {
-		return holidayConverter.toVo(holidayService.findAll());
-	}
+    @GetMapping("/")
+    public List<HolidayVo> findAll() {
+        return holidayConverter.toVo(holidayService.findAll());
+    }
 
-	@PutMapping("/")
-	public int update(@RequestBody HolidayVo holidayVo) {
-		return holidayService.update(holidayConverter.toItem(holidayVo));
-	}
+    @PutMapping("/")
+    public int update(@RequestBody HolidayVo holidayVo) {
+        return holidayService.update(holidayConverter.toItem(holidayVo));
+    }
 
-	@GetMapping("/reference/{reference}")
-	public HolidayVo findByReference(@PathVariable String reference) {
-		return new HolidayConverter().toVo(holidayService.findByReference(reference));
-	}
+    @GetMapping("/reference/{reference}")
+    public HolidayVo findByReference(@PathVariable String reference) {
+        return new HolidayConverter().toVo(holidayService.findByReference(reference));
+    }
 
-	@DeleteMapping("/id/{id}")
-	public void delete(@PathVariable Long id) {
-		holidayService.delete(id);
-	}
+    @DeleteMapping("/id/{id}")
+    public void delete(@PathVariable Long id) {
+        holidayService.delete(id);
+    }
 
-	public HolidayService getHolidayService() {
-		return holidayService;
-	}
+    @GetMapping("/countholidays")
+    public long count() {
+        return holidayService.count();
+    }
 
-	public void setHolidayService(HolidayService holidayService) {
-		this.holidayService = holidayService;
-	}
+    public HolidayService getHolidayService() {
+        return holidayService;
+    }
 
-	public AbstractConverter<Holiday, HolidayVo> getHolidayConverter() {
-		return holidayConverter;
-	}
+    public void setHolidayService(HolidayService holidayService) {
+        this.holidayService = holidayService;
+    }
 
-	public void setHolidayConverter(AbstractConverter<Holiday, HolidayVo> holidayConverter) {
-		this.holidayConverter = holidayConverter;
-	}
+    public AbstractConverter<Holiday, HolidayVo> getHolidayConverter() {
+        return holidayConverter;
+    }
+
+    public void setHolidayConverter(AbstractConverter<Holiday, HolidayVo> holidayConverter) {
+        this.holidayConverter = holidayConverter;
+    }
 
 }

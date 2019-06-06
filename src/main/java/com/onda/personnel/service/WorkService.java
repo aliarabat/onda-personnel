@@ -6,6 +6,7 @@
 package com.onda.personnel.service;
 
 import com.onda.personnel.model.Work;
+import com.onda.personnel.rest.vo.WorkVo;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -44,9 +45,10 @@ public interface WorkService {
     void printGraphForEmployee(HttpServletResponse response, int matricule, int year);
 
     Work findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(Date date);
-    
+
     Work findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, int year);
 
     List<Work> findAll();
 
+    List<WorkVo> countAll(int year);
 }

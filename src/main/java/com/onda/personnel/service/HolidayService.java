@@ -14,8 +14,10 @@ public interface HolidayService {
     List<Holiday> findAll();
 
     int update(Holiday holiday);
-    
+
     void delete(Long id);
-    
+
     Holiday findByReference(String reference);
+
+    long count();
 }

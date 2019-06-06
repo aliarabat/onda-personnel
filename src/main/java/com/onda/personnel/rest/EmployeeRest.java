@@ -109,4 +109,9 @@ public class EmployeeRest {
         this.employeeConverter = employeeConverter;
     }
 
+    @GetMapping("/numberofemployees")
+    public long count() {
+        return employeeService.count();
+    }
+
 }

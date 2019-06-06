@@ -33,4 +33,6 @@ public interface EmployeeService {
     public int revert(Integer matricule);
 
     public List<Employee> findByType(String type);
+    
+    public long count();
 }

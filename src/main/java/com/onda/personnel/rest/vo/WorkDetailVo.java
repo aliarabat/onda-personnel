@@ -28,6 +28,23 @@ public class WorkDetailVo {
     private String cm = "";
     private String at = "";
     private String cex = "";
+    private int skipNumber = 0;
+    private int missionNumber = 0;
+    private int replacementNumber = 0;
+    private int vacationNumber = 0;
+    private int holidaysNumber = 0;
+
+    public WorkDetailVo() {
+    }
+
+    public WorkDetailVo(String workDetailDate, int skipNumber, int missionNumber, int replacementNumber, int vacationNumber, int holidaysNumber) {
+        this.workDetailDate=workDetailDate;
+        this.skipNumber = skipNumber;
+        this.missionNumber = missionNumber;
+        this.replacementNumber = replacementNumber;
+        this.vacationNumber = vacationNumber;
+        this.holidaysNumber = holidaysNumber;
+    }
 
     public Long getId() {
         return id;
@@ -131,5 +148,45 @@ public class WorkDetailVo {
 
     public void setCex(String cex) {
         this.cex = cex;
+    }
+
+    public int getSkipNumber() {
+        return skipNumber;
+    }
+
+    public void setSkipNumber(int skipNumber) {
+        this.skipNumber = skipNumber;
+    }
+
+    public int getMissionNumber() {
+        return missionNumber;
+    }
+
+    public void setMissionNumber(int missionNumber) {
+        this.missionNumber = missionNumber;
+    }
+
+    public int getReplacementNumber() {
+        return replacementNumber;
+    }
+
+    public void setReplacementNumber(int replacementNumber) {
+        this.replacementNumber = replacementNumber;
+    }
+
+    public int getVacationNumber() {
+        return vacationNumber;
+    }
+
+    public void setVacationNumber(int vacationNumber) {
+        this.vacationNumber = vacationNumber;
+    }
+
+    public int getHolidaysNumber() {
+        return holidaysNumber;
+    }
+
+    public void setHolidaysNumber(int holidaysNumber) {
+        this.holidaysNumber = holidaysNumber;
     }
 }

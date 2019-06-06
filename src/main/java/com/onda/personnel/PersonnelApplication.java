@@ -2,12 +2,12 @@ package com.onda.personnel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class PersonnelApplication {
-	
+
     public static void main(String[] args) {
         SpringApplication.run(PersonnelApplication.class, args);
     }

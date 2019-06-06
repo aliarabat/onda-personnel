@@ -123,6 +123,15 @@ public class DetailServiceImpl implements DetailService {
         return detailDao.findTopByWording(wording);
     }
 
+    @Override
+    public long count() {
+        if (detailDao.findTopByWording("R")!=null) {
+            long res=detailDao.count()-2;
+            return res;
+        }
+        return detailDao.count();
+    }
+
     public DetailDao getDayDetailDao() {
         return detailDao;
     }

@@ -75,11 +75,16 @@ public class DetailRest {
     public TimingVo getHoursBetween(@PathVariable int startingHour, @PathVariable int startingMinute, @PathVariable int endingHour, @PathVariable int endingMinute, @PathVariable boolean isNight) {
         return timingConverter.toVo(detailService.getHoursBetween(startingHour, startingMinute, endingHour, endingMinute, isNight));
     }
+
     @GetMapping("/id/{id}")
     public DetailVo getDetailById(@PathVariable Long id) {
         return detailConverter.toVo(detailService.getDetailById(id));
     }
 
+    @GetMapping("/countdetailwordings")
+    public long count() {
+        return detailService.count();
+    }
 
     public DetailService getDayDetailService() {
         return detailService;

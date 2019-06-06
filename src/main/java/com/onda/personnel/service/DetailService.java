@@ -34,4 +34,6 @@ public interface DetailService {
     public Detail getDetailById(Long id );
 
     Detail findTopByWording(String r);
+    
+    public long count();
 }

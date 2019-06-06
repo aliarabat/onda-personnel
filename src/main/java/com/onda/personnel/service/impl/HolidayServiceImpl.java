@@ -81,11 +81,11 @@ public class HolidayServiceImpl implements HolidayService {
         }*/
         holidayDao.deleteById(id);
     }
-    
+
     @Override
-	public Holiday findByReference(String reference) {
-		return holidayDao.findByReference(reference);
-	}
+    public Holiday findByReference(String reference) {
+        return holidayDao.findByReference(reference);
+    }
 
     public DayService getDayService() {
         return dayService;
@@ -95,6 +95,8 @@ public class HolidayServiceImpl implements HolidayService {
         this.dayService = dayService;
     }
 
-	
-
+    @Override
+    public long count() {
+        return holidayDao.count();
+    }
 }
