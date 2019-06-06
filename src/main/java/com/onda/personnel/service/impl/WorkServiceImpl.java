@@ -301,7 +301,7 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> findByMonthAndYear(int year, int month) {
         LocalDate localDate = LocalDate.of(year, month, 1);
         List<Work> listOfWorksMonthly = findByWorkDetailWorkDetailDate(DateUtil.toDate(localDate));
-        if (listOfWorksMonthly.isEmpty() || listOfWorksMonthly == null) {
+        if (listOfWorksMonthly.isEmpty()) {
             return null;
         } else {
             listWorkToShow(listOfWorksMonthly);
@@ -430,8 +430,8 @@ public class WorkServiceImpl implements WorkService {
     public Work findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, int year) {
         Date dateDebut = DateUtil.toDate(LocalDate.of(year, Month.JANUARY, 1));
         Date dateFin = DateUtil.toDate(LocalDate.of(year, Month.DECEMBER, 31));
-        long count=workDao.countByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, dateDebut,dateFin);
-        return count>1? workDao.findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByIdAsc(matricule, dateDebut, dateFin):null;
+        long count = workDao.countByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, dateDebut, dateFin);
+        return count > 1 ? workDao.findTopByEmployeeMatriculeAndWorkDetailWorkDetailDateBetweenOrderByIdAsc(matricule, dateDebut, dateFin) : null;
     }
 
     @Override
@@ -489,7 +489,7 @@ public class WorkServiceImpl implements WorkService {
                 }
                 list.add(new WorkVo(new WorkDetailVo(entry.getKey(), skipNumber, missionNumber, replacementNumber, vacationNumber, holidaysNumber)));
 
-            });    
+            });
             return list;
         }
         return null;

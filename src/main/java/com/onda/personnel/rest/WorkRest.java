@@ -89,13 +89,13 @@ public class WorkRest {
         return workService.findFromDateToDate(matricule);
     }
 
-    @RequestMapping(value = "/generatedoc/year/{year}/month/{month}/type/pdf", produces = MediaType.ALL_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/generatedoc/year/{year}/month/{month}/type/pdf", method = RequestMethod.GET)
     public void generateDoc(HttpServletResponse response, @PathVariable int year, @PathVariable int month)
             throws JRException, IOException {
         workService.printDoc(response, year, month);
     }
 
-    @RequestMapping(value = "/generatedoc/year/{year}/month/{month}/type/xlsx", produces = MediaType.ALL_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/generatedoc/year/{year}/month/{month}/type/xlsx", method = RequestMethod.GET)
     public void generateXlsx(HttpServletResponse response, @PathVariable int year, @PathVariable int month)
             throws JRException, IOException {
         workService.printXlsx(response, year, month);

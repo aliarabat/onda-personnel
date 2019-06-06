@@ -72,14 +72,6 @@ public class PeriodUtil {
         return false;
     }
 
-    public static void main(String[] args) {
-        Timing t = getHoursBetween(14, 30, 00, 00, false);
-        Timing t2 = getHoursBetween(14, 30, 00, 00, true);
-        System.out.println("HE" + t);
-        System.out.println("HN" + t2);
-
-    }
-
     public static void minutesToHour(int hoursHnWorked, int minutesHnWorked, int hoursHeWorked, int minutesHeWorked) {
         if (minutesHnWorked >= 60) {
             hoursHnWorked++;
