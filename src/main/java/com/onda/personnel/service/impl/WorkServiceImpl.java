@@ -126,7 +126,7 @@ public class WorkServiceImpl implements WorkService {
                     } else if (day.getVacationVo().getType().equals("C.M")) {
                         w.getWorkDetailVo()
                                 .setCm(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCm()) + 1));
-                    } else if (day.getVacationVo().getType().equals("A.T")) {
+                    } else if (day.getVacationVo().getType().equals("C.AT")) {
                         w.getWorkDetailVo()
                                 .setAt(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getAt()) + 1));
                     } else if (day.getVacationVo().getType().equals("C.EXCEP")) {
@@ -134,11 +134,16 @@ public class WorkServiceImpl implements WorkService {
                                 .setCex(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCex()) + 1));
                     }
                 } else {
-                    DayDetailVo dayDetailVoCheck = day.getDayDetailsVo().stream().filter((d)
+                    DayDetailVo dayDetailVoCheck = new DayDetailVo();
+                    try {
+                        dayDetailVoCheck = day.getDayDetailsVo().stream().filter((d)
                             -> // (d.getDetailVo() != null && d.getMissionVo() != null) ||
                             (!d.getDetailVo().getWording().equals("R") && d.getReplacementVo() == null && d.getSkipVo() == null)
                             || (d.getDetailVo() == null && (d.getReplacementVo() != null || d.getMissionVo() != null)))
-                            .findAny().orElse(null);
+                            .findFirst().orElse(null);
+                    } catch (NullPointerException e) {
+                        System.out.println("Null in bloc of dayCheck if it's holiday");
+                    }
                     if (day.getReference() != null && dayDetailVoCheck != null) {
                         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
                             w.getWorkDetailVo().setHolidayHundered(NumberUtil
@@ -162,7 +167,6 @@ public class WorkServiceImpl implements WorkService {
             }
             if (NumberUtil.toInteger(w.getWorkDetailVo().getAdm()) == 0) {
                 w.getWorkDetailVo().setAdm("");
-                System.out.println("haa l adm ==> " + w.getWorkDetailVo().getAdm());
             }
             if (NumberUtil.toInteger(w.getWorkDetailVo().getHolidayZero()) == 0) {
                 w.getWorkDetailVo().setHolidayZero("");
