@@ -100,7 +100,7 @@ public class JasperUtil {
 		 */
 	}
 
-	public JasperPrint generateDoc(List<WorkVo> list, Map<String, Object> params, String jasperFile, String type)
+	public JasperPrint generateDoc(List list, Map<String, Object> params, String jasperFile, String type)
 			throws FileNotFoundException, JRException, IOException {
 		JasperPrint jasperPrint = null;
 		switch (type.toLowerCase()) {

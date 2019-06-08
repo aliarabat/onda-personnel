@@ -89,13 +89,13 @@ public class WorkRest {
         return workService.findFromDateToDate(matricule);
     }
 
-    @RequestMapping(value = "/generatedoc/year/{year}/month/{month}/type/pdf", method = RequestMethod.GET)
+    @GetMapping(value = "/generatedoc/year/{year}/month/{month}/type/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
     public void generateDoc(HttpServletResponse response, @PathVariable int year, @PathVariable int month)
             throws JRException, IOException {
         workService.printDoc(response, year, month);
     }
 
-    @RequestMapping(value = "/generatedoc/year/{year}/month/{month}/type/xlsx", method = RequestMethod.GET)
+    @GetMapping(value = "/generatedoc/year/{year}/month/{month}/type/xlsx", produces = {"text/plain", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"})
     public void generateXlsx(HttpServletResponse response, @PathVariable int year, @PathVariable int month)
             throws JRException, IOException {
         workService.printXlsx(response, year, month);
@@ -109,7 +109,7 @@ public class WorkRest {
                 workService.findTopByWorkDetailWorkDetailDateOrderByWorkDetailWorkDetailDateDesc(DateUtil.toDate(ld)));
     }
 
-    @GetMapping("/printgraph/matricule/{matricule}/year/{year}")
+    @GetMapping(value = "/printgraph/matricule/{matricule}/year/{year}", produces = MediaType.APPLICATION_PDF_VALUE)
     public void printGraphForEmployee(HttpServletResponse response, @PathVariable int matricule,
             @PathVariable int year) {
         workService.printGraphForEmployee(response, matricule, year);

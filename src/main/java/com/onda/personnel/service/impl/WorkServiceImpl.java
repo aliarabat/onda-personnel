@@ -133,14 +133,17 @@ public class WorkServiceImpl implements WorkService {
                         w.getWorkDetailVo()
                                 .setCex(NumberUtil.toString(NumberUtil.toInteger(w.getWorkDetailVo().getCex()) + 1));
                     }
-                } else {
+                } else if (day.getReference() != null) {
                     DayDetailVo dayDetailVoCheck = new DayDetailVo();
                     try {
-                        dayDetailVoCheck = day.getDayDetailsVo().stream().filter((d)
-                            -> // (d.getDetailVo() != null && d.getMissionVo() != null) ||
-                            (!d.getDetailVo().getWording().equals("R") && d.getReplacementVo() == null && d.getSkipVo() == null)
-                            || (d.getDetailVo() == null && (d.getReplacementVo() != null || d.getMissionVo() != null)))
-                            .findFirst().orElse(null);
+                        if (day.getDayDetailsVo() == null || day.getDayDetailsVo().isEmpty()) {
+                            dayDetailVoCheck = null;
+                        } else {
+                            dayDetailVoCheck = day.getDayDetailsVo().stream().filter((d)
+                                    -> (!d.getDetailVo().getWording().equals("R") && d.getReplacementVo() == null && d.getSkipVo() == null)
+                                    || (d.getDetailVo() == null && d.getReplacementVo() != null))
+                                    .findAny().orElse(null);
+                        }
                     } catch (NullPointerException e) {
                         System.out.println("Null in bloc of dayCheck if it's holiday");
                     }
@@ -197,12 +200,19 @@ public class WorkServiceImpl implements WorkService {
                         int hjfHours = w.getWorkDetail().getHjf().getHour();
                         int hjfMinutes = w.getWorkDetail().getHjf().getMinute();
                         if (dd.getDetail() != null) {
-                            if (dd.getMission() != null || dd.getReplacement() != null || dd.getSkip() != null) {
+                            if (dd.getReplacement() != null || dd.getSkip() != null) {
                                 hnHours = hnHours - dd.getDetail().getHn().getHour();
                                 hnMinutes = hnMinutes - dd.getDetail().getHn().getMinute();
                                 hjfHours = hjfHours - dd.getDetail().getHe().getHour();
                                 hjfMinutes = hjfMinutes - dd.getDetail().getHe().getMinute();
-                                minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
+                                if (hnMinutes < 0) {
+                                    --hnHours;
+                                    hnMinutes = hnMinutes + 60;
+                                }
+                                if (hjfMinutes < 0) {
+                                    --hjfHours;
+                                    hjfMinutes = hjfMinutes + 60;
+                                }
 
                                 w.getWorkDetail().setPan(w.getWorkDetail().getPan() - dd.getDetail().getPan());
                                 setWorkParams(w, hnHours, hnMinutes, hjfHours, hjfMinutes);
@@ -217,14 +227,28 @@ public class WorkServiceImpl implements WorkService {
                                 w.getWorkDetail()
                                         .setPan(w.getWorkDetail().getPan() + dd.getReplacement().getDetail().getPan());
 
-                                replacementMinutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
+                                if (hnMinutes >= 60) {
+                                    ++hnHours;
+                                    hnMinutes = hnMinutes - 60;
+                                }
+                                if (hjfMinutes >= 60) {
+                                    ++hjfHours;
+                                    hjfMinutes = hjfMinutes - 60;
+                                }
                             } else if (dd.getSkip() != null) {
                                 hnHours = hnHours - dd.getSkip().getDetail().getHn().getHour();
                                 hnMinutes = hnMinutes - dd.getSkip().getDetail().getHn().getMinute();
                                 hjfHours = hjfHours - dd.getSkip().getDetail().getHe().getHour();
                                 hjfMinutes = hjfMinutes - dd.getSkip().getDetail().getHe().getMinute();
 
-                                minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
+                                if (hnMinutes < 0) {
+                                    --hnHours;
+                                    hnMinutes = hnMinutes + 60;
+                                }
+                                if (hjfMinutes < 0) {
+                                    --hjfHours;
+                                    hjfMinutes = hjfMinutes + 60;
+                                }
 
                                 w.getWorkDetail()
                                         .setPan(w.getWorkDetail().getPan() - dd.getSkip().getDetail().getPan());
@@ -238,24 +262,20 @@ public class WorkServiceImpl implements WorkService {
                     int hjfHours = w.getWorkDetail().getHjf().getHour() - day.getHe().getHour();
                     int hjfMinutes = w.getWorkDetail().getHjf().getMinute() - day.getHe().getMinute();
 
-                    minutesManipulations(hnHours, hnMinutes, hjfHours, hjfMinutes);
+                    if (hnMinutes < 0) {
+                        --hnHours;
+                        hnMinutes = hnMinutes + 60;
+                    }
+                    if (hjfMinutes < 0) {
+                        --hjfHours;
+                        hjfMinutes = hjfMinutes + 60;
+                    }
 
                     w.getWorkDetail().setPan(w.getWorkDetail().getPan() - day.getPan());
                     setWorkParams(w, hnHours, hnMinutes, hjfHours, hjfMinutes);
                 }
             });
         });
-    }
-
-    private void replacementMinutesManipulations(int hnHours, int hnMinutes, int hjfHours, int hjfMinutes) {
-        if (hnMinutes >= 60) {
-            ++hnHours;
-            hnMinutes = hnMinutes - 60;
-        }
-        if (hjfMinutes >= 60) {
-            ++hjfHours;
-            hjfMinutes = hjfMinutes - 60;
-        }
     }
 
     private void setWorkParams(Work w, int hnHours, int hnMinutes, int hjfHours, int hjfMinutes) {
@@ -354,7 +374,6 @@ public class WorkServiceImpl implements WorkService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

@@ -160,7 +160,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  "Matricule: "+$P{employee}.getMatricule()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Matricule: "+$P{employee}.getMatricule()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="301" y="4" width="200" height="28" uuid="a6777c3b-3f64-48e5-a3e5-12e096c32b21"/>
@@ -188,21 +188,21 @@
 		<band height="350" splitType="Stretch">
 			<stackedBarChart>
 				<chart isShowLegend="true" evaluationTime="Master" customizerClass="com.onda.personnel.reports.MyBarChartCustomizer" theme="aegean">
-					<reportElement x="51" y="5" width="700" height="340" isRemoveLineWhenBlank="true" uuid="e5844881-736a-4415-aad7-2ff312ec3c04"/>
+					<reportElement x="51" y="5" width="700" height="340" isRemoveLineWhenBlank="true" uuid="c571f83f-73cc-47a5-a0c6-5a1a68616bfa"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<categoryDataset>
 					<dataset>
-						<datasetRun subDataset="dashboardDataSet" uuid="500ee0fc-489e-4c01-b4d4-dbbce52bfb4e">
+						<datasetRun subDataset="dashboardDataSet" uuid="753e244a-b321-400d-b9bd-dfc04495af27">
 							<dataSourceExpression><![CDATA[$P{workDataSource}]]></dataSourceExpression>
 						</datasetRun>
 					</dataset>
 					<categorySeries>
-						<seriesExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate() +" ("+(Double.parseDouble($F{workDetailVo}.getHjf().getHour() )+(Double.parseDouble("0."+$F{workDetailVo}.getHjf().getMinute())*10/6))+")"]]></seriesExpression>
+						<seriesExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate() +" ("+(Double.parseDouble($F{workDetailVo}.getHjf().getHour())+Double.parseDouble($F{workDetailVo}.getHjf().getMinute())/60)+")"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate()]]></categoryExpression>
-						<valueExpression><![CDATA[Double.parseDouble($F{workDetailVo}.getHjf().getHour() )+(Double.parseDouble($F{workDetailVo}.getHjf().getMinute())*10/6)]]></valueExpression>
+						<valueExpression><![CDATA[Double.parseDouble($F{workDetailVo}.getHjf().getHour())+(Double.parseDouble($F{workDetailVo}.getHjf().getMinute())/60)]]></valueExpression>
 						<labelExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate()]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
