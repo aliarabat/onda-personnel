@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com"})
 @RequestMapping("/personnel-api/personnels/vacation")
 public class vacationRest {
 

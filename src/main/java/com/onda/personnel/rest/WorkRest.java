@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com"})
 @RequestMapping("/personnel-api/personnels/work")
 public class WorkRest {
 
