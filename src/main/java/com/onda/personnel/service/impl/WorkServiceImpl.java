@@ -292,8 +292,8 @@ public class WorkServiceImpl implements WorkService {
         LocalDate fromDate;
         LocalDate toDate;
         if (work == null) {
-            fromDate = DateUtil.getFirstDayOfMonth();
-            // toDate = fromDate.plusDays(6);
+            fromDate = DateUtil.getFirstDayOfWeek();
+            //toDate = fromDate.plusDays(6);
             // for tests
             // fromDate = DateUtil.getFirstDayOfMonth();
         } else {

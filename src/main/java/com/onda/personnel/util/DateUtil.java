@@ -88,18 +88,18 @@ return localDate.toString();
         System.out.println(cal.getTime());
         return DateUtil.fromDate(cal.getTime());
     }
-    /*
+    
     public static Date getFirstDayOfMonth(){
         LocalDate localDate=LocalDate.of(getFirstDayOfWeek().getYear(), getFirstDayOfWeek().getMonth(),1);
         return toDate(localDate);
-    }*/
+    }
 
     //for tests
 
-    public static LocalDate getFirstDayOfMonth(){
+    /*public static LocalDate getFirstDayOfMonth(){
         LocalDate localDate=LocalDate.of(getFirstDayOfWeek().getYear(), Month.APRIL,1);
         return localDate;
-    }
+    }*/
 
 
     public static int lenghtOfMonth(LocalDate date){
