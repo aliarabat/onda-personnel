@@ -35,12 +35,14 @@ import com.onda.personnel.rest.vo.DayVo;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
+import java.io.ByteArrayOutputStream;
 import java.time.Month;
 import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
@@ -358,15 +360,27 @@ public class WorkServiceImpl implements WorkService {
         params.put("month", mois);
         params.put("year", year);
         List<Work> list = findByMonthAndYear(year, month);
-        response.setContentType("application/pdf");
-        response.addHeader("Content-Disposition",
-                "attachement; filename=\"etatsElements" + mois + year + ".pdf" + "\"");
+
         OutputStream out = null;
 
         try {
             out = response.getOutputStream();
             jasperPrint = new JasperUtil().generateDoc(listToPrintToVo(list), params, "etat_elements.jasper", "pdf");
-            JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+            //JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+
+            JRPdfExporter pdfExporter = new JRPdfExporter();
+            pdfExporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+            ByteArrayOutputStream pdfReportStream = new ByteArrayOutputStream();
+            pdfExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(pdfReportStream));
+            pdfExporter.exportReport();
+
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition",
+                    "attachement; filename=\"etatsElements" + mois + year + ".pdf" + "\"");
+
+            out.write(pdfReportStream.toByteArray());
+            out.close();
+            pdfReportStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (JRException e) {
@@ -385,9 +399,7 @@ public class WorkServiceImpl implements WorkService {
         params.put("month", mois);
         params.put("year", year);
         List<Work> list = findByMonthAndYear(year, month);
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.addHeader("Content-Disposition",
-                "attachement; filename=\"etatsElements" + mois + year + ".xlsx" + "\"");
+
         OutputStream out = null;
 
         try {
@@ -396,12 +408,21 @@ public class WorkServiceImpl implements WorkService {
             JRXlsxExporter exporter = new JRXlsxExporter();
 
             exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+            ByteArrayOutputStream pdfReportStream = new ByteArrayOutputStream();
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(pdfReportStream));
 
             SimpleXlsxReportConfiguration reportConfig = new SimpleXlsxReportConfiguration();
             reportConfig.setUseTimeZone(true);
             exporter.setConfiguration(reportConfig);
             exporter.exportReport();
+
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.addHeader("Content-Disposition",
+                    "attachement; filename=\"etatsElements" + mois + year + ".xlsx" + "\"");
+
+            out.write(pdfReportStream.toByteArray());
+            out.close();
+            pdfReportStream.close();
         } catch (JRException | IOException e) {
             e.printStackTrace();
         }
@@ -429,16 +450,25 @@ public class WorkServiceImpl implements WorkService {
             params.put("workMin", Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "") - 4);
             params.put("workMax", Double.parseDouble(workMax.getWorkDetail().getHjf().getHour() + "") + 4);
 
-            response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition",
-                    "attachement; filename=\"graphe" + list.get(0).getEmployee().getMatricule() + year + ".pdf" + "\"");
             OutputStream out = null;
 
             try {
                 out = response.getOutputStream();
-                jasperPrint = new JasperUtil().generateDoc(listToPrintToVo(list), params, "Graphe_Employee.jasper",
-                        "pdf");
-                JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+                jasperPrint = new JasperUtil().generateDoc(listToPrintToVo(list), params, "Graphe_Employee.jasper", "pdf");
+                //JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+
+                JRPdfExporter pdfExporter = new JRPdfExporter();
+                pdfExporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+                ByteArrayOutputStream pdfReportStream = new ByteArrayOutputStream();
+                pdfExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(pdfReportStream));
+                pdfExporter.exportReport();
+
+                response.setContentType("application/pdf");
+                response.addHeader("Content-Disposition", "attachement; filename=\"graphe" + list.get(0).getEmployee().getMatricule() + year + ".pdf" + "\"");
+
+                out.write(pdfReportStream.toByteArray());
+                out.close();
+                pdfReportStream.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (JRException e) {
