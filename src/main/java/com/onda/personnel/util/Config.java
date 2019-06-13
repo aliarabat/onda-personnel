@@ -13,7 +13,7 @@ import java.io.File;
  */
 public class Config {
 
-    private static String cheminJasper = "personnel-0.0.1-SNAPSHOT.jar\\BOOT-INF\\classes\\com\\onda\\personnel\\reports\\";
+    private static String cheminJasper = "reports/";
     private static String cheminExport = "E:\\employess";
 
     public static String getCheminJasper() {
