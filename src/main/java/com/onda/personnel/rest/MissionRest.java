@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author JaafarDiyaou
  */
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
 @RequestMapping("/personnel-api/personnels/mission")
 public class MissionRest {
     @Autowired

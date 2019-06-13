@@ -19,7 +19,7 @@ import com.onda.personnel.service.WorkDetailService;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
 @RequestMapping("/personnel-api/personnels/workDetail")
 public class WorkDetailRest {
     @Autowired
