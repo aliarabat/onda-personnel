@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
 @RequestMapping("/personnel-api/personnels/Detail")
 public class DetailRest {
 

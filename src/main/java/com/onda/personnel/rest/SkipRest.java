@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author JaafarDiyaou
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
 @RequestMapping("/personnel-api/personnels/skip")
 public class SkipRest {
 

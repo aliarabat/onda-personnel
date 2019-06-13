@@ -66,17 +66,14 @@ public class DayServiceImpl implements DayService {
     @Override
     public Day setDayInfos(List<DayDetail> dayDetails, Date ld) {
         Day day = new Day();
-        /*Timing hn = new Timing(0, 0);
-        Timing he = new Timing(0, 0);*/
         int pan = 0, minutesHnWorked = 0, minutesHeWorked = 0, hoursHnWorked = 0, hoursHeWorked = 0;
         day.setDayDate(ld);
-        System.out.println("hha size nta3 la liste ==> " + dayDetails.size());
         for (DayDetail dayDetail : dayDetails) {
             Detail dd = new Detail();
-            if (dayDetail.getDetail().getWording().equals("R")){
-                dd=detailService.findTopByWording("R");
-            }else{
-                dd=detailService.findByWording(dayDetail.getDetail().getWording());
+            if (dayDetail.getDetail().getWording().equals("R")) {
+                dd = detailService.findTopByWording("R");
+            } else {
+                dd = detailService.findByWording(dayDetail.getDetail().getWording());
             }
             dayDetail.setDetail(dd);
             day.getDayDetails().add(dayDetailService.createDayDetail(dayDetail));
@@ -150,12 +147,8 @@ public class DayServiceImpl implements DayService {
             return res = -1;
         } else if (vacation.getType().equals("C.M") || vacation.getType().equals("C.AT") || vacation.getType().equals("C.EXCEP")) {
             List<LocalDate> daysVacation = betweenDate.between(ldS, ldE);
-            System.out.println("hhhhhhhhh" + ldE);
-            System.out.println("hhhhhhhhhhhhh" + ldS);
             for (LocalDate ld : daysVacation) {
-                System.out.println("haaaaa amne" + ld);
                 Day day = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld));
-                System.out.println("haaaaaaaaaaaa" + day);
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);
@@ -206,15 +199,12 @@ public class DayServiceImpl implements DayService {
             oldVacation.setType(vacation.getType());
             for (LocalDate localDate : daysVacation) {
                 Day day = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(localDate));
-                System.out.println("zaaaydin day" + day);
                 vacationService.saveVacation(oldVacation);
                 day.setVacation(oldVacation);
                 dayDao.save(day);
             }
             for (LocalDate ld : daysVacationOld2) {
                 Day Noday = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld));
-                System.out.println("nooooooooooooo day" + Noday);
-
                 Noday.setVacation(null);
                 dayDao.save(Noday);
             }
@@ -234,15 +224,12 @@ public class DayServiceImpl implements DayService {
             oldVacation.setType(vacation.getType());
             for (LocalDate localDate : daysVacation) {
                 Day day = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(localDate));
-                System.out.println("zaaaydin day" + day);
                 vacationService.saveVacation(oldVacation);
                 day.setVacation(oldVacation);
                 dayDao.save(day);
             }
             for (LocalDate ld : daysVacationOld2) {
                 Day Noday = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld));
-                System.out.println("nooooooooooooo day" + Noday);
-
                 Noday.setVacation(null);
                 dayDao.save(Noday);
             }

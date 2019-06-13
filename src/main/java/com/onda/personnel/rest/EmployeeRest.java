@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
 @RequestMapping("/personnel-api/personnels/employee")
 public class EmployeeRest {
 
