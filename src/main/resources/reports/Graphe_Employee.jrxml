@@ -190,7 +190,7 @@
 	<detail>
 		<band height="350" splitType="Stretch">
 			<stackedBarChart>
-				<chart isShowLegend="true" customizerClass="com.example.chartcustomizer.customizers.MyBarChartCustomizer" theme="aegean">
+				<chart isShowLegend="true" customizerClass="com.onda.chartcustomiser.MyBarChartCustomiser" theme="aegean">
 					<reportElement x="51" y="5" width="700" height="340" isRemoveLineWhenBlank="true" uuid="c571f83f-73cc-47a5-a0c6-5a1a68616bfa"/>
 					<chartTitle/>
 					<chartSubtitle/>
