@@ -5,10 +5,11 @@
  */
 package com.onda.personnel.rest.converter;
 
-import com.onda.personnel.util.DateUtil;
+import org.springframework.stereotype.Component;
+
 import com.onda.personnel.model.Vacation;
 import com.onda.personnel.rest.vo.VacationVo;
-import org.springframework.stereotype.Component;
+import com.onda.personnel.util.DateUtil;
 
 /**
  *

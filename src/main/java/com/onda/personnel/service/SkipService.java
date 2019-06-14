@@ -5,12 +5,11 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.model.DayDetail;
 import java.util.Date;
 import java.util.List;
 
+import com.onda.personnel.model.DayDetail;
 import com.onda.personnel.model.Skip;
-import com.onda.personnel.model.Vacation;
 
 /**
  *

@@ -5,11 +5,12 @@
  */
 package com.onda.personnel.rest.converter;
 
-import com.onda.personnel.util.DateUtil;
-import com.onda.personnel.model.Skip;
-import com.onda.personnel.rest.vo.SkipVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.onda.personnel.model.Skip;
+import com.onda.personnel.rest.vo.SkipVo;
+import com.onda.personnel.util.DateUtil;
 
 /**
  *

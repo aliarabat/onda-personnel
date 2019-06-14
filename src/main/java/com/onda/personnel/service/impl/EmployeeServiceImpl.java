@@ -5,26 +5,25 @@
  */
 package com.onda.personnel.service.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.onda.personnel.dao.EmployeeDao;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.util.JasperUtil;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.http.HttpServletResponse;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @author AMINE

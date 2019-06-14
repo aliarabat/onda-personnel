@@ -5,9 +5,6 @@
  */
 package com.onda.personnel.rest.vo;
 
-import java.util.Date;
-import javax.persistence.Temporal;
-
 /**
  * @author AMINE
  */

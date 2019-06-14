@@ -5,10 +5,11 @@
  */
 package com.onda.personnel.rest.converter;
 
-import com.onda.personnel.util.NumberUtil;
+import org.springframework.stereotype.Component;
+
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.rest.vo.EmployeeVo;
-import org.springframework.stereotype.Component;
+import com.onda.personnel.util.NumberUtil;
 
 /**
  *

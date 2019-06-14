@@ -5,7 +5,6 @@
  */
 package com.onda.personnel.service;
 
-import java.time.LocalTime;
 import java.util.List;
 
 import com.onda.personnel.model.Detail;

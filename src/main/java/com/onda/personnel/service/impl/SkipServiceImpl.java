@@ -5,6 +5,12 @@
  */
 package com.onda.personnel.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.onda.personnel.dao.DayDao;
 import com.onda.personnel.dao.DayDetailDao;
 import com.onda.personnel.dao.SkipDao;
@@ -14,18 +20,10 @@ import com.onda.personnel.model.Detail;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.model.Skip;
 import com.onda.personnel.service.DayDetailService;
-
 import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.DetailService;
-
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.SkipService;
-
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @author JaafarDiyaou

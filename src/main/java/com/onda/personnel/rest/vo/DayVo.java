@@ -6,10 +6,6 @@
 package com.onda.personnel.rest.vo;
 
 import java.util.List;
-import javax.persistence.OneToOne;
-
-import com.onda.personnel.model.Mission;
-import com.onda.personnel.model.Vacation;
 
 /**
  *

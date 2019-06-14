@@ -5,7 +5,6 @@
  */
 package com.onda.personnel.service;
 
-import com.onda.personnel.model.DayDetail;
 import java.util.Date;
 import java.util.List;
 

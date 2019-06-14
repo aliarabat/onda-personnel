@@ -6,6 +6,7 @@
 package com.onda.personnel.dao;
 
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,8 @@ public interface DetailDao extends JpaRepository<Detail, Long> {
 
     public Detail findByWording(String wording);
 
-    public List<Detail> findAll();
+    @Override
+	public List<Detail> findAll();
 
     public List<Detail> findByMode(String mode);
 

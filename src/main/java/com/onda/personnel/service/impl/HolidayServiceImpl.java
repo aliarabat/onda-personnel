@@ -8,7 +8,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.onda.personnel.dao.HolidayDao;
-import com.onda.personnel.model.Day;
 import com.onda.personnel.model.Holiday;
 import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.HolidayService;

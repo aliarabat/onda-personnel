@@ -5,23 +5,27 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.util.DateUtil;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import com.onda.personnel.util.DateUtil;
 
 import net.sf.jasperreports.engine.JRException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author AMINE

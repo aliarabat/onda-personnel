@@ -6,13 +6,20 @@
 package com.onda.personnel.rest;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.rest.converter.AbstractConverter;
 import com.onda.personnel.rest.converter.WorkDetailConverter;
 import com.onda.personnel.rest.vo.WorkDetailVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
 import com.onda.personnel.service.WorkDetailService;
 
 /**

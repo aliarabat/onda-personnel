@@ -440,27 +440,31 @@ public class WorkServiceImpl implements WorkService {
 		}
 	}
 
-	@Override
-	public void printGraphForEmployee(HttpServletResponse response, int matricule, int year) {
-		List<Work> list = findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, year);
-		if (list != null && !list.isEmpty() && list.size() > 1) {
-			InputStream imageInputStream = getClass().getClassLoader().getResourceAsStream("reports/logo.png");
-			JasperPrint jasperPrint = null;
-			Map<String, Object> params = new HashMap<>();
 
-			Double average = list.stream().mapToDouble(item -> item.getWorkDetail().getHjf().getHour()
-					+ (item.getWorkDetail().getHjf().getMinute() * 10 / 6)).average().getAsDouble();
-			Work workMin = Collections.min(list, new WorkComparator());
-			Work workMax = Collections.max(list, new WorkComparator());
-			String lastMonth = MonthUtil.getMonth(workMax.getWorkDetail().getWorkDetailDate().getMonth() - 1);
-			params.put("year", year);
-			params.put("average", average);
-			params.put("employee", list.get(0).getEmployee());
-			params.put("firstMonth", MonthUtil.getMonth(workMin.getWorkDetail().getWorkDetailDate().getMonth() - 1));
-			params.put("lastMonth", lastMonth);
-			params.put("workMin", Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "") - 4);
-			params.put("workMax", Double.parseDouble(workMax.getWorkDetail().getHjf().getHour() + "") + 4);
-			params.put("logoImage", imageInputStream);
+    @Override
+    public void printGraphForEmployee(HttpServletResponse response, int matricule, int year) {
+        List<Work> list = findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, year);
+        if (list != null && !list.isEmpty() && list.size() > 1) {
+        	InputStream imageInputStream=getClass().getClassLoader().getResourceAsStream("reports/logo.png");
+            JasperPrint jasperPrint = null;
+            Map<String, Object> params = new HashMap<>();
+
+
+            Double average = list.stream().mapToDouble(item -> item.getWorkDetail().getHjf().getHour()
+                    + (item.getWorkDetail().getHjf().getMinute() * 10 / 6)).average().getAsDouble();
+            Work workMin = Collections.min(list, new WorkComparator());
+            Work workMax = Collections.max(list, new WorkComparator());
+            String lastMonth = MonthUtil.getMonth(
+                    workMax.getWorkDetail().getWorkDetailDate().getMonth() - 1);
+            params.put("year", year);
+            params.put("average", average);
+            params.put("employee", list.get(0).getEmployee());
+            params.put("firstMonth", MonthUtil.getMonth(workMin.getWorkDetail().getWorkDetailDate().getMonth() - 1));
+            params.put("lastMonth", lastMonth);
+            params.put("workMin", Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "") - 4);
+            params.put("workMax", Double.parseDouble(workMax.getWorkDetail().getHjf().getHour() + "") + 4);
+            params.put("logoImage", imageInputStream);
+
 
 			OutputStream out = null;
 

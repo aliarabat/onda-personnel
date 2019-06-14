@@ -5,17 +5,16 @@
  */
 package com.onda.personnel.rest;
 
-import com.onda.personnel.rest.converter.DayDetailConverter;
-import com.onda.personnel.rest.vo.DayDetailVo;
-import com.onda.personnel.service.SkipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.onda.personnel.rest.converter.DayDetailConverter;
+import com.onda.personnel.rest.vo.DayDetailVo;
+import com.onda.personnel.service.SkipService;
 
 /**
  *

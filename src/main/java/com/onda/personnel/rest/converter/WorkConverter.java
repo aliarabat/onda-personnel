@@ -5,9 +5,10 @@
  */
 package com.onda.personnel.rest.converter;
 
+import org.springframework.stereotype.Component;
+
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.vo.WorkVo;
-import org.springframework.stereotype.Component;
 
 /**
  *

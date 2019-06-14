@@ -5,9 +5,10 @@
  */
 package com.onda.personnel.rest.converter;
 
+import org.springframework.stereotype.Component;
+
 import com.onda.personnel.model.DayDetail;
 import com.onda.personnel.rest.vo.DayDetailVo;
-import org.springframework.stereotype.Component;
 
 /**
  *
