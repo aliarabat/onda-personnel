@@ -5,10 +5,13 @@
  */
 package com.onda.personnel.service.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -16,17 +19,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.onda.personnel.util.DateUtil;
-import com.onda.personnel.util.JasperUtil;
-import com.onda.personnel.util.MonthUtil;
-import com.onda.personnel.util.NumberUtil;
-import com.onda.personnel.util.WorkComparator;
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.model.Work;
 import com.onda.personnel.rest.converter.WorkConverter;
@@ -35,12 +34,13 @@ import com.onda.personnel.rest.vo.DayVo;
 import com.onda.personnel.rest.vo.WorkDetailVo;
 import com.onda.personnel.rest.vo.WorkVo;
 import com.onda.personnel.service.WorkService;
-import java.io.ByteArrayOutputStream;
-import java.time.Month;
-import java.util.stream.Collectors;
+import com.onda.personnel.util.DateUtil;
+import com.onda.personnel.util.JasperUtil;
+import com.onda.personnel.util.MonthUtil;
+import com.onda.personnel.util.NumberUtil;
+import com.onda.personnel.util.WorkComparator;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
@@ -433,6 +433,7 @@ public class WorkServiceImpl implements WorkService {
     public void printGraphForEmployee(HttpServletResponse response, int matricule, int year) {
         List<Work> list = findAllByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(matricule, year);
         if (list != null && !list.isEmpty() && list.size() > 1) {
+        	InputStream imageInputStream=getClass().getClassLoader().getResourceAsStream("reports/logo.png");
             JasperPrint jasperPrint = null;
             Map<String, Object> params = new HashMap<>();
 
@@ -449,6 +450,7 @@ public class WorkServiceImpl implements WorkService {
             params.put("lastMonth", lastMonth);
             params.put("workMin", Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "") - 4);
             params.put("workMax", Double.parseDouble(workMax.getWorkDetail().getHjf().getHour() + "") + 4);
+            params.put("logoImage", imageInputStream);
 
             OutputStream out = null;
 

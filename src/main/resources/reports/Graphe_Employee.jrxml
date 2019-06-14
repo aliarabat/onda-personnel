@@ -35,6 +35,9 @@
 	</parameter>
 	<parameter name="workMin" class="java.lang.Double"/>
 	<parameter name="workMax" class="java.lang.Double"/>
+	<parameter name="logoImage" class="java.io.InputStream">
+		<defaultValueExpression><![CDATA[$P{logoImage}]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -94,9 +97,9 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Résultats: Année "+$P{year}]]></textFieldExpression>
 			</textField>
-			<image>
+			<image onErrorType="Icon">
 				<reportElement x="361" y="8" width="80" height="55" uuid="39e7917c-4a2d-4a8e-a55d-21c9ebbcad26"/>
-				<imageExpression><![CDATA["src/main/java/com/onda/personnel/asset/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logoImage}]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
@@ -187,7 +190,7 @@
 	<detail>
 		<band height="350" splitType="Stretch">
 			<stackedBarChart>
-				<chart isShowLegend="true" evaluationTime="Master" customizerClass="com.onda.personnel.reports.MyBarChartCustomizer" theme="aegean">
+				<chart isShowLegend="true" customizerClass="com.example.chartcustomizer.customizers.MyBarChartCustomizer" theme="aegean">
 					<reportElement x="51" y="5" width="700" height="340" isRemoveLineWhenBlank="true" uuid="c571f83f-73cc-47a5-a0c6-5a1a68616bfa"/>
 					<chartTitle/>
 					<chartSubtitle/>
