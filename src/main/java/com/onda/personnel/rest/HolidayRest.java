@@ -21,16 +21,16 @@ import com.onda.personnel.rest.vo.HolidayVo;
 import com.onda.personnel.service.HolidayService;
 
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/holiday")
 public class HolidayRest {
 
     @Autowired
-    private HolidayService holidayService;
+    HolidayService holidayService;
 
     @Autowired
     @Qualifier("holidayConverter")
-    private AbstractConverter<Holiday, HolidayVo> holidayConverter;
+    AbstractConverter<Holiday, HolidayVo> holidayConverter;
 
     @PostMapping("/")
     public int createHoliday(@RequestBody List<HolidayVo> holidaysVo) {

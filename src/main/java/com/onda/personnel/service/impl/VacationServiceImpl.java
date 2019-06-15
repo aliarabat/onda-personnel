@@ -25,6 +25,7 @@ public class VacationServiceImpl implements VacationService {
 
     @Autowired
     private VacationDao vacationDao;
+
     @Autowired
     private DayService dayService;
 
@@ -40,9 +41,9 @@ public class VacationServiceImpl implements VacationService {
             return -1;
         } else {
             List<Day> days = dayService.findByVacationId(id);
-            for (Day day : days) {
+            days.forEach((day) -> {
                 day.setVacation(null);
-            }
+            });
             vacationDao.delete(vac);
             return 1;
         }
@@ -52,17 +53,10 @@ public class VacationServiceImpl implements VacationService {
     public Vacation getVacationByID(Long id) {
         return vacationDao.getOne(id);
     }
+
     @Override
     public List<Vacation> findAllVacation() {
         return vacationDao.findAll();
-    }
-
-    public DayService getDayService() {
-        return dayService;
-    }
-
-    public void setDayService(DayService dayService) {
-        this.dayService = dayService;
     }
 
     public VacationDao getVacationDao() {
@@ -73,5 +67,12 @@ public class VacationServiceImpl implements VacationService {
         this.vacationDao = vacationDao;
     }
 
+    public DayService getDayService() {
+        return dayService;
+    }
+
+    public void setDayService(DayService dayService) {
+        this.dayService = dayService;
+    }
 
 }

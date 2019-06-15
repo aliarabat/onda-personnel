@@ -28,16 +28,16 @@ import com.onda.personnel.service.DetailService;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/Detail")
 public class DetailRest {
 
     @Autowired
-    private DetailService detailService;
+    DetailService detailService;
     @Autowired
-    private DetailConverter detailConverter;
+    DetailConverter detailConverter;
     @Autowired
-    private TimingConverter timingConverter;
+    TimingConverter timingConverter;
 
     @GetMapping("/wording/{wording}")
     public DetailVo findByWording(@PathVariable String wording) {

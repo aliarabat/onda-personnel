@@ -37,11 +37,11 @@ public class WorkDetail implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date workDetailDate;
     private Integer pan = 0;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Timing hn = new Timing(0, 0);
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Timing hjf = new Timing(0, 0);
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Day> days = new ArrayList<>();
 
     public WorkDetail() {
@@ -129,13 +129,13 @@ public class WorkDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "WorkDetail{" +
-                "id=" + id +
-                ", workDetailDate=" + workDetailDate +
-                ", pan=" + pan +
-                ", hn=" + hn +
-                ", hjf=" + hjf +
-                ", days=" + days +
-                '}';
+        return "WorkDetail{"
+                + "id=" + id
+                + ", workDetailDate=" + workDetailDate
+                + ", pan=" + pan
+                + ", hn=" + hn
+                + ", hjf=" + hjf
+                + ", days=" + days
+                + '}';
     }
 }

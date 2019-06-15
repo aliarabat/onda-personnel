@@ -18,21 +18,21 @@ import com.onda.personnel.model.Vacation;
  */
 public interface DayService {
 
-    public int createDay(Integer matricule, List<Day> days);
+    int createDay(Integer matricule, List<Day> days);
 
-    public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month);
+    List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month);
 
-    public Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate);
+    Day findByEmployeeMatriculeAndDateOfTheDay(Integer matricule, Date dayDate);
 
-    public List<Day> findByDayDate(Date dayDate);
+    List<Day> findByDayDate(Date dayDate);
 
-    public List<Day> findByDateOfTheWork(Date dateOfTheDay);
+    List<Day> findByDateOfTheWork(Date dateOfTheDay);
 
-    public int createVacation(Vacation vacation, Integer matricule);
-    
-   public int updateVacation(Vacation vacation, Integer matricule);
+    int createVacation(Vacation vacation, Integer matricule);
 
-   Day setDayInfos(List<DayDetail> dayDetails, Date toDate);
+    int updateVacation(Vacation vacation, Integer matricule);
 
-    public List<Day> findByVacationId(Long id);
+    Day setDayInfos(List<DayDetail> dayDetails, Date toDate);
+
+    List<Day> findByVacationId(Long id);
 }

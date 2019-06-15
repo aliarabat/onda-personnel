@@ -43,16 +43,6 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
     @Autowired
     private DayService dayService;
 
-    private static final Logger log = LoggerFactory.getLogger(WorkDetailSeviceImpl.class);
-
-    /*@Override
-    public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate) {
-        if (workDetailDao.findByWorkDetailDate(workDetailDate).isEmpty()) {
-            return null;
-        } else {
-            return workDetailDao.findByWorkDetailDate(workDetailDate);
-        }
-    }*/
     @Override
     public WorkDetail findByWorkDetailDate(LocalDate localDate) {
         return workDetailDao.findByWorkDetailDate(localDate);
@@ -86,7 +76,7 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
             int size = workDetail.getDays().size();
             Day dayMin = Collections.min(workDetail.getDays(), new DayComparator());
             workDetailListLength = DateUtil.fromDate(workDetail.getWorkDetailDate()).lengthOfMonth() - dayMin.getDayDate().getDate() + 1;
-            dayDate = DateUtil.fromDate(workDetail.getDays().get(size - 1).getDayDate()).plusDays(1);
+            dayDate = DateUtil.fromDate(Collections.max(workDetail.getDays(), new DayComparator()).getDayDate()).plusDays(1);
         }
 
         LocalDate ld = DateUtil.fromDate(workDetail.getWorkDetailDate()).plusMonths(1);
@@ -101,7 +91,6 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
                 dayDate = dayDate.plusDays(1);
             }
         } catch (NullPointerException e) {
-            log.error("null in for-loop block " + e.getMessage());
         }
         if (newWorkDetail.getDays() == null || newWorkDetail.getDays().isEmpty()) {
             saveWorkDetail(workDetail);
@@ -156,6 +145,32 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         workDetail.getDays().add(day);
     }
 
+    @Override
+    public WorkDetail findByEmployeeMatriculeAndWorkDetailDate(Integer matricule, int year, int month) {
+        Employee employee = employeeService.findByMatricule(matricule);
+        if (employee == null) {
+            return null;
+        } else {
+            LocalDate localDate = LocalDate.of(year, month, 1);
+            Date theDate = DateUtil.toDate(localDate);
+            Work work = workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, theDate);
+            if (work == null) {
+                return null;
+            } else {
+                WorkDetail workDetail = work.getWorkDetail();
+                return workDetail;
+            }
+        }
+    }
+
+    public WorkService getWorkService() {
+        return workService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
+    }
+
     public WorkDetailDao getWorkDetailDao() {
         return workDetailDao;
     }
@@ -172,14 +187,6 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         this.employeeService = employeeService;
     }
 
-    public WorkService getWorkService() {
-        return workService;
-    }
-
-    public void setWorkService(WorkService workService) {
-        this.workService = workService;
-    }
-
     public DayService getDayService() {
         return dayService;
     }
@@ -188,22 +195,4 @@ public class WorkDetailSeviceImpl implements WorkDetailService {
         this.dayService = dayService;
     }
 
-    @Override
-    public WorkDetail findByEmployeeMatriculeAndWorkDetailDate(Integer matricule, int year, int month) {
-        Employee employee = employeeService.findByMatricule(matricule);
-        if (employee == null) {
-            return null;
-        } else {
-
-            LocalDate localDate = LocalDate.of(year, month, 1);
-            Date theDate = DateUtil.toDate(localDate);
-            Work work = workService.findByEmployeeMatriculeAndWorkDetailWorkDetailDate(matricule, theDate);
-            if (work == null) {
-                return null;
-            } else {
-                WorkDetail workDetail = work.getWorkDetail();
-                return workDetail;
-            }
-        }
-    }
 }

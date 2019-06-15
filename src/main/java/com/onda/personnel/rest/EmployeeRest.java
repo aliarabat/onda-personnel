@@ -34,16 +34,16 @@ import net.sf.jasperreports.engine.JRException;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/employee")
 public class EmployeeRest {
 
     @Autowired
-    private EmployeeService employeeService;
+    EmployeeService employeeService;
 
     @Autowired
     @Qualifier("employeeConverter")
-    private AbstractConverter<Employee, EmployeeVo> employeeConverter;
+    AbstractConverter<Employee, EmployeeVo> employeeConverter;
 
     @GetMapping("/matricule/{matricule}")
     public EmployeeVo findByMatricule(@PathVariable Integer matricule) {
@@ -86,11 +86,6 @@ public class EmployeeRest {
     @GetMapping("/id/{id}")
     public EmployeeVo getEmployeeById(@PathVariable Long id) {
         return employeeConverter.toVo(employeeService.getEmployeeById(id));
-    }
-
-    @GetMapping("/generatepdf/matricule/{matricule}")
-    public void generatePdf(HttpServletResponse response, @PathVariable Integer matricule) throws JRException, IOException {
-        employeeService.print(response, matricule);
     }
 
     public EmployeeService getEmployeeService() {

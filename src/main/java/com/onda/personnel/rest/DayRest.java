@@ -30,25 +30,24 @@ import com.onda.personnel.util.DateUtil;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/day")
 public class DayRest {
 
     @Autowired
-    private DayService dayService;
+    DayService dayService;
 
     @Autowired
-    private DayConverter dayConverter;
+    DayConverter dayConverter;
 
     @Autowired
-    private VacationConverter vacationConverter;
+    VacationConverter vacationConverter;
 
     @Autowired
-    private VacationService vacationService;
+    VacationService vacationService;
 
     @PostMapping("/matricule/{matricule}")
     public int createDay(@PathVariable Integer matricule, @RequestBody List<DayVo> days) {
-        days.forEach(day -> System.out.println(day.toString()));
         return dayService.createDay(matricule, dayConverter.toItem(days));
     }
 
@@ -83,12 +82,12 @@ public class DayRest {
         Date thedate = DateUtil.toDate(DateUtil.fromStringToLocalDate(dayDate));
         return new DayConverter().toVo(dayService.findByDayDate(thedate));
     }
+
     @GetMapping("/vacation/id/{id}")
     public VacationVo getVacationByID(@PathVariable Long id) {
         return vacationConverter.toVo(vacationService.getVacationByID(id));
     }
 
-    
     public DayService getDayService() {
         return dayService;
     }

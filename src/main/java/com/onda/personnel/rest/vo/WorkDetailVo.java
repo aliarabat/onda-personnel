@@ -35,7 +35,7 @@ public class WorkDetailVo {
     }
 
     public WorkDetailVo(String workDetailDate, int skipNumber, int missionNumber, int replacementNumber, int vacationNumber, int holidaysNumber) {
-        this.workDetailDate=workDetailDate;
+        this.workDetailDate = workDetailDate;
         this.skipNumber = skipNumber;
         this.missionNumber = missionNumber;
         this.replacementNumber = replacementNumber;

@@ -32,21 +32,24 @@ import com.onda.personnel.service.SkipService;
 public class SkipServiceImpl implements SkipService {
 
     @Autowired
-    SkipDao skipDao;
+    private SkipDao skipDao;
     @Autowired
-    EmployeeService employeeService;
-    @Autowired
-    DetailService detailService;
+    private EmployeeService employeeService;
 
     @Autowired
-    DayDetailDao dayDetailDao;
-    @Autowired
-    DayService dayService;
+    private DetailService detailService;
 
     @Autowired
-    DayDao dayDao;
+    private DayDetailDao dayDetailDao;
+
     @Autowired
-    DayDetailService dayDetailService;
+    private DayService dayService;
+
+    @Autowired
+    private DayDao dayDao;
+
+    @Autowired
+    private DayDetailService dayDetailService;
 
     @Override
     public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate) {
@@ -104,8 +107,6 @@ public class SkipServiceImpl implements SkipService {
             } else {
                 Day day1 = dayService.findByEmployeeMatriculeAndDateOfTheDay(skip1.getEmployee().getMatricule(), skip1.getSkipDate());
                 Day day = dayService.findByEmployeeMatriculeAndDateOfTheDay(skip.getEmployee().getMatricule(), skip.getSkipDate());
-                System.out.println("hahowaaaaaaa" + day);
-                System.out.println("hahowaaaaaaa" + day1);
                 if (day == null || day1 == null) {
                     return -2;
                 } else if (day.getVacation() != null) {
@@ -220,6 +221,14 @@ public class SkipServiceImpl implements SkipService {
         }
     }
 
+    public SkipDao getSkipDao() {
+        return skipDao;
+    }
+
+    public void setSkipDao(SkipDao skipDao) {
+        this.skipDao = skipDao;
+    }
+
     public EmployeeService getEmployeeService() {
         return employeeService;
     }
@@ -228,12 +237,8 @@ public class SkipServiceImpl implements SkipService {
         this.employeeService = employeeService;
     }
 
-    public SkipDao getSkipDao() {
-        return skipDao;
-    }
-
-    public void setSkipDao(SkipDao skipDao) {
-        this.skipDao = skipDao;
+    public DetailService getDetailService() {
+        return detailService;
     }
 
     public void setDetailService(DetailService detailService) {
@@ -262,6 +267,14 @@ public class SkipServiceImpl implements SkipService {
 
     public void setDayDao(DayDao dayDao) {
         this.dayDao = dayDao;
+    }
+
+    public DayDetailService getDayDetailService() {
+        return dayDetailService;
+    }
+
+    public void setDayDetailService(DayDetailService dayDetailService) {
+        this.dayDetailService = dayDetailService;
     }
 
 }

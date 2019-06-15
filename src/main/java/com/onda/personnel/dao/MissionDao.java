@@ -18,7 +18,8 @@ import com.onda.personnel.model.Mission;
  * @author AMINE
  */
 @Repository
-public interface MissionDao extends JpaRepository<Mission, Long>{
-  public List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule,Date startingDate); 
-    
+public interface MissionDao extends JpaRepository<Mission, Long> {
+
+    List<Mission> findByEmployeeMatriculeAndStartingDate(Integer matricule, Date startingDate);
+
 }

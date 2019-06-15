@@ -25,15 +25,13 @@ public interface EmployeeService {
 
     int deleteEmployee(Integer matricule);
 
-    public List<Employee> findByIsExist(boolean isExist);
+    List<Employee> findByIsExist(boolean isExist);
 
-    void print(HttpServletResponse response, Integer matricule);
+    Employee getEmployeeById(Long id);
 
-    public Employee getEmployeeById(Long id);
+    int revert(Integer matricule);
 
-    public int revert(Integer matricule);
+    List<Employee> findByType(String type);
 
-    public List<Employee> findByType(String type);
-    
-    public long count();
+    long count();
 }

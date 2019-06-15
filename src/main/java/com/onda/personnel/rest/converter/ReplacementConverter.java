@@ -17,10 +17,7 @@ import com.onda.personnel.util.DateUtil;
  * @author AMINE
  */
 @Component
-public class ReplacementConverter extends AbstractConverter<Replacement, ReplacementVo>  {
-
-    @Autowired
-    EmployeeConverter employeeConverter;
+public class ReplacementConverter extends AbstractConverter<Replacement, ReplacementVo> {
 
     @Override
     public Replacement toItem(ReplacementVo vo) {
@@ -29,7 +26,7 @@ public class ReplacementConverter extends AbstractConverter<Replacement, Replace
         } else {
             Replacement rep = new Replacement();
             rep.setId(vo.getId());
-            rep.setOriginalEmployee(new EmployeeConverter().toItem(vo.getOriginalEmployee()) );
+            rep.setOriginalEmployee(new EmployeeConverter().toItem(vo.getOriginalEmployee()));
             rep.setReplacedEmpolyee(new EmployeeConverter().toItem(vo.getReplacedEmployee()));
             rep.setReplacementDate(DateUtil.toDate(DateUtil.fromStringToLocalDate(vo.getReplacementDate())));
             rep.setReference(vo.getReference());
@@ -53,14 +50,6 @@ public class ReplacementConverter extends AbstractConverter<Replacement, Replace
             repVo.setDetailVo(new DetailConverter().toVo(item.getDetail()));
             return repVo;
         }
-    }
-
-    public EmployeeConverter getEmployeeConverter() {
-        return employeeConverter;
-    }
-
-    public void setEmployeeConverter(EmployeeConverter employeeConverter) {
-        this.employeeConverter = employeeConverter;
     }
 
 }

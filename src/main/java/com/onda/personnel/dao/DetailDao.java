@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.onda.personnel.model.Detail;
+
 /**
  *
  * @author AMINE
@@ -18,12 +19,9 @@ import com.onda.personnel.model.Detail;
 @Repository
 public interface DetailDao extends JpaRepository<Detail, Long> {
 
-    public Detail findByWording(String wording);
+    Detail findByWording(String wording);
 
-    @Override
-	public List<Detail> findAll();
-
-    public List<Detail> findByMode(String mode);
+    List<Detail> findByMode(String mode);
 
     Detail findTopByWording(String wording);
 }

@@ -25,7 +25,6 @@ public class VacationVo {
         this.employeeVo = employeeVo;
     }
 
-
     public Long getId() {
         return id;
     }

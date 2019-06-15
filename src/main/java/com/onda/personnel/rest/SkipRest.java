@@ -21,7 +21,7 @@ import com.onda.personnel.service.SkipService;
  * @author JaafarDiyaou
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/skip")
 public class SkipRest {
 
@@ -32,8 +32,6 @@ public class SkipRest {
     public int updateSkip(@RequestBody DayDetailVo dayDetailVo) {
         return skipService.updateSkip(new DayDetailConverter().toItem(dayDetailVo));
     }
-
-    
 
     public SkipService getSkipService() {
         return skipService;

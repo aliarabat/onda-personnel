@@ -26,20 +26,21 @@ import com.onda.personnel.service.WorkService;
 import com.onda.personnel.util.DateUtil;
 
 import net.sf.jasperreports.engine.JRException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 /**
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/work")
 public class WorkRest {
 
     @Autowired
-    private WorkService workService;
+    WorkService workService;
 
     @Autowired
-    private WorkConverter workConverter;
+    WorkConverter workConverter;
 
     @GetMapping("/matricule/{matricule}/workDetailDate/{workDetailDate}")
     public WorkVo findByEmployeeMatriculeAndWorkDetailWorkDetailDate(@PathVariable Integer matricule,
@@ -127,6 +128,11 @@ public class WorkRest {
     @GetMapping("/countall/year/{year}")
     public List<WorkVo> countAll(@PathVariable int year) {
         return workService.countAll(year);
+    }
+
+    @DeleteMapping("/id/{id}")
+    public int deleteById(@PathVariable long id) {
+        return workService.deleteById(id);
     }
 
     @GetMapping("/")

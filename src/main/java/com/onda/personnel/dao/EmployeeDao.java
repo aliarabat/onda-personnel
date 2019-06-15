@@ -19,10 +19,10 @@ import com.onda.personnel.model.Employee;
 @Repository
 public interface EmployeeDao extends JpaRepository<Employee, Long> {
 
-    public Employee findByMatricule(Integer matricule);
+    Employee findByMatricule(Integer matricule);
 
-    public List<Employee> findByIsExist(boolean isExist);
+    List<Employee> findByIsExist(boolean isExist);
 
-    public List<Employee> findByType(String type);
+    List<Employee> findByType(String type);
 
 }

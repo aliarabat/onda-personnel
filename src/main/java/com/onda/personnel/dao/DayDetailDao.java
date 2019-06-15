@@ -19,16 +19,16 @@ import com.onda.personnel.model.DayDetail;
 @Repository
 public interface DayDetailDao extends JpaRepository<DayDetail, Long> {
 
-    public List<DayDetail> findByMissionIsNotNull();
+    List<DayDetail> findByMissionIsNotNull();
 
-    public List<DayDetail> findByReplacementIsNotNullAndDetailIsNotNull();
+    List<DayDetail> findByReplacementIsNotNullAndDetailIsNotNull();
 
-    public List<DayDetail> findByDetailIsNullAndSkipIsNullAndReplacementIsNullAndMissionIsNull();
+    List<DayDetail> findByDetailIsNullAndSkipIsNullAndReplacementIsNullAndMissionIsNull();
 
-    public DayDetail findByReplacementIdAndDetailIsNull(Long id);
+    DayDetail findByReplacementIdAndDetailIsNull(Long id);
 
-    public List<DayDetail> findBySkipIsNotNull();
+    List<DayDetail> findBySkipIsNotNull();
 
-    public List<DayDetail> findBySkipId(Long id);
+    List<DayDetail> findBySkipId(Long id);
 
 }

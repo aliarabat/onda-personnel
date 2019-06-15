@@ -34,16 +34,18 @@ import com.onda.personnel.service.SkipService;
  * @author JaafarDiyaou
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/dayDetail")
 public class DayDetailRest {
 
     @Autowired
     DayDetailService dayDetailService;
-     @Autowired
-    SkipService skipService;
+
     @Autowired
-    private DayDetailDao dayDetailDao;
+    SkipService skipService;
+
+    @Autowired
+    DayDetailDao dayDetailDao;
 
     @PutMapping("/mission/matricule/{matricule}")
     public int updateDayDetailMission(@PathVariable Integer matricule, @RequestBody MissionVo missionVo) {

@@ -8,20 +8,19 @@ package com.onda.personnel.rest.vo;
 /**
  * @author AMINE
  */
-public class WorkVo implements Comparable<WorkVo>{
+public class WorkVo implements Comparable<WorkVo> {
 
     private Long id;
     private WorkDetailVo workDetailVo;
     private EmployeeVo employeeVo;
 
     public WorkVo(WorkDetailVo workDetailVo) {
-        this.workDetailVo=workDetailVo;
+        this.workDetailVo = workDetailVo;
     }
 
     public WorkVo() {
     }
 
-   
     public Long getId() {
         return id;
     }

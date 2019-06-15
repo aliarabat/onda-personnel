@@ -18,6 +18,7 @@ import com.onda.personnel.model.Replacement;
  * @author JaafarDiyaou
  */
 @Repository
-public interface ReplacementDao extends JpaRepository<Replacement, Long>{
-        public List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule,Date replacementDate); 
+public interface ReplacementDao extends JpaRepository<Replacement, Long> {
+
+    List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule, Date replacementDate);
 }

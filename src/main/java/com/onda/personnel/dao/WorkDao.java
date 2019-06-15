@@ -44,5 +44,5 @@ public interface WorkDao extends JpaRepository<Work, Long> {
 
     List<Work> findByWorkDetailWorkDetailDateBetween(Date dateDebut, Date dateFin);
 
-    public long countByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Date dateDebut, Date dateFin);
+    long countByEmployeeMatriculeAndWorkDetailWorkDetailDateBetween(Integer matricule, Date dateDebut, Date dateFin);
 }

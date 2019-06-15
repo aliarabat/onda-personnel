@@ -33,7 +33,6 @@ public class VacationConverter extends AbstractConverter<Vacation, VacationVo> {
 
             return vac;
         }
-
     }
 
     @Override
@@ -48,10 +47,8 @@ public class VacationConverter extends AbstractConverter<Vacation, VacationVo> {
             vacVo.setStartingDate(DateUtil.toString(DateUtil.fromDate(item.getStartingDate())));
             vacVo.setType(item.getType());
             vacVo.setEmployeeVo(new EmployeeConverter().toVo(item.getEmployee()));
-            
+
             return vacVo;
         }
     }
 }
-
-

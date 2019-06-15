@@ -31,10 +31,13 @@ public class MissionServiceImpl implements MissionService {
 
     @Autowired
     MissionDao missionDao;
+
     @Autowired
     DayDetailDao dayDetailDao;
+
     @Autowired
     DayService dayService;
+
     @Autowired
     EmployeeService employeeService;
 
@@ -67,54 +70,6 @@ public class MissionServiceImpl implements MissionService {
         return missionDao.findByEmployeeMatriculeAndStartingDate(matricule, startingDate);
     }
 
-    public MissionDao getMissionDao() {
-        return missionDao;
-    }
-
-    public void setMissionDao(MissionDao missionDao) {
-        this.missionDao = missionDao;
-    }
-
-    public EmployeeService getEmployeeService() {
-        return employeeService;
-    }
-
-    public void setEmployeeService(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
-
-    public DayService getDayService() {
-        return dayService;
-    }
-
-    public void setDayService(DayService dayService) {
-        this.dayService = dayService;
-    }
-
-    public DayDetailDao getDayDetailDao() {
-        return dayDetailDao;
-    }
-
-    public void setDayDetailDao(DayDetailDao dayDetailDao) {
-        this.dayDetailDao = dayDetailDao;
-    }
-
-    public DayDao getDayDao() {
-        return dayDao;
-    }
-
-    public void setDayDao(DayDao dayDao) {
-        this.dayDao = dayDao;
-    }
-
-    public DetailService getDetailService() {
-        return detailService;
-    }
-
-    public void setDetailService(DetailService detailService) {
-        this.detailService = detailService;
-    }
-
     @Override
     public int updateMission(DayDetail dayDetail) {
         DayDetail dayDetail1 = dayDetailDao.getOne(dayDetail.getId());
@@ -128,14 +83,11 @@ public class MissionServiceImpl implements MissionService {
             } else {
                 Day day1 = dayService.findByEmployeeMatriculeAndDateOfTheDay(mission1.getEmployee().getMatricule(), mission1.getStartingDate());
                 Day day = dayService.findByEmployeeMatriculeAndDateOfTheDay(mission.getEmployee().getMatricule(), mission.getStartingDate());
-//                System.out.println("hahowaaaaaaa" + day);
-//                System.out.println("hahowaaaaaaa" + day1);
                 if (day == null || day1 == null) {
                     return -2;
                 } else if (day.getVacation() != null) {
                     return -4;
                 } else {
-
                     mission1.setEmployee(dayDetail.getMission().getEmployee());
                     mission1.setReference(dayDetail.getMission().getReference());
                     mission1.setType(dayDetail.getMission().getType());
@@ -161,6 +113,54 @@ public class MissionServiceImpl implements MissionService {
                 }
             }
         }
+    }
+
+    public MissionDao getMissionDao() {
+        return missionDao;
+    }
+
+    public void setMissionDao(MissionDao missionDao) {
+        this.missionDao = missionDao;
+    }
+
+    public DayDetailDao getDayDetailDao() {
+        return dayDetailDao;
+    }
+
+    public void setDayDetailDao(DayDetailDao dayDetailDao) {
+        this.dayDetailDao = dayDetailDao;
+    }
+
+    public DayService getDayService() {
+        return dayService;
+    }
+
+    public void setDayService(DayService dayService) {
+        this.dayService = dayService;
+    }
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    public DetailService getDetailService() {
+        return detailService;
+    }
+
+    public void setDetailService(DetailService detailService) {
+        this.detailService = detailService;
+    }
+
+    public DayDao getDayDao() {
+        return dayDao;
+    }
+
+    public void setDayDao(DayDao dayDao) {
+        this.dayDao = dayDao;
     }
 
 }

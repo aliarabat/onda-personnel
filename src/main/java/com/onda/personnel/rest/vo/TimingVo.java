@@ -38,5 +38,4 @@ public class TimingVo {
         this.minute = minute;
     }
 
-
 }

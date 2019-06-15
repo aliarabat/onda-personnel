@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.onda.personnel.dao.HolidayDao;
 import com.onda.personnel.model.Holiday;
-import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.HolidayService;
 
 @Service
@@ -17,9 +16,6 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Autowired
     private HolidayDao holidayDao;
-
-    @Autowired
-    private DayService dayService;
 
     @Override
     public int createHoliday(List<Holiday> holidays) {
@@ -35,14 +31,6 @@ public class HolidayServiceImpl implements HolidayService {
             });
             return 1;
         }
-    }
-
-    public HolidayDao getHolidayDao() {
-        return holidayDao;
-    }
-
-    public void setHolidayDao(HolidayDao holidayDao) {
-        this.holidayDao = holidayDao;
     }
 
     @Override
@@ -71,13 +59,6 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public void delete(Long id) {
-        /*List<Day> days = dayService.findByHolidayId(id);
-        if (!days.isEmpty() && days != null) {
-            days.forEach(d -> {
-                d.setHoliday(null);
-                dayService.save(d);
-            });
-        }*/
         holidayDao.deleteById(id);
     }
 
@@ -86,16 +67,17 @@ public class HolidayServiceImpl implements HolidayService {
         return holidayDao.findByReference(reference);
     }
 
-    public DayService getDayService() {
-        return dayService;
-    }
-
-    public void setDayService(DayService dayService) {
-        this.dayService = dayService;
-    }
-
     @Override
     public long count() {
         return holidayDao.count();
     }
+
+    public HolidayDao getHolidayDao() {
+        return holidayDao;
+    }
+
+    public void setHolidayDao(HolidayDao holidayDao) {
+        this.holidayDao = holidayDao;
+    }
+
 }

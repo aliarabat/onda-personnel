@@ -24,8 +24,6 @@ public class DetailServiceImpl implements DetailService {
 
     @Autowired
     private DetailDao detailDao;
-    @Autowired
-    private DetailService detailService;
 
     @Override
     public Detail findByWording(String wording) {
@@ -39,31 +37,9 @@ public class DetailServiceImpl implements DetailService {
             if (dd != null) {
                 return -1;
             } else if (dd == null) {
-
-                if (detail.getWording().equals("R")) {
-                    detail.setMode("Normal");
-                    detail.setEndingTime(detail.getEndingTime());
-                    detail.setStartingTime(detail.getStartingTime());
-                    detail.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
-                    detail.setHn(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), true));
-                    detail.setPan(detail.getPan());
-                    detailDao.save(detail);
-                    Detail ddd = new Detail();
-                    ddd.setMode("Ramadan");
-                    ddd.setWording(detail.getWording());
-                    ddd.setEndingTime(detail.getEndingTime());
-                    ddd.setStartingTime(detail.getStartingTime());
-                    ddd.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
-                    ddd.setHn(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), true));
-                    ddd.setPan(detail.getPan());
-                    detailDao.save(ddd);
-
-                } else {
-                    detail.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
-                    detail.setHn(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), true));
-                    detailDao.save(detail);
-                }
-
+                detail.setHe(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), false));
+                detail.setHn(getHoursBetween(detail.getStartingTime().getHour(), detail.getStartingTime().getMinute(), detail.getEndingTime().getHour(), detail.getEndingTime().getMinute(), true));
+                detailDao.save(detail);
             }
         }
         return 1;
@@ -125,8 +101,8 @@ public class DetailServiceImpl implements DetailService {
 
     @Override
     public long count() {
-        if (detailDao.findTopByWording("R")!=null) {
-            long res=detailDao.count()-2;
+        if (detailDao.findByWording("R") != null) {
+            long res = detailDao.count() - 1;
             return res;
         }
         return detailDao.count();
@@ -136,24 +112,12 @@ public class DetailServiceImpl implements DetailService {
         return detailDao;
     }
 
-    public void setDayDetailDao(DetailDao detailDao) {
-        this.detailDao = detailDao;
-    }
-
     public DetailDao getDetailDao() {
         return detailDao;
     }
 
     public void setDetailDao(DetailDao detailDao) {
         this.detailDao = detailDao;
-    }
-
-    public DetailService getDetailService() {
-        return detailService;
-    }
-
-    public void setDetailService(DetailService detailService) {
-        this.detailService = detailService;
     }
 
 }

@@ -84,15 +84,10 @@ public class DayServiceImpl implements DayService {
         int pan = 0, minutesHnWorked = 0, minutesHeWorked = 0, hoursHnWorked = 0, hoursHeWorked = 0;
         day.setDayDate(ld);
         for (DayDetail dayDetail : dayDetails) {
-            Detail dd = new Detail();
-            if (dayDetail.getDetail().getWording().equals("R")) {
-                dd = detailService.findTopByWording("R");
-            } else {
-                dd = detailService.findByWording(dayDetail.getDetail().getWording());
-            }
+            Detail dd = detailService.findByWording(dayDetail.getDetail().getWording());
             dayDetail.setDetail(dd);
             day.getDayDetails().add(dayDetailService.createDayDetail(dayDetail));
-            if (!dd.getWording().equals("R")) {
+            if (!dd.getWording().equalsIgnoreCase("R")) {
                 pan += dd.getPan();
                 hoursHnWorked += dd.getHn().getHour();
                 minutesHnWorked += dd.getHn().getMinute();
@@ -116,12 +111,7 @@ public class DayServiceImpl implements DayService {
     @Override
     public List<Day> findDaysOfWorkByEmployeeMatriculeAndYearAndMonth(Integer matricule, int year, int month) {
         List<Work> work = workService.findByEmployeeMatriculeAndMonthAndYear(matricule, year, month);
-        if (work == null) {
-            return null;
-        } else {
-            //return work.getWorkDetail().getDays();
-            return null;
-        }
+        return null;
     }
 
     @Override
@@ -146,7 +136,6 @@ public class DayServiceImpl implements DayService {
             } else {
                 return theDay;
             }
-
         }
 
     }
@@ -167,14 +156,12 @@ public class DayServiceImpl implements DayService {
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
                 vacationService.saveVacation(vacation);
-
             }
             return res = 1;
 
         } else if (vacation.getType().equals("C.R")) {
             List<LocalDate> daysVacationWithoutSunday = betweenDate.noSundays(ldS, ldE);
             for (LocalDate ld : daysVacationWithoutSunday) {
-                System.out.println(ld);
                 Day day = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld));
                 vacation.setEmployee(emp);
                 day.setVacation(vacation);
@@ -212,18 +199,19 @@ public class DayServiceImpl implements DayService {
             oldVacation.setEndingDate(vacation.getEndingDate());
             oldVacation.setStartingDate(vacation.getStartingDate());
             oldVacation.setType(vacation.getType());
-            for (LocalDate localDate : daysVacation) {
-                Day day = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(localDate));
+            daysVacation.stream().map((localDate) -> findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(localDate))).map((day) -> {
                 vacationService.saveVacation(oldVacation);
                 day.setVacation(oldVacation);
+                return day;
+            }).forEachOrdered((day) -> {
                 dayDao.save(day);
-            }
-            for (LocalDate ld : daysVacationOld2) {
-                Day Noday = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld));
+            });
+            daysVacationOld2.stream().map((ld) -> findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld))).map((Noday) -> {
                 Noday.setVacation(null);
+                return Noday;
+            }).forEachOrdered((Noday) -> {
                 dayDao.save(Noday);
-            }
-
+            });
             return res = 1;
 
         } else if (vacation.getType().equals("C.R")) {
@@ -237,17 +225,19 @@ public class DayServiceImpl implements DayService {
             oldVacation.setEndingDate(vacation.getEndingDate());
             oldVacation.setStartingDate(vacation.getStartingDate());
             oldVacation.setType(vacation.getType());
-            for (LocalDate localDate : daysVacation) {
-                Day day = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(localDate));
+            daysVacation.stream().map((localDate) -> findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(localDate))).map((day) -> {
                 vacationService.saveVacation(oldVacation);
                 day.setVacation(oldVacation);
+                return day;
+            }).forEachOrdered((day) -> {
                 dayDao.save(day);
-            }
-            for (LocalDate ld : daysVacationOld2) {
-                Day Noday = findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld));
+            });
+            daysVacationOld2.stream().map((ld) -> findByEmployeeMatriculeAndDateOfTheDay(matricule, DateUtil.toDate(ld))).map((Noday) -> {
                 Noday.setVacation(null);
+                return Noday;
+            }).forEachOrdered((Noday) -> {
                 dayDao.save(Noday);
-            }
+            });
             return res = 2;
         }
         return res;
@@ -263,12 +253,18 @@ public class DayServiceImpl implements DayService {
         return dayDao.findByVacationId(id);
     }
 
-    public EmployeeService getEmployeeService() {
-        return employeeService;
-    }
-
-    public void setEmployeeService(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    @Override
+    public List<Day> findByDateOfTheWork(Date dateOfTheDay) {
+        LocalDate localDate = DateUtil.fromDate(dateOfTheDay);
+        LocalDate checkLocalDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
+        Date tmpDate = DateUtil.toDate(checkLocalDate);
+        List<Day> listDay = new ArrayList<>();
+        workService.findByWorkDetailWorkDetailDate(tmpDate).stream().map((work) -> work.getWorkDetail().getDays()).forEachOrdered((daysOfWork) -> {
+            daysOfWork.stream().filter((day) -> (day.getDayDate().compareTo(dateOfTheDay) == 0)).forEachOrdered((day) -> {
+                listDay.add(day);
+            });
+        });
+        return listDay;
     }
 
     public DayDao getDayDao() {
@@ -277,6 +273,14 @@ public class DayServiceImpl implements DayService {
 
     public void setDayDao(DayDao dayDao) {
         this.dayDao = dayDao;
+    }
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     public WorkDetailService getWorkDetailService() {
@@ -311,23 +315,6 @@ public class DayServiceImpl implements DayService {
         this.dayDetailService = dayDetailService;
     }
 
-    @Override
-    public List<Day> findByDateOfTheWork(Date dateOfTheDay) {
-        LocalDate localDate = DateUtil.fromDate(dateOfTheDay);
-        LocalDate checkLocalDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
-        Date tmpDate = DateUtil.toDate(checkLocalDate);
-        List<Day> listDay = new ArrayList<>();
-        for (Work work : workService.findByWorkDetailWorkDetailDate(tmpDate)) {
-            List<Day> daysOfWork = work.getWorkDetail().getDays();
-            for (Day day : daysOfWork) {
-                if (day.getDayDate().compareTo(dateOfTheDay) == 0) {
-                    listDay.add(day);
-                }
-            }
-        }
-        return listDay;
-    }
-
     public VacationService getVacationService() {
         return vacationService;
     }
@@ -343,4 +330,5 @@ public class DayServiceImpl implements DayService {
     public void setHolidayService(HolidayService holidayService) {
         this.holidayService = holidayService;
     }
+
 }

@@ -16,9 +16,7 @@ import com.onda.personnel.model.Replacement;
  */
 public interface ReplacementService {
 
-    public List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule, Date replacementDate);
+    List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule, Date replacementDate);
 
-    public Replacement createReplacement(Integer matricule, Integer matricule1, String wording, Replacement replacement);
-
-
+    Replacement createReplacement(Integer matricule, Integer matricule1, String wording, Replacement replacement);
 }

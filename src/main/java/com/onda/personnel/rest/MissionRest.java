@@ -21,21 +21,17 @@ import com.onda.personnel.service.MissionService;
  * @author JaafarDiyaou
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/mission")
 public class MissionRest {
+
     @Autowired
     MissionService missionService;
-    
-    
+
     @PutMapping("/")
     public int updateMission(@RequestBody DayDetailVo dayDetailVo) {
         return missionService.updateMission(new DayDetailConverter().toItem(dayDetailVo));
     }
-    
-    
-    
-    
 
     public MissionService getMissionService() {
         return missionService;
@@ -44,13 +40,5 @@ public class MissionRest {
     public void setMissionService(MissionService missionService) {
         this.missionService = missionService;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

@@ -31,11 +31,11 @@ public interface WorkService {
 
     List<Work> findAllByWorkDetailWorkDetailDateBetween(Integer annee);
 
-    public List<Work> findByEmployeeMatriculeAndMonthAndYear(Integer matricule, int year, int month);
+    List<Work> findByEmployeeMatriculeAndMonthAndYear(Integer matricule, int year, int month);
 
-    public List<Work> findByMonthAndYear(int year, int month);
+    List<Work> findByMonthAndYear(int year, int month);
 
-    public List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate);
+    List<Work> findByWorkDetailWorkDetailDate(Date workDetailDate);
 
     List<String> findFromDateToDate(Integer matricule);
 
@@ -52,4 +52,6 @@ public interface WorkService {
     List<Work> findAll();
 
     List<WorkVo> countAll(int year);
+
+    int deleteById(long id);
 }

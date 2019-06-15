@@ -25,7 +25,6 @@ public class ReplacementVo {
         this.detailVo = detailVo;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -57,9 +56,6 @@ public class ReplacementVo {
     public void setReplacedEmployee(EmployeeVo replacedEmployee) {
         this.replacedEmployee = replacedEmployee;
     }
-
-    
-
 
     public String getReplacementDate() {
         return replacementDate;

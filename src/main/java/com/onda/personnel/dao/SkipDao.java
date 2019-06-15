@@ -19,5 +19,6 @@ import com.onda.personnel.model.Skip;
  */
 @Repository
 public interface SkipDao extends JpaRepository<Skip, Long> {
-      public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule,Date skipDate); 
+
+    List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate);
 }

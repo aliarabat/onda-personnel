@@ -76,9 +76,13 @@ public class DetailVo {
         this.heVo = heVo;
     }
 
-    public String getReference() { return reference; }
+    public String getReference() {
+        return reference;
+    }
 
-    public void setReference(String reference) { this.reference = reference; }
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
 
     public String getMode() {
         return mode;

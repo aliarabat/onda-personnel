@@ -24,15 +24,15 @@ import com.onda.personnel.service.VacationService;
  * @author AMINE
  */
 @RestController
-@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk"})
+@CrossOrigin(origins = {"https://onda-marrakech.firebaseapp.com", "https://onda-menara.tk", "http://localhost:4200"})
 @RequestMapping("/personnel-api/personnels/vacation")
 public class vacationRest {
 
     @Autowired
-    private VacationConverter vacationConverter;
+    VacationConverter vacationConverter;
 
     @Autowired
-    private VacationService vacationService;
+    VacationService vacationService;
 
     @DeleteMapping("/id/{id}")
     public int removeVacation(@PathVariable Long id) {

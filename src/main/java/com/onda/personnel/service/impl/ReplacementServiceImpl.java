@@ -5,14 +5,14 @@
  */
 package com.onda.personnel.service.impl;
 
+import com.onda.personnel.dao.DayDao;
+import com.onda.personnel.dao.DayDetailDao;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.onda.personnel.dao.DayDao;
-import com.onda.personnel.dao.DayDetailDao;
 import com.onda.personnel.dao.ReplacementDao;
 import com.onda.personnel.model.Detail;
 import com.onda.personnel.model.Employee;
@@ -30,13 +30,16 @@ public class ReplacementServiceImpl implements ReplacementService {
 
     @Autowired
     ReplacementDao replacementDao;
+
     @Autowired
     EmployeeService employeeService;
+
     @Autowired
     DetailService detailService;
 
     @Autowired
     DayDetailDao dayDetailDao;
+
     @Autowired
     DayService dayService;
 
@@ -70,20 +73,20 @@ public class ReplacementServiceImpl implements ReplacementService {
 
     }
 
-    public EmployeeService getEmployeeService() {
-        return employeeService;
-    }
-
-    public void setEmployeeService(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
-
     public ReplacementDao getReplacementDao() {
         return replacementDao;
     }
 
     public void setReplacementDao(ReplacementDao replacementDao) {
         this.replacementDao = replacementDao;
+    }
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     public DetailService getDetailService() {
@@ -94,6 +97,28 @@ public class ReplacementServiceImpl implements ReplacementService {
         this.detailService = detailService;
     }
 
-   
+    public DayDetailDao getDayDetailDao() {
+        return dayDetailDao;
+    }
+
+    public void setDayDetailDao(DayDetailDao dayDetailDao) {
+        this.dayDetailDao = dayDetailDao;
+    }
+
+    public DayService getDayService() {
+        return dayService;
+    }
+
+    public void setDayService(DayService dayService) {
+        this.dayService = dayService;
+    }
+
+    public DayDao getDayDao() {
+        return dayDao;
+    }
+
+    public void setDayDao(DayDao dayDao) {
+        this.dayDao = dayDao;
+    }
 
 }

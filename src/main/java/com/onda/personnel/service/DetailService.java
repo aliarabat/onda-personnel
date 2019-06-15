@@ -16,23 +16,23 @@ import com.onda.personnel.model.Timing;
  */
 public interface DetailService {
 
-    public Detail findByWording(String wording);
+    Detail findByWording(String wording);
 
-    public int createDetail(List<Detail> details);
+    int createDetail(List<Detail> details);
 
-    public int updateDetail(Detail detail);
+    int updateDetail(Detail detail);
 
-    public int deleteDetail(String wording);
+    int deleteDetail(String wording);
 
-    public List<Detail> findAll();
+    List<Detail> findAll();
 
-    public List<Detail> findByMode(String mode);
+    List<Detail> findByMode(String mode);
 
-    public  Timing getHoursBetween(int startingHour, int startingMinute, int endingHour, int endingMinute, boolean isNight); 
-     
-    public Detail getDetailById(Long id );
+    Timing getHoursBetween(int startingHour, int startingMinute, int endingHour, int endingMinute, boolean isNight);
+
+    Detail getDetailById(Long id);
 
     Detail findTopByWording(String r);
-    
-    public long count();
+
+    long count();
 }

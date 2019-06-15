@@ -20,8 +20,6 @@ import com.onda.personnel.model.WorkDetail;
 
 public interface WorkDetailDao extends JpaRepository<WorkDetail, Long> {
 
-    public WorkDetail findByWorkDetailDate(LocalDate localDate);
-
-    //public List<WorkDetail> findByWorkDetailDate(LocalDate workDetailDate);
+    WorkDetail findByWorkDetailDate(LocalDate localDate);
 
 }

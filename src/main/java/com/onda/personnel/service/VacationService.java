@@ -15,15 +15,12 @@ import com.onda.personnel.model.Vacation;
  */
 public interface VacationService {
 
-    public void saveVacation(Vacation vacation);
-    
-    public int removeVacation (Long id);
-    
-    public List<Vacation> findAllVacation();
-    
-    public Vacation getVacationByID(Long id);
-    
-   
-    
-    
+    void saveVacation(Vacation vacation);
+
+    int removeVacation(Long id);
+
+    List<Vacation> findAllVacation();
+
+    Vacation getVacationByID(Long id);
+
 }

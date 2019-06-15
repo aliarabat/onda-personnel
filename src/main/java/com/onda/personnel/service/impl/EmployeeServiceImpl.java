@@ -5,13 +5,7 @@
  */
 package com.onda.personnel.service.impl;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +13,6 @@ import org.springframework.stereotype.Service;
 import com.onda.personnel.dao.EmployeeDao;
 import com.onda.personnel.model.Employee;
 import com.onda.personnel.service.EmployeeService;
-import com.onda.personnel.util.JasperUtil;
-
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  * @author AMINE
@@ -91,44 +80,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDao.findByIsExist(isExist);
     }
 
-    public EmployeeDao getEmployeeDao() {
-        return employeeDao;
-    }
-
-    public void setEmployeeDao(EmployeeDao employeeDao) {
-        this.employeeDao = employeeDao;
-    }
-
-    @Override
-    public void print(HttpServletResponse response, Integer matricule) {
-        JasperPrint jasperPrint = null;
-        //List<Employee> list = new ArrayList();
-        Employee employee = findByMatricule(matricule);
-        System.out.println("matricule ==> "+employee.getMatricule());
-        //list.add(employee);
-       
-        response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", String.format("attachement; filename=\"empployee" + employee.getMatricule() + ".pdf\""));
-        OutputStream out = null;
-        try {
-            out = response.getOutputStream();
-            jasperPrint=JasperUtil.generatePdf(employee, "Repprt_Employee.jasper");
-            //jasperPrint = new JasperUtil().generatePdf(list, null, "Employee_Profile.jasper");
-            JasperExportManager.exportReportToPdfStream(jasperPrint, out);
-        } catch (IOException ex) {
-            Logger.getLogger(EmployeeServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JRException ex) {
-            Logger.getLogger(EmployeeServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
     @Override
     public int revert(Integer matricule) {
         Employee checkEmployee = findByMatricule(matricule);
         if (checkEmployee == null) {
             return -1;
-
         } else {
             checkEmployee.setIsExist(true);
             employeeDao.save(checkEmployee);
@@ -140,10 +96,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> findByType(String type) {
         return employeeDao.findByType(type);
     }
-    
+
     @Override
-    public long count(){
+    public long count() {
         return employeeDao.count();
     }
 
+    public EmployeeDao getEmployeeDao() {
+        return employeeDao;
+    }
+
+    public void setEmployeeDao(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
+    }
 }

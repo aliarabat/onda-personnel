@@ -17,13 +17,7 @@ import com.onda.personnel.util.DateUtil;
  * @author AMINE
  */
 @Component
-public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
-    
-    
-    @Autowired
-    EmployeeConverter employeeConverter;    
-    @Autowired
-    DayDetailConverter dayDetailConverter;    
+public class SkipConverter extends AbstractConverter<Skip, SkipVo> {
 
     @Override
     public Skip toItem(SkipVo vo) {
@@ -39,9 +33,8 @@ public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
             skip.setDetail(new DetailConverter().toItem(vo.getDetailVo()));
             return skip;
         }
-        
     }
-    
+
     @Override
     public SkipVo toVo(Skip item) {
         if (item == null) {
@@ -56,21 +49,5 @@ public class SkipConverter  extends AbstractConverter<Skip, SkipVo>{
             skipVo.setDetailVo(new DetailConverter().toVo(item.getDetail()));
             return skipVo;
         }
-    }
-    
-    public EmployeeConverter getEmployeeConverter() {
-        return employeeConverter;
-    }
-    
-    public void setEmployeeConverter(EmployeeConverter employeeConverter) {
-        this.employeeConverter = employeeConverter;
-    }
-    
-    public DayDetailConverter getDayDetailConverter() {
-        return dayDetailConverter;
-    }
-    
-    public void setDayDetailConverter(DayDetailConverter dayDetailConverter) {
-        this.dayDetailConverter = dayDetailConverter;
     }
 }

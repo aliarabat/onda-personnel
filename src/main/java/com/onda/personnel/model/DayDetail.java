@@ -6,6 +6,7 @@
 package com.onda.personnel.model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,28 +27,17 @@ public class DayDetail implements Serializable {
     private Long id;
     @OneToOne
     private Detail detail;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE})
     private Replacement replacement;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE})
     private Skip skip;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE})
     private Mission mission;
-    
 
-    /**
-     *
-     * @return
-     */
-    
-    
     public Long getId() {
         return id;
     }
 
-    /**
-     *
-     * @param id
-     */
     public void setId(Long id) {
         this.id = id;
     }
@@ -83,13 +73,7 @@ public class DayDetail implements Serializable {
     public void setMission(Mission mission) {
         this.mission = mission;
     }
-    
-    
-    /**
-     *
-     * @param object
-     * @return
-     */
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -103,14 +87,10 @@ public class DayDetail implements Serializable {
         return true;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String toString() {
-        return "DayDetail{" +
-                "detail=" + detail +
-                '}';
+        return "DayDetail{"
+                + "detail=" + detail
+                + '}';
     }
 }

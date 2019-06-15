@@ -17,14 +17,14 @@ import com.onda.personnel.model.Skip;
  */
 public interface SkipService {
 
-    public List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate);
+    List<Skip> findByEmployeeMatriculeAndSkipDate(Integer matricule, Date skipDate);
 
-    public Skip createSkip(Integer matricule, String wording, Skip skip);
+    Skip createSkip(Integer matricule, String wording, Skip skip);
 
-    public int updateSkip(DayDetail dayDetail);
+    int updateSkip(DayDetail dayDetail);
 
-    public List<Skip> findAllSkips();
-    
-    public int removeSkip (Long id);
+    List<Skip> findAllSkips();
+
+    int removeSkip(Long id);
 
 }

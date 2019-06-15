@@ -168,15 +168,10 @@ public class DayDetailServiceImpl implements DayDetailService {
                         Detail detail = detailService.findByWording(wordingDetail);
 
                         for (DayDetail dayDetail : listdayDetails) {
-                            if (dayDetail.getDetail() != null) {
-
-                                if (dayDetail.getDetail().getWording().equals(detail.getWording())) {
-                                    thedayDetail = dayDetailDao.getOne(dayDetail.getId());
-
-                                }
+                            if (dayDetail.getDetail() != null && dayDetail.getDetail().getWording().equals(detail.getWording())) {
+                                thedayDetail = dayDetailDao.getOne(dayDetail.getId());
                             }
                         }
-
                         if (thedayDetail.getReplacement() != null || thedayDetail.getSkip() != null || thedayDetail.getMission() != null) {
                             return -2;
                         } else {
@@ -193,7 +188,6 @@ public class DayDetailServiceImpl implements DayDetailService {
                     }
                 }
             }
-
         }
     }
 
@@ -226,16 +220,12 @@ public class DayDetailServiceImpl implements DayDetailService {
                     if (day.getDayDate().compareTo(replacement.getReplacementDate()) == 0) {
                         theDay = dayDao.getOne(day.getId());
                     }
-
                 }
-
                 for (Day day : listDay1) {
                     if (day.getDayDate().compareTo(replacement.getReplacementDate()) == 0) {
                         theDay1 = dayDao.getOne(day.getId());
                     }
-
                 }
-
                 if (theDay == null || theDay1 == null) {
                     return -4;
                 } else {
@@ -243,7 +233,6 @@ public class DayDetailServiceImpl implements DayDetailService {
                     if (theDay.getVacation() != null || theDay1.getVacation() != null) {
                         return -3;
                     } else {
-
                         List<DayDetail> listdayDetails = theDay.getDayDetails();
                         List<DayDetail> listdayDetails1 = theDay1.getDayDetails();
 
@@ -252,28 +241,19 @@ public class DayDetailServiceImpl implements DayDetailService {
                         Detail detail = detailService.findByWording(wordingDetail);
 
                         for (DayDetail dayDetail : listdayDetails) {
-                            if (dayDetail.getDetail() != null) {
-                                if (dayDetail.getDetail().getWording().equals(detail.getWording())) {
-                                    thedayDetail = dayDetailDao.getOne(dayDetail.getId());
-
-                                }
-
+                            if (dayDetail.getDetail() != null && dayDetail.getDetail().getWording().equals(detail.getWording())) {
+                                thedayDetail = dayDetailDao.getOne(dayDetail.getId());
                             }
                         }
                         int i = 0;
-
                         for (DayDetail dayDetail : listdayDetails1) {
                             if (dayDetail.getDetail() != null) {
                                 if (dayDetail.getDetail().getWording().equals(detail.getWording())) {
-
                                     i = 0;
                                     break;
                                 } else {
-
                                     i = 1;
-//                                
                                 }
-
                             }
                         }
                         if (i == 0) {
@@ -301,7 +281,6 @@ public class DayDetailServiceImpl implements DayDetailService {
                     }
                 }
             }
-
         }
     }
 
@@ -330,10 +309,8 @@ public class DayDetailServiceImpl implements DayDetailService {
         if (res == 1) {
             Mission mission = dayDetail1.getMission();
             dayDetail1.setMission(null);
-
             missionDao.delete(mission);
             dayDetailDao.save(dayDetail1);
-
             return res;
         } else {
             return res;
@@ -357,11 +334,10 @@ public class DayDetailServiceImpl implements DayDetailService {
 
     @Override
     public int deleteDayDetailWhereIsNull() {
-
         List<DayDetail> listDayDetails = findByDetailIsNullAndSkipIsNullAndRepalcementIsNullAndMissionIsNull();
-        for (DayDetail listDayDetail : listDayDetails) {
+        listDayDetails.forEach((listDayDetail) -> {
             dayDetailDao.delete(listDayDetail);
-        }
+        });
         return 1;
     }
 
@@ -403,44 +379,17 @@ public class DayDetailServiceImpl implements DayDetailService {
         return dayDetailDao.findBySkipIsNotNull();
     }
 
+    @Override
+    public List<DayDetail> findBySkipId(Long id) {
+        return dayDetailDao.findBySkipId(id);
+    }
+
     public DayDetailDao getDayDetailDao() {
         return dayDetailDao;
     }
 
     public void setDayDetailDao(DayDetailDao dayDetailDao) {
         this.dayDetailDao = dayDetailDao;
-    }
-
-    public WorkService getWorkService() {
-        return workService;
-    }
-
-    public void setWorkService(WorkService workService) {
-        this.workService = workService;
-    }
-
-    public EmployeeService getEmployeeService() {
-        return employeeService;
-    }
-
-    public void setEmployeeService(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
-
-    public MissionService getMissionService() {
-        return missionService;
-    }
-
-    public void setMissionService(MissionService missionService) {
-        this.missionService = missionService;
-    }
-
-    public DetailService getDetailService() {
-        return detailService;
-    }
-
-    public void setDetailService(DetailService detailService) {
-        this.detailService = detailService;
     }
 
     public DayDao getDayDao() {
@@ -467,6 +416,14 @@ public class DayDetailServiceImpl implements DayDetailService {
         this.workDao = workDao;
     }
 
+    public WorkService getWorkService() {
+        return workService;
+    }
+
+    public void setWorkService(WorkService workService) {
+        this.workService = workService;
+    }
+
     public SkipService getSkipService() {
         return skipService;
     }
@@ -483,14 +440,6 @@ public class DayDetailServiceImpl implements DayDetailService {
         this.replacementService = replacementService;
     }
 
-    public MissionDao getMissionDao() {
-        return missionDao;
-    }
-
-    public void setMissionDao(MissionDao missionDao) {
-        this.missionDao = missionDao;
-    }
-
     public ReplacementDao getReplacementDao() {
         return replacementDao;
     }
@@ -499,9 +448,36 @@ public class DayDetailServiceImpl implements DayDetailService {
         this.replacementDao = replacementDao;
     }
 
-    @Override
-    public List<DayDetail> findBySkipId(Long id) {
-        return dayDetailDao.findBySkipId(id);
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    public MissionService getMissionService() {
+        return missionService;
+    }
+
+    public void setMissionService(MissionService missionService) {
+        this.missionService = missionService;
+    }
+
+    public DetailService getDetailService() {
+        return detailService;
+    }
+
+    public void setDetailService(DetailService detailService) {
+        this.detailService = detailService;
+    }
+
+    public MissionDao getMissionDao() {
+        return missionDao;
+    }
+
+    public void setMissionDao(MissionDao missionDao) {
+        this.missionDao = missionDao;
     }
 
 }
