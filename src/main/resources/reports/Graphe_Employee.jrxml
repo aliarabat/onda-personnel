@@ -191,22 +191,22 @@
 		<band height="350" splitType="Stretch">
 			<stackedBarChart>
 				<chart isShowLegend="true" customizerClass="com.onda.chartcustomiser.MyBarChartCustomiser" theme="aegean">
-					<reportElement x="51" y="5" width="700" height="340" isRemoveLineWhenBlank="true" uuid="c571f83f-73cc-47a5-a0c6-5a1a68616bfa"/>
+					<reportElement x="51" y="5" width="700" height="340" isRemoveLineWhenBlank="true" uuid="8fa6589a-26ca-4466-998f-03f255b4b3c1"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<categoryDataset>
 					<dataset>
-						<datasetRun subDataset="dashboardDataSet" uuid="753e244a-b321-400d-b9bd-dfc04495af27">
+						<datasetRun subDataset="dashboardDataSet" uuid="1cc16f98-bf69-4ef7-8703-46260f786ae4">
 							<dataSourceExpression><![CDATA[$P{workDataSource}]]></dataSourceExpression>
 						</datasetRun>
 					</dataset>
 					<categorySeries>
-						<seriesExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate() +" ("+(Double.parseDouble($F{workDetailVo}.getHjf().getHour())+Double.parseDouble($F{workDetailVo}.getHjf().getMinute())/60)+")"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate()]]></categoryExpression>
+						<seriesExpression><![CDATA[$F{workDetailVo}.getMonth() +" ("+(Double.parseDouble($F{workDetailVo}.getHjf().getHour())+Double.parseDouble($F{workDetailVo}.getHjf().getMinute())/60)+")"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{workDetailVo}.getMonth()]]></categoryExpression>
 						<valueExpression><![CDATA[Double.parseDouble($F{workDetailVo}.getHjf().getHour())+(Double.parseDouble($F{workDetailVo}.getHjf().getMinute())/60)]]></valueExpression>
-						<labelExpression><![CDATA[$F{workDetailVo}.getWorkDetailDate()]]></labelExpression>
+						<labelExpression><![CDATA[$F{workDetailVo}.getMonth()]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
 				<barPlot>

@@ -108,6 +108,7 @@ public class WorkServiceImpl implements WorkService {
         List<WorkVo> worksVo = new WorkConverter().toVo(works);
         if (worksVo != null && !worksVo.isEmpty()) {
             worksVo.stream().forEach((w) -> {
+            	w.getWorkDetailVo().setMonth(MonthUtil.getMonth(LocalDate.parse(w.getWorkDetailVo().getWorkDetailDate()).getMonthValue()-1));
                 w.getWorkDetailVo().getDaysVo().stream().forEach((day) -> {
                     Calendar c = Calendar.getInstance();
                     c.setTime(DateUtil.toDate(DateUtil.fromStringToLocalDate(day.getDayDate())));
@@ -437,7 +438,8 @@ public class WorkServiceImpl implements WorkService {
             params.put("employee", list.get(0).getEmployee());
             params.put("firstMonth", MonthUtil.getMonth(workMin.getWorkDetail().getWorkDetailDate().getMonth() - 1));
             params.put("lastMonth", lastMonth);
-            params.put("workMin", Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + ""));
+            params.put("workMin", Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "")-
+            		(Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "")>20?15:5));
             params.put("workMax", Double.parseDouble(workMax.getWorkDetail().getHjf().getHour() + ""));
             params.put("logoImage", imageInputStream);
 
