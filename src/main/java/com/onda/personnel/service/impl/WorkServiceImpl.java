@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import com.onda.personnel.dao.WorkDao;
 import com.onda.personnel.model.Work;
+import com.onda.personnel.model.WorkDetail;
 import com.onda.personnel.rest.converter.WorkConverter;
 import com.onda.personnel.rest.vo.DayDetailVo;
 import com.onda.personnel.rest.vo.DayVo;
@@ -40,6 +41,8 @@ import com.onda.personnel.util.JasperUtil;
 import com.onda.personnel.util.MonthUtil;
 import com.onda.personnel.util.NumberUtil;
 import com.onda.personnel.util.WorkComparator;
+import com.onda.personnel.util.WorkComparatorByDate;
+import java.util.Comparator;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -431,13 +434,12 @@ public class WorkServiceImpl implements WorkService {
                     + (item.getWorkDetail().getHjf().getMinute() * 10 / 6)).average().getAsDouble();
             Work workMin = Collections.min(list, new WorkComparator());
             Work workMax = Collections.max(list, new WorkComparator());
-            String lastMonth = MonthUtil.getMonth(
-                    workMax.getWorkDetail().getWorkDetailDate().getMonth() - 1);
             params.put("year", year);
             params.put("average", average);
             params.put("employee", list.get(0).getEmployee());
-            params.put("firstMonth", MonthUtil.getMonth(workMin.getWorkDetail().getWorkDetailDate().getMonth() - 1));
-            params.put("lastMonth", lastMonth);
+            params.put("firstMonth", MonthUtil.getMonth(Collections.min(list, new WorkComparatorByDate()).getWorkDetail().getWorkDetailDate().getMonth()));
+            params.put("lastMonth", MonthUtil.getMonth(
+                    Collections.max(list, new WorkComparatorByDate()).getWorkDetail().getWorkDetailDate().getMonth()));
             params.put("workMin", Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "")-
             		(Double.parseDouble(workMin.getWorkDetail().getHjf().getHour() + "")>20?15:5));
             params.put("workMax", Double.parseDouble(workMax.getWorkDetail().getHjf().getHour() + ""));

@@ -35,8 +35,8 @@ public class Work implements Serializable {
     }
 
     public Work(Employee emp, WorkDetail workDetail) {
-        this.employee=emp;
-        this.workDetail=workDetail;
+        this.employee = emp;
+        this.workDetail = workDetail;
     }
 
     public Work() {

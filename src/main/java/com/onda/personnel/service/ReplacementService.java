@@ -19,4 +19,7 @@ public interface ReplacementService {
     List<Replacement> findByOriginalEmployeeMatriculeAndReplacementDate(Integer matricule, Date replacementDate);
 
     Replacement createReplacement(Integer matricule, Integer matricule1, String wording, Replacement replacement);
+
+    List<Replacement> findAll();
+    
 }

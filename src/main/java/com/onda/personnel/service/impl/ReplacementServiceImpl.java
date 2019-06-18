@@ -21,6 +21,7 @@ import com.onda.personnel.service.DayService;
 import com.onda.personnel.service.DetailService;
 import com.onda.personnel.service.EmployeeService;
 import com.onda.personnel.service.ReplacementService;
+import org.springframework.data.domain.Sort;
 
 /**
  * @author JaafarDiyaou
@@ -71,6 +72,11 @@ public class ReplacementServiceImpl implements ReplacementService {
             }
         }
 
+    }
+
+    @Override
+    public List<Replacement> findAll() {
+        return replacementDao.findAll(Sort.by("replacementDate"));
     }
 
     public ReplacementDao getReplacementDao() {
